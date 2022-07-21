@@ -1,0 +1,53 @@
+.main {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 8em;
+    margin-left: 8em;
+}
+
+npm run sync .title {
+    font-size: 2em;
+    font-family: "Georgia", sans-serif;
+    font-weight: bold;
+}
+
+.p1 {
+    font-weight: 400;
+}
+
+.q {
+    margin-top: 2em;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.radio {
+    font-family: system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.input-text {
+    padding: 0.4rem;
+    width: 25rem;
+    border-width: 0.5px;
+    border-radius: 0.8rem;
+}
+
+.select {
+    width: 25rem;
+}
+
+.submit {
+    margin-top: 3rem;
+    width: 10rem;
+}
+
+.radio label {
+    text-align: 3rem;
+}

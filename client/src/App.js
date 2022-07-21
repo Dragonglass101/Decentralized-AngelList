@@ -2,16 +2,13 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { TezosNodeWriter, TezosParameterFormat } from "conseiljs";
 import { Dashboard } from "./components/Dashboard";
-import {StartupForm} from "./components/StartupForm";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-
-// Key manager
-var key_name = "test_key1";
-var key = require(`../../keystore/${key_name}`);
-
-var tezosNode = "https://testnet.tezster.tech",
-  contractAddress = "KT1LxQGACpzhTrSxCnBxGRtU9XBWc2EwLW2r";
+import { Signup } from "./components/Signup"
+import { Signin } from "./components/Signin"
+import { FormInvestor } from "./components/FormInvestor";
+import { FormCompany } from "./components/FormCompany";
+import { FormEmployee } from "./components/FormEmployee";
   
   function App() {
     return (
@@ -19,7 +16,11 @@ var tezosNode = "https://testnet.tezster.tech",
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/startup-form" element={<StartupForm/>} />
+          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-in" element={<Signin />} />
+          <Route path="/form-investor" element={<FormInvestor />} />
+          <Route path="/form-company" element={<FormCompany />} />
+          <Route path="/form-employee" element={<FormEmployee />} />
         </Routes>
         <Footer/>
     </Router>
