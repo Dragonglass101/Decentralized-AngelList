@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { TezosNodeWriter, TezosParameterFormat } from "conseiljs";
 import { Dashboard } from "./components/Dashboard";
+import {StartupForm} from "./components/StartupForm";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 
@@ -18,6 +19,7 @@ var tezosNode = "https://testnet.tezster.tech",
         <Header />
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/startup-form" element={<StartupForm/>} />
         </Routes>
         <Footer/>
     </Router>
