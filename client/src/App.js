@@ -9,6 +9,7 @@ import { Signin } from "./components/Signin"
 import { FormInvestor } from "./components/FormInvestor";
 import { FormCompany } from "./components/FormCompany";
 import { FormEmployee } from "./components/FormEmployee";
+import { Test } from "./components/Test";
   
   function App() {
     return (
@@ -21,8 +22,8 @@ import { FormEmployee } from "./components/FormEmployee";
           <Route path="/form-investor" element={<FormInvestor />} />
           <Route path="/form-company" element={<FormCompany />} />
           <Route path="/form-employee" element={<FormEmployee />} />
+          <Route path="/test" element={<Test/>} />
         </Routes>
-        <Footer/>
     </Router>
     );
   }
