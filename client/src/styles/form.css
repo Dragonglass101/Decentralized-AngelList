@@ -9,3 +9,10 @@
 .font13{
     font-size: 13px !important;
 }
+
+.rounded25{
+    border-radius: 25px !important;
+}
+.employee-form-bg{
+background-color: rgb(236, 238, 245)
+}
