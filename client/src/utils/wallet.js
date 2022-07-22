@@ -1,13 +1,13 @@
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 
-const preferredNetwork = "ghostnet";
+const preferredNetwork = "jakartanet";
 const options = {
   name: "NFT",
   iconUrl: "https://tezostaquito.io/img/favicon.png",
   preferredNetwork: preferredNetwork,
 };
-const rpcURL = "https://rpc.ghostnet.teztnets.xyz";
+const rpcURL = "https://rpc.jakartanet.teztnets.xyz";
 const wallet = new BeaconWallet(options);
 
 const getActiveAccount = async () => {
@@ -55,4 +55,5 @@ export {
   disconnectWallet,
   getActiveAccount,
   checkIfWalletConnected,
+  wallet 
 };

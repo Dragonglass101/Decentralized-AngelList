@@ -5,20 +5,22 @@ import Select from "react-select";
 import Button from '@material-ui/core/Button';
 
 import { connectWallet } from "../utils/wallet";
+import {verifyInvestor} from "../utils/operation"
 
 import "../styles/FormInvestor.css";
 
 export const FormInvestor = () => {
   const [step, setStep] = useState(1);
   const countries = countryList().getData();
+  const [loading, setLoading] = useState(false);
   const [identity, setIdentity] = useState("Individual");
   const [details, setDetails] = useState({
     walletTokenID: "",
     legalName: "",
-    accreditedProof: "",
+    accreditedProof: 0,
     linkedIn: "",
-    investmentGoalAmount: "",
-    netWorthPerentage: "",
+    investmentGoalAmount: 0,
+    netWorthPerentage: 0,
   });
 
   const [wallet, setWallet] = useState(null);
@@ -27,9 +29,27 @@ export const FormInvestor = () => {
     setWallet(wallet);
   };
 
+  const onverifyInvestor = async () =>{
+    let accreditionAmount = 0
+    // if(investmentGoalAmount > 3)
+    //   accreditionAmount =  20000
+    // else 
+    //   accreditionAmount = 5000
+    console.log(details.linkedIn)
+    try{
+      setLoading(true);
+      await verifyInvestor(50, "alice@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
+      alert("Transaction Confirmed! You are now an Accredited Investor");
+    }catch(error){
+      alert("Transaction Failed:", error.message);
+    } 
+
+    setLoading(false);
+    
+  }
+
   return (
     <>
-      
       {step == 1 ? (
         <div className="main">
           <h1 className="title"> Step 1 of 3 : Accreditation </h1>
@@ -110,11 +130,24 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: "I have atleast $5M in investments",
+                          accreditedProof: 1,
                         })
                       }
                     />
-                    I have atleast $5M in investments
+                    I have atleast 500k Tez in investments
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="q4"
+                      onChange={(e) =>
+                        setDetails({
+                          ...details,
+                          accreditedProof: 2,
+                        })
+                      }
+                    />
+                    I have between 220k to 500k Tez in net assets
                   </label>
                   <label>
                     <input
@@ -124,11 +157,11 @@ export const FormInvestor = () => {
                         setDetails({
                           ...details,
                           accreditedProof:
-                            "I have between $2.2M and $5M in net assets",
+                            3,
                         })
                       }
                     />
-                    I have between $2.2M and $5M in net assets
+                    I have between 100k to 200k Tez in net assets 
                   </label>
                   <label>
                     <input
@@ -137,26 +170,11 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
-                            "I have between $1M and $2.2M in net assets",
+                          accreditedProof: 4,
                         })
                       }
                     />
-                    I have between $1M and $2.2M in net assets
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "I have income of $200k( or $300k jointly with spouse) for the past 2 years and expect the same for this year",
-                        })
-                      }
-                    />
-                    I have income of $200k( or $300k jointly with spouse) for
+                    I have income of 200k Tez( or 300k Tez jointly with spouse) for
                     the past 2 years and expect the same for this year
                   </label>
                   <label>
@@ -166,8 +184,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
-                            "I am Series 7, Series65, or Series 82 holder and my license is active and in good standing",
+                          accreditedProof:5,
                         })
                       }
                     />
@@ -181,7 +198,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: "I am not accredited yet",
+                          accreditedProof: 6,
                         })
                       }
                     />
@@ -268,7 +285,6 @@ export const FormInvestor = () => {
             <>
               <div className="q2">
                 <p className="q">
-                  
                   What is your firm 's or fund' s legal name ?
                 </p>
                 <input
@@ -383,7 +399,6 @@ export const FormInvestor = () => {
               setStep(2);
             }}
           >
-            
             Continue
           </button>
         </div>
@@ -415,7 +430,7 @@ export const FormInvestor = () => {
           </div>
           <div className="q2">
             <p className="q">
-              How much are you hoping to allocate( in USD) to startups using
+              How much are you hoping to allocate( in Tez) to startups using
               AngelList Venture over the next 12 months ?
             </p>
             <div className="radio">
@@ -426,11 +441,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $20,000",
+                      investmentGoalAmount: 1,
                     })
                   }
                 />
-                Up to $20, 000
+                Up to 20, 000
               </label>
               <label>
                 <input
@@ -439,11 +454,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $50,000",
+                      investmentGoalAmount: 2,
                     })
                   }
                 />
-                Up to $50, 000
+                Up to 50,000
               </label>
               <label>
                 <input
@@ -452,11 +467,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $100,000",
+                      investmentGoalAmount: 3,
                     })
                   }
                 />
-                Up to $100, 000
+                Up to 100,000
               </label>
               <label>
                 <input
@@ -465,11 +480,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $250,000",
+                      investmentGoalAmount: 4,
                     })
                   }
                 />
-                Up to $250, 000
+                Up to 250,000
               </label>
               <label>
                 <input
@@ -478,11 +493,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $500,000",
+                      investmentGoalAmount: 5,
                     })
                   }
                 />
-                Up to $500, 000
+                Up to 500, 000
               </label>
               <label>
                 <input
@@ -491,11 +506,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "More than $500,000",
+                      investmentGoalAmount: 6,
                     })
                   }
                 />
-                More than $500, 000
+                More than 500,000
               </label>
             </div>
           </div>
@@ -510,7 +525,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: "Up to 5%" })
+                    setDetails({ ...details, netWorthPerentage: 1 })
                   }
                 />
                 Up to 5 %
@@ -520,7 +535,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: "Up to 10%" })
+                    setDetails({ ...details, netWorthPerentage:2 })
                   }
                 />
                 Up to 10 %
@@ -530,7 +545,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: "Up to 15%" })
+                    setDetails({ ...details, netWorthPerentage: 3 })
                   }
                 />
                 Up to 15 %
@@ -542,7 +557,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      netWorthPerentage: "More than %15",
+                      netWorthPerentage: 4,
                     })
                   }
                 />
@@ -588,7 +603,6 @@ export const FormInvestor = () => {
               setStep(1);
             }}
           >
-            
             Back
           </button>
           <button
@@ -597,7 +611,6 @@ export const FormInvestor = () => {
               setStep(3);
             }}
           >
-            
             Continue
           </button>
         </div>
@@ -645,7 +658,6 @@ export const FormInvestor = () => {
           </div>
           <div className="q3">
             <p className="q">
-              
               What is your experience working with tech startups ?
             </p>
             <div className="radio">
@@ -695,7 +707,6 @@ export const FormInvestor = () => {
           </div>
           <div className="q5">
             <p className="q">
-              
               Please carefully review the information below before submitting
               your application.
             </p>
@@ -718,12 +729,22 @@ export const FormInvestor = () => {
           >
             Back
           </button>
-            <Button
-              variant="contained" color="primary"
-              onClick={wallet ? ()=>{} : handleConnectWallet}
-            >
-              {wallet ? "Wallet Connected" : "Connect Your Wallet To Continue"}
-            </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={wallet ? () => {} : handleConnectWallet}
+          >
+            {wallet ? "Wallet Connected" : "Connect Your Wallet To Continue"}
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={onverifyInvestor}
+          >
+            {loading === true ? "Loading..." : "Verify"}
+          </Button>
         </div>
       )}
     </>
