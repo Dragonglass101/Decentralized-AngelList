@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import countryList from "react-select-country-list";
 import Select from "react-select";
@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 
 import { connectWallet } from "../utils/wallet";
 import {verifyInvestor} from "../utils/operation"
+
+import ipfs from '../ipfs';
 
 import "../styles/FormInvestor.css";
 
@@ -15,13 +17,20 @@ export const FormInvestor = () => {
   const [loading, setLoading] = useState(false);
   const [identity, setIdentity] = useState("Individual");
   const [details, setDetails] = useState({
-    walletTokenID: "",
-    legalName: "",
-    accreditedProof: 0,
-    linkedIn: "",
-    investmentGoalAmount: 0,
-    netWorthPerentage: 0,
+    amountToAccredition: 10,
+    email: "",        // done
+    howAccredited: 0, // done
+    linkedIn: "",     // done
+    name: "",         // done
+    number: 0,     // done
+    percentageNetworth: 2,
+    walletID: "",     // done
+
+    bufferPhoto: null,
+    bufferResume: null
   });
+  const [photoCID, setphotoCID] = useState(null);
+  const [resumeCID, setresumeCID] = useState(null)
 
   const [wallet, setWallet] = useState(null);
   const handleConnectWallet = async () => {
@@ -29,23 +38,86 @@ export const FormInvestor = () => {
     setWallet(wallet);
   };
 
-  const onverifyInvestor = async () =>{
-    let accreditionAmount = 0
-    // if(investmentGoalAmount > 3)
-    //   accreditionAmount =  20000
-    // else 
-    //   accreditionAmount = 5000
-    console.log(details.linkedIn)
-    try{
-      setLoading(true);
-      await verifyInvestor(50, "alice@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
-      alert("Transaction Confirmed! You are now an Accredited Investor");
-    }catch(error){
-      alert("Transaction Failed:", error.message);
-    } 
-
-    setLoading(false);
+  useEffect(() => {
+    console.log(photoCID, resumeCID)
+      const onverifyInvestor = async () =>{
+        console.log(photoCID, resumeCID)
+        try{
+          setLoading(true);
+          // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
+          await verifyInvestor(details["amountToAccredition"], details["email"], details["howAccredited"],details["linkedIn"],details["name"],details["number"],details["percentageNetworth"],photoCID, resumeCID,wallet);
+          alert("Transaction Confirmed! You are now an Accredited Investor");
+        }catch(error){
+          alert("Transaction Failed:", error.message);
+        } 
     
+        setLoading(false);
+        
+      }
+      if(photoCID != null && resumeCID != null)
+        onverifyInvestor();
+
+    //   // setLoading(false);
+    // }
+  }, [resumeCID])
+  
+
+  function handleSubmit(){
+    uploadPhoto();
+    uploadResume();
+  }
+
+  // const onverifyInvestor = async () =>{
+  //   console.log(photoCID, resumeCID)
+  //   try{
+  //     setLoading(true);
+  //     // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
+  //     await verifyInvestor(details["amountToAccredition"], details["email"], details["howAccredited"],details["linkedIn"],details["name"],details["number"],details["percentageNetworth"],photoCID, resumeCID,wallet);
+  //     alert("Transaction Confirmed! You are now an Accredited Investor");
+  //   }catch(error){
+  //     alert("Transaction Failed:", error.message);
+  //   } 
+
+  //   setLoading(false);
+    
+  // }
+
+  function capturePhoto(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      setDetails({ ...details, bufferPhoto: Buffer(reader.result) })
+    }
+  }
+  function captureResume(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      setDetails({ ...details, bufferResume: Buffer(reader.result) })
+    }
+  }
+
+  function uploadPhoto() {
+    ipfs.files.add(details["bufferPhoto"], (error, result) => {
+      if(error) {
+        console.error(error)
+        return
+      }
+      setphotoCID(result[0].hash)
+    })
+  }
+  function uploadResume() {
+    ipfs.files.add(details["bufferResume"], (error, result) => {
+      if(error) {
+        console.error(error)
+        return
+      }
+      setresumeCID(result[0].hash)
+    })
   }
 
   return (
@@ -56,16 +128,6 @@ export const FormInvestor = () => {
           <p className="p1">
             You must be an accredited investor to invest in AnglelList Venture
           </p>
-          <div className="q1">
-            <p className="q"> Wallet Token ID </p>
-            <input
-              type="text"
-              className="input-text"
-              onChange={(e) =>
-                setDetails({ ...details, walletTokenID: e.target.value })
-              }
-            />
-          </div>
           <div className="q1">
             <p className="q">
               Will you be investing money as an Individual, a Trust, or a Firm
@@ -106,15 +168,44 @@ export const FormInvestor = () => {
           </div>
           {identity == "Individual" ? (
             <>
-              <div className="q2">
+              <div className="q1">
                 <p className="q"> What is your full legal name ? </p>
                 <input
                   type="text"
                   className="input-text"
                   onChange={(e) =>
-                    setDetails({ ...details, legalName: e.target.value })
+                    setDetails({ ...details, name: e.target.value })
                   }
                 />
+              </div>
+              <div className="q2">
+                <p className="q"> Enter Your Phone Number </p>
+                <input
+                  type="tel"
+                  pattern="[0-9]{10}"
+                  className="input-text"
+                  onChange={(e) =>
+                    setDetails({ ...details, number: parseInt(e.target.value) })
+                  }
+                />
+              </div>
+              <div className="q2">
+                <p className="q"> Enter Your Email Id </p>
+                <input
+                  type="email"
+                  className="input-text"
+                  onChange={(e) =>
+                    setDetails({ ...details, email: e.target.value })
+                  }
+                />
+              </div>
+              <div>
+                <p className="q"> Profile Picture </p>
+                <input type="file" onChange={capturePhoto}/>
+              </div>
+              <div>
+                <p className="q"> Resume </p>
+                <input type="file" onChange={captureResume}/>
               </div>
               <div className="q3">
                 <p className="q"> Where is your legal place of Residence ? </p>
@@ -130,7 +221,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: 1,
+                          howAccredited: 1,
                         })
                       }
                     />
@@ -143,7 +234,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: 2,
+                          howAccredited: 2,
                         })
                       }
                     />
@@ -156,7 +247,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             3,
                         })
                       }
@@ -170,7 +261,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: 4,
+                          howAccredited: 4,
                         })
                       }
                     />
@@ -184,7 +275,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:5,
+                          howAccredited:5,
                         })
                       }
                     />
@@ -198,7 +289,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: 6,
+                          howAccredited: 6,
                         })
                       }
                     />
@@ -215,7 +306,7 @@ export const FormInvestor = () => {
                   type="text"
                   className="input-text"
                   onChange={(e) =>
-                    setDetails({ ...details, legalName: e.target.value })
+                    setDetails({ ...details, name: e.target.value })
                   }
                 />
               </div>
@@ -244,7 +335,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             "The trust has over $25M in investments",
                         })
                       }
@@ -258,7 +349,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             "The trust has over $5M in net assets",
                         })
                       }
@@ -272,7 +363,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: "None of the above",
+                          howAccredited: "None of the above",
                         })
                       }
                     />
@@ -291,7 +382,7 @@ export const FormInvestor = () => {
                   type="text"
                   className="input-text"
                   onChange={(e) =>
-                    setDetails({ ...details, legalName: e.target.value })
+                    setDetails({ ...details, name: e.target.value })
                   }
                 />
               </div>
@@ -309,7 +400,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             "The investing entity has over $25M in investments",
                         })
                       }
@@ -323,7 +414,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             "The investing entity has between $5M and $25M in net assets",
                         })
                       }
@@ -337,7 +428,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             "All the owners of the investing enituty are qualified purchasers",
                         })
                       }
@@ -352,7 +443,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             "All the owners of the investing enituty are individually accredited",
                         })
                       }
@@ -367,7 +458,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof:
+                          howAccredited:
                             "The investing entity is a state or SEC registered investment adviser or any exempt reporting adviser",
                         })
                       }
@@ -382,7 +473,7 @@ export const FormInvestor = () => {
                       onChange={(e) =>
                         setDetails({
                           ...details,
-                          accreditedProof: "None of the above",
+                          howAccredited: "None of the above",
                         })
                       }
                     />
@@ -525,7 +616,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: 1 })
+                    setDetails({ ...details, percentageNetworth: 1 })
                   }
                 />
                 Up to 5 %
@@ -535,7 +626,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage:2 })
+                    setDetails({ ...details, percentageNetworth:2 })
                   }
                 />
                 Up to 10 %
@@ -545,7 +636,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: 3 })
+                    setDetails({ ...details, percentageNetworth: 3 })
                   }
                 />
                 Up to 15 %
@@ -557,7 +648,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      netWorthPerentage: 4,
+                      percentageNetworth: 4,
                     })
                   }
                 />
@@ -741,7 +832,7 @@ export const FormInvestor = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={onverifyInvestor}
+            onClick={handleSubmit}
           >
             {loading === true ? "Loading..." : "Verify"}
           </Button>

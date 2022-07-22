@@ -3,7 +3,6 @@ import ipfs from '../ipfs';
 
 export const Test = () => {
     const [ipfsHash, setipfsHash] = useState("");
-    const [account, setaccount] = useState(null);
     const [buffer, setbuffer] = useState(null);
 
     function captureFile(event) {
@@ -24,10 +23,6 @@ export const Test = () => {
             console.error(error)
             return
           }
-        //   this.simpleStorageInstance.set(result[0].hash, { from: this.state.account }).then((r) => {
-        //     return this.setState({ ipfsHash: result[0].hash })
-        //     console.log('ifpsHash', this.state.ipfsHash)
-        //   })
           setipfsHash(result[0].hash);
         })
       }
@@ -42,7 +37,7 @@ export const Test = () => {
             <div className="pure-u-1-1">
                 <h1>Your Image</h1>
                 <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
-                {ipfs ? 
+                {ipfs=="" ? 
                 <img src={`https://ipfs.io/ipfs/${ipfs}`} alt=""/> : <></>}
                 <h2>Upload Image</h2>
                 <form onSubmit={onSubmit} >
