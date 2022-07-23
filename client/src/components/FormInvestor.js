@@ -43,7 +43,6 @@ export const FormInvestor = () => {
       const onverifyInvestor = async () =>{
         console.log(photoCID, resumeCID)
         try{
-          setLoading(true);
           // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
           await verifyInvestor(details["amountToAccredition"], details["email"], details["howAccredited"],details["linkedIn"],details["name"],details["number"],details["percentageNetworth"],photoCID, resumeCID,wallet);
           alert("Transaction Confirmed! You are now an Accredited Investor");
@@ -56,31 +55,7 @@ export const FormInvestor = () => {
       }
       if(photoCID != null && resumeCID != null)
         onverifyInvestor();
-
-    //   // setLoading(false);
-    // }
-  }, [resumeCID])
-  
-
-  function handleSubmit(){
-    uploadPhoto();
-    uploadResume();
-  }
-
-  // const onverifyInvestor = async () =>{
-  //   console.log(photoCID, resumeCID)
-  //   try{
-  //     setLoading(true);
-  //     // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
-  //     await verifyInvestor(details["amountToAccredition"], details["email"], details["howAccredited"],details["linkedIn"],details["name"],details["number"],details["percentageNetworth"],photoCID, resumeCID,wallet);
-  //     alert("Transaction Confirmed! You are now an Accredited Investor");
-  //   }catch(error){
-  //     alert("Transaction Failed:", error.message);
-  //   } 
-
-  //   setLoading(false);
-    
-  // }
+  }, [resumeCID, photoCID])
 
   function capturePhoto(event) {
     event.preventDefault()
@@ -120,10 +95,18 @@ export const FormInvestor = () => {
     })
   }
 
+  async function handleSubmit(e){
+    e.preventDefault()
+    await handleConnectWallet();
+    setLoading(true);
+    uploadPhoto();
+    uploadResume();
+  }
+
   return (
-    <>
-      {step == 1 ? (
-        <div className="main">
+    <form onSubmit={handleSubmit}>
+      {/* Step 1 */}
+        <div className={"main " + `${step != 1 ? "hidden" : ""}`}>
           <h1 className="title"> Step 1 of 3 : Accreditation </h1>
           <p className="p1">
             You must be an accredited investor to invest in AnglelList Venture
@@ -176,6 +159,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({ ...details, name: e.target.value })
                   }
+                  required
                 />
               </div>
               <div className="q2">
@@ -187,6 +171,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({ ...details, number: parseInt(e.target.value) })
                   }
+                  required
                 />
               </div>
               <div className="q2">
@@ -197,15 +182,16 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({ ...details, email: e.target.value })
                   }
+                  required
                 />
               </div>
               <div>
                 <p className="q"> Profile Picture </p>
-                <input type="file" onChange={capturePhoto}/>
+                <input type="file" onChange={capturePhoto} required/>
               </div>
               <div>
                 <p className="q"> Resume </p>
-                <input type="file" onChange={captureResume}/>
+                <input type="file" onChange={captureResume} required/>
               </div>
               <div className="q3">
                 <p className="q"> Where is your legal place of Residence ? </p>
@@ -218,12 +204,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited: 1,
-                        })
-                      }
                     />
                     I have atleast 500k Tez in investments
                   </label>
@@ -231,12 +211,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited: 2,
-                        })
-                      }
                     />
                     I have between 220k to 500k Tez in net assets
                   </label>
@@ -244,13 +218,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            3,
-                        })
-                      }
                     />
                     I have between 100k to 200k Tez in net assets 
                   </label>
@@ -258,12 +225,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited: 4,
-                        })
-                      }
                     />
                     I have income of 200k Tez( or 300k Tez jointly with spouse) for
                     the past 2 years and expect the same for this year
@@ -272,12 +233,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:5,
-                        })
-                      }
                     />
                     I am Series 7, Series65, or Series 82 holder and my license
                     is active and in good standing
@@ -286,12 +241,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited: 6,
-                        })
-                      }
                     />
                     I am not accredited yet
                   </label>
@@ -332,13 +281,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q5"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            "The trust has over $25M in investments",
-                        })
-                      }
                     />
                     The trust has over $25M in investments
                   </label>
@@ -346,13 +288,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q5"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            "The trust has over $5M in net assets",
-                        })
-                      }
                     />
                     The trust has over $5M in net assets
                   </label>
@@ -360,12 +295,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q5"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited: "None of the above",
-                        })
-                      }
                     />
                     None of the above
                   </label>
@@ -397,13 +326,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            "The investing entity has over $25M in investments",
-                        })
-                      }
                     />
                     The investing entity has over $25M in investments
                   </label>
@@ -411,13 +333,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            "The investing entity has between $5M and $25M in net assets",
-                        })
-                      }
                     />
                     The investing entity has between $5M and $25M in net assets
                   </label>
@@ -425,13 +340,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            "All the owners of the investing enituty are qualified purchasers",
-                        })
-                      }
                     />
                     All the owners of the investing enituty are qualified
                     purchasers
@@ -440,13 +348,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            "All the owners of the investing enituty are individually accredited",
-                        })
-                      }
                     />
                     All the owners of the investing enituty are individually
                     accredited
@@ -455,13 +356,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited:
-                            "The investing entity is a state or SEC registered investment adviser or any exempt reporting adviser",
-                        })
-                      }
                     />
                     The investing entity is a state or SEC registered investment
                     adviser or any exempt reporting adviser
@@ -470,12 +364,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          howAccredited: "None of the above",
-                        })
-                      }
                     />
                     None of the above
                   </label>
@@ -484,7 +372,8 @@ export const FormInvestor = () => {
             </>
           ) : null}
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               console.log(details);
               setStep(2);
@@ -493,8 +382,8 @@ export const FormInvestor = () => {
             Continue
           </button>
         </div>
-      ) : step == 2 ? (
-        <div className="main">
+      {/* Step 2 */}
+        <div className={"main " + `${step != 2 ? "hidden" : ""}`}>
           <h1 className="title"> Step 2 of 3 : Investment Goals </h1>
           <p className="p1">
             Tell us more about why you want to invest on AngelList Venture
@@ -532,7 +421,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: 1,
+                      howAccredited: 1,
                     })
                   }
                 />
@@ -545,7 +434,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: 2,
+                      howAccredited: 2,
                     })
                   }
                 />
@@ -558,7 +447,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: 3,
+                      howAccredited: 3,
                     })
                   }
                 />
@@ -571,7 +460,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: 4,
+                      howAccredited: 4,
                     })
                   }
                 />
@@ -584,7 +473,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: 5,
+                      howAccredited: 5,
                     })
                   }
                 />
@@ -597,7 +486,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: 6,
+                      howAccredited: 6,
                     })
                   }
                 />
@@ -689,7 +578,8 @@ export const FormInvestor = () => {
             />
           </div>
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               setStep(1);
             }}
@@ -697,7 +587,8 @@ export const FormInvestor = () => {
             Back
           </button>
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               setStep(3);
             }}
@@ -705,8 +596,8 @@ export const FormInvestor = () => {
             Continue
           </button>
         </div>
-      ) : (
-        <div className="main">
+      {/* Step 3 */}
+        <div className={"main " + `${step != 3 ? "hidden" : ""}`}>
           <h1 className="title"> Step 3 of 3 : Past Experience </h1>
           <p className="p1">
             Yours goals and past experience can help unlock access to investment
@@ -813,7 +704,8 @@ export const FormInvestor = () => {
             </label>
           </div>
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               setStep(2);
             }}
@@ -822,25 +714,13 @@ export const FormInvestor = () => {
           </button>
 
           <Button
+            type="submit"
             variant="contained"
             color="primary"
-            onClick={wallet ? () => {} : handleConnectWallet}
           >
-            {wallet ? "Wallet Connected" : "Connect Your Wallet To Continue"}
-          </Button>
-
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-          >
-            {loading === true ? "Loading..." : "Verify"}
+            {loading === true ? "Loading..." : "Submit Form"}
           </Button>
         </div>
-      )}
-    </>
+    </form>
   );
 };
-
-
-

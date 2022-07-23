@@ -43,11 +43,15 @@ npm run sync .title {
     width: 25rem;
 }
 
-.submit {
+.continue {
     margin-top: 3rem;
     width: 10rem;
 }
 
 .radio label {
     text-align: 3rem;
+}
+
+.hidden {
+    display: none;
 }
