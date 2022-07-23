@@ -10,9 +10,31 @@
     font-size: 13px !important;
 }
 
+.font10{
+    font-size: 10px !important;
+}
+
 .rounded25{
     border-radius: 25px !important;
 }
 .employee-form-bg{
 background-color: rgb(236, 238, 245)
+}
+
+.cardColorPinkish{
+    background-color: rgb(243, 243, 255) !important;
+}
+.cardColorGreyish{
+    background-color: rgb(241,245,252) !important;
+}
+.bg-paleBlue{
+    background-color: rgb(233,243,251) !important;
+}
+
+.color-primary{
+    color: rgb(64,80,181);
+}
+
+.sidebar-background{
+    background-color: rgb(26,27,47);
 }
