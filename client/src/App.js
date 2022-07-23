@@ -11,6 +11,7 @@ import { FormCompany } from "./components/FormCompany";
 import { FormEmployee } from "./components/FormEmployee";
 import { DashboardInvestor} from "./components/DashboardInvestor";
 // import { SideNav } from "./components/SideNav"
+import { Test } from "./components/Test";
   
   function App() {
     return (
@@ -25,8 +26,8 @@ import { DashboardInvestor} from "./components/DashboardInvestor";
           <Route path="/form-company" element={<FormCompany />} />
           <Route path="/form-employee" element={<FormEmployee />} />
           <Route path="/dashboard-investor" element={<DashboardInvestor/>} />
+          <Route path="/test" element={<Test/>} />
         </Routes>
-        <Footer/>
     </Router>
     );
   }

@@ -1,25 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import countryList from "react-select-country-list";
 import Select from "react-select";
 import Button from '@material-ui/core/Button';
 
 import { connectWallet } from "../utils/wallet";
+import {verifyInvestor} from "../utils/operation"
+
+import ipfs from '../ipfs';
 
 import "../styles/FormInvestor.css";
 
 export const FormInvestor = () => {
   const [step, setStep] = useState(1);
   const countries = countryList().getData();
+  const [loading, setLoading] = useState(false);
   const [identity, setIdentity] = useState("Individual");
   const [details, setDetails] = useState({
-    walletTokenID: "",
-    legalName: "",
-    accreditedProof: "",
-    linkedIn: "",
-    investmentGoalAmount: "",
-    netWorthPerentage: "",
+    amountToAccredition: 10,
+    email: "",        // done
+    howAccredited: 0, // done
+    linkedIn: "",     // done
+    name: "",         // done
+    number: 0,     // done
+    percentageNetworth: 2,
+    walletID: "",     // done
+
+    bufferPhoto: null,
+    bufferResume: null
   });
+  const [photoCID, setphotoCID] = useState(null);
+  const [resumeCID, setresumeCID] = useState(null)
 
   const [wallet, setWallet] = useState(null);
   const handleConnectWallet = async () => {
@@ -27,25 +38,79 @@ export const FormInvestor = () => {
     setWallet(wallet);
   };
 
+  useEffect(() => {
+    console.log(photoCID, resumeCID)
+      const onverifyInvestor = async () =>{
+        console.log(photoCID, resumeCID)
+        try{
+          // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
+          await verifyInvestor(details["amountToAccredition"], details["email"], details["howAccredited"],details["linkedIn"],details["name"],details["number"],details["percentageNetworth"],photoCID, resumeCID,wallet);
+          alert("Transaction Confirmed! You are now an Accredited Investor");
+        }catch(error){
+          alert("Transaction Failed:", error.message);
+        } 
+    
+        setLoading(false);
+        
+      }
+      if(photoCID != null && resumeCID != null)
+        onverifyInvestor();
+  }, [resumeCID, photoCID])
+
+  function capturePhoto(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      setDetails({ ...details, bufferPhoto: Buffer(reader.result) })
+    }
+  }
+  function captureResume(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      setDetails({ ...details, bufferResume: Buffer(reader.result) })
+    }
+  }
+
+  function uploadPhoto() {
+    ipfs.files.add(details["bufferPhoto"], (error, result) => {
+      if(error) {
+        console.error(error)
+        return
+      }
+      setphotoCID(result[0].hash)
+    })
+  }
+  function uploadResume() {
+    ipfs.files.add(details["bufferResume"], (error, result) => {
+      if(error) {
+        console.error(error)
+        return
+      }
+      setresumeCID(result[0].hash)
+    })
+  }
+
+  async function handleSubmit(e){
+    e.preventDefault()
+    await handleConnectWallet();
+    setLoading(true);
+    uploadPhoto();
+    uploadResume();
+  }
+
   return (
-    <>
-      
-      {step == 1 ? (
-        <div className="main">
+    <form onSubmit={handleSubmit}>
+      {/* Step 1 */}
+        <div className={"main " + `${step != 1 ? "hidden" : ""}`}>
           <h1 className="title"> Step 1 of 3 : Accreditation </h1>
           <p className="p1">
             You must be an accredited investor to invest in AnglelList Venture
           </p>
-          <div className="q1">
-            <p className="q"> Wallet Token ID </p>
-            <input
-              type="text"
-              className="input-text"
-              onChange={(e) =>
-                setDetails({ ...details, walletTokenID: e.target.value })
-              }
-            />
-          </div>
           <div className="q1">
             <p className="q">
               Will you be investing money as an Individual, a Trust, or a Firm
@@ -86,15 +151,47 @@ export const FormInvestor = () => {
           </div>
           {identity == "Individual" ? (
             <>
-              <div className="q2">
+              <div className="q1">
                 <p className="q"> What is your full legal name ? </p>
                 <input
                   type="text"
                   className="input-text"
                   onChange={(e) =>
-                    setDetails({ ...details, legalName: e.target.value })
+                    setDetails({ ...details, name: e.target.value })
                   }
+                  required
                 />
+              </div>
+              <div className="q2">
+                <p className="q"> Enter Your Phone Number </p>
+                <input
+                  type="tel"
+                  pattern="[0-9]{10}"
+                  className="input-text"
+                  onChange={(e) =>
+                    setDetails({ ...details, number: parseInt(e.target.value) })
+                  }
+                  required
+                />
+              </div>
+              <div className="q2">
+                <p className="q"> Enter Your Email Id </p>
+                <input
+                  type="email"
+                  className="input-text"
+                  onChange={(e) =>
+                    setDetails({ ...details, email: e.target.value })
+                  }
+                  required
+                />
+              </div>
+              <div>
+                <p className="q"> Profile Picture </p>
+                <input type="file" onChange={capturePhoto} required/>
+              </div>
+              <div>
+                <p className="q"> Resume </p>
+                <input type="file" onChange={captureResume} required/>
               </div>
               <div className="q3">
                 <p className="q"> Where is your legal place of Residence ? </p>
@@ -107,69 +204,35 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof: "I have atleast $5M in investments",
-                        })
-                      }
                     />
-                    I have atleast $5M in investments
+                    I have atleast 500k Tez in investments
                   </label>
                   <label>
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "I have between $2.2M and $5M in net assets",
-                        })
-                      }
                     />
-                    I have between $2.2M and $5M in net assets
+                    I have between 220k to 500k Tez in net assets
                   </label>
                   <label>
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "I have between $1M and $2.2M in net assets",
-                        })
-                      }
                     />
-                    I have between $1M and $2.2M in net assets
+                    I have between 100k to 200k Tez in net assets 
                   </label>
                   <label>
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "I have income of $200k( or $300k jointly with spouse) for the past 2 years and expect the same for this year",
-                        })
-                      }
                     />
-                    I have income of $200k( or $300k jointly with spouse) for
+                    I have income of 200k Tez( or 300k Tez jointly with spouse) for
                     the past 2 years and expect the same for this year
                   </label>
                   <label>
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "I am Series 7, Series65, or Series 82 holder and my license is active and in good standing",
-                        })
-                      }
                     />
                     I am Series 7, Series65, or Series 82 holder and my license
                     is active and in good standing
@@ -178,12 +241,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof: "I am not accredited yet",
-                        })
-                      }
                     />
                     I am not accredited yet
                   </label>
@@ -198,7 +255,7 @@ export const FormInvestor = () => {
                   type="text"
                   className="input-text"
                   onChange={(e) =>
-                    setDetails({ ...details, legalName: e.target.value })
+                    setDetails({ ...details, name: e.target.value })
                   }
                 />
               </div>
@@ -224,13 +281,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q5"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "The trust has over $25M in investments",
-                        })
-                      }
                     />
                     The trust has over $25M in investments
                   </label>
@@ -238,13 +288,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q5"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "The trust has over $5M in net assets",
-                        })
-                      }
                     />
                     The trust has over $5M in net assets
                   </label>
@@ -252,12 +295,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q5"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof: "None of the above",
-                        })
-                      }
                     />
                     None of the above
                   </label>
@@ -268,14 +305,13 @@ export const FormInvestor = () => {
             <>
               <div className="q2">
                 <p className="q">
-                  
                   What is your firm 's or fund' s legal name ?
                 </p>
                 <input
                   type="text"
                   className="input-text"
                   onChange={(e) =>
-                    setDetails({ ...details, legalName: e.target.value })
+                    setDetails({ ...details, name: e.target.value })
                   }
                 />
               </div>
@@ -290,13 +326,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "The investing entity has over $25M in investments",
-                        })
-                      }
                     />
                     The investing entity has over $25M in investments
                   </label>
@@ -304,13 +333,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "The investing entity has between $5M and $25M in net assets",
-                        })
-                      }
                     />
                     The investing entity has between $5M and $25M in net assets
                   </label>
@@ -318,13 +340,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "All the owners of the investing enituty are qualified purchasers",
-                        })
-                      }
                     />
                     All the owners of the investing enituty are qualified
                     purchasers
@@ -333,13 +348,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "All the owners of the investing enituty are individually accredited",
-                        })
-                      }
                     />
                     All the owners of the investing enituty are individually
                     accredited
@@ -348,13 +356,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof:
-                            "The investing entity is a state or SEC registered investment adviser or any exempt reporting adviser",
-                        })
-                      }
                     />
                     The investing entity is a state or SEC registered investment
                     adviser or any exempt reporting adviser
@@ -363,12 +364,6 @@ export const FormInvestor = () => {
                     <input
                       type="radio"
                       name="q4"
-                      onChange={(e) =>
-                        setDetails({
-                          ...details,
-                          accreditedProof: "None of the above",
-                        })
-                      }
                     />
                     None of the above
                   </label>
@@ -377,18 +372,18 @@ export const FormInvestor = () => {
             </>
           ) : null}
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               console.log(details);
               setStep(2);
             }}
           >
-            
             Continue
           </button>
         </div>
-      ) : step == 2 ? (
-        <div className="main">
+      {/* Step 2 */}
+        <div className={"main " + `${step != 2 ? "hidden" : ""}`}>
           <h1 className="title"> Step 2 of 3 : Investment Goals </h1>
           <p className="p1">
             Tell us more about why you want to invest on AngelList Venture
@@ -415,7 +410,7 @@ export const FormInvestor = () => {
           </div>
           <div className="q2">
             <p className="q">
-              How much are you hoping to allocate( in USD) to startups using
+              How much are you hoping to allocate( in Tez) to startups using
               AngelList Venture over the next 12 months ?
             </p>
             <div className="radio">
@@ -426,11 +421,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $20,000",
+                      howAccredited: 1,
                     })
                   }
                 />
-                Up to $20, 000
+                Up to 20, 000
               </label>
               <label>
                 <input
@@ -439,11 +434,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $50,000",
+                      howAccredited: 2,
                     })
                   }
                 />
-                Up to $50, 000
+                Up to 50,000
               </label>
               <label>
                 <input
@@ -452,11 +447,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $100,000",
+                      howAccredited: 3,
                     })
                   }
                 />
-                Up to $100, 000
+                Up to 100,000
               </label>
               <label>
                 <input
@@ -465,11 +460,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $250,000",
+                      howAccredited: 4,
                     })
                   }
                 />
-                Up to $250, 000
+                Up to 250,000
               </label>
               <label>
                 <input
@@ -478,11 +473,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "Up to $500,000",
+                      howAccredited: 5,
                     })
                   }
                 />
-                Up to $500, 000
+                Up to 500, 000
               </label>
               <label>
                 <input
@@ -491,11 +486,11 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      investmentGoalAmount: "More than $500,000",
+                      howAccredited: 6,
                     })
                   }
                 />
-                More than $500, 000
+                More than 500,000
               </label>
             </div>
           </div>
@@ -510,7 +505,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: "Up to 5%" })
+                    setDetails({ ...details, percentageNetworth: 1 })
                   }
                 />
                 Up to 5 %
@@ -520,7 +515,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: "Up to 10%" })
+                    setDetails({ ...details, percentageNetworth:2 })
                   }
                 />
                 Up to 10 %
@@ -530,7 +525,7 @@ export const FormInvestor = () => {
                   type="radio"
                   name="q3"
                   onChange={(e) =>
-                    setDetails({ ...details, netWorthPerentage: "Up to 15%" })
+                    setDetails({ ...details, percentageNetworth: 3 })
                   }
                 />
                 Up to 15 %
@@ -542,7 +537,7 @@ export const FormInvestor = () => {
                   onChange={(e) =>
                     setDetails({
                       ...details,
-                      netWorthPerentage: "More than %15",
+                      percentageNetworth: 4,
                     })
                   }
                 />
@@ -583,26 +578,26 @@ export const FormInvestor = () => {
             />
           </div>
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               setStep(1);
             }}
           >
-            
             Back
           </button>
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               setStep(3);
             }}
           >
-            
             Continue
           </button>
         </div>
-      ) : (
-        <div className="main">
+      {/* Step 3 */}
+        <div className={"main " + `${step != 3 ? "hidden" : ""}`}>
           <h1 className="title"> Step 3 of 3 : Past Experience </h1>
           <p className="p1">
             Yours goals and past experience can help unlock access to investment
@@ -645,7 +640,6 @@ export const FormInvestor = () => {
           </div>
           <div className="q3">
             <p className="q">
-              
               What is your experience working with tech startups ?
             </p>
             <div className="radio">
@@ -695,7 +689,6 @@ export const FormInvestor = () => {
           </div>
           <div className="q5">
             <p className="q">
-              
               Please carefully review the information below before submitting
               your application.
             </p>
@@ -711,24 +704,23 @@ export const FormInvestor = () => {
             </label>
           </div>
           <button
-            className="submit"
+            className="continue"
+            type="button"
             onClick={() => {
               setStep(2);
             }}
           >
             Back
           </button>
-            <Button
-              variant="contained" color="primary"
-              onClick={wallet ? ()=>{} : handleConnectWallet}
-            >
-              {wallet ? "Wallet Connected" : "Connect Your Wallet To Continue"}
-            </Button>
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            {loading === true ? "Loading..." : "Submit Form"}
+          </Button>
         </div>
-      )}
-    </>
+    </form>
   );
 };
-
-
-
