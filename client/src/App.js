@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { TezosNodeWriter, TezosParameterFormat } from "conseiljs";
 import { Dashboard } from "./components/Dashboard";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -10,14 +9,13 @@ import { FormInvestor } from "./components/FormInvestor";
 import { FormCompany } from "./components/FormCompany";
 import { FormEmployee } from "./components/FormEmployee";
 import { DashboardInvestor} from "./components/DashboardInvestor";
-// import { SideNav } from "./components/SideNav"
 import { Test } from "./components/Test";
+import Navbar from "./components/Navbar";
   
   function App() {
     return (
       <Router>
-        <Header />
-        {/* <SideNav/> */}
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/sign-up" element={<Signup />} />
