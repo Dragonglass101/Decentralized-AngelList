@@ -124,37 +124,6 @@ const Navbar = () => {
             </List>
         </Drawer>
     </div>
-
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div className="container-fluid">
-      <a className="navbar-brand" href="#">Navbar</a>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
-            <div>
-            {!open ?
-            <button className="btn btn-primary" onClick={handleSideNavOpen} style={{marginLeft: "100px"}}>
-              Open SideNav
-            </button> : null}
-            <button
-              className="btn btn-danger"
-                  onClick={wallet ? handleDisconnectWallet : redirectToSignup}
-              style={{marginLeft: "800px"}}
-            >
-              {wallet
-                ? wallet.slice(0, 4) +
-                  "..." +
-                  wallet.slice(wallet.length - 4, wallet.length)
-                : "Signup"}
-            </button>
-          </div>
-        </div>
-        </div>
-      </div>
-    </nav>
     </>
   );
 };

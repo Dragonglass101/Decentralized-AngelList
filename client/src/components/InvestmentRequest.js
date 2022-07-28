@@ -81,11 +81,6 @@ export const InvestmentRequest = () => {
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar className='d-flex justify-content-between'>
-                        <Typography className='fw-bold ms-2' variant="h6" noWrap>
-                            Investment Requests
-                        </Typography>
-                    </Toolbar>
                 </AppBar>
                 <Drawer
                     className={classes.drawer}
@@ -117,92 +112,14 @@ export const InvestmentRequest = () => {
                 </Drawer>
                 <main className={classes.content}>
 
-                    <div id='request-page-container' className='container cardColorGreyish p-0 rounded my-4 d-flex' style={{ height: '80vh' }}>
-                        <div className='h-100 bg-dark' style={{ overflow: 'auto', width: '35%' }}>
+                    <h4 className='fw-bold'>Card List</h4>
+                    <div id='request-page-container' className='container p-0 rounded my-2 d-flex' style={{ height: '85vh' }}>
+                        <div className='h-100' style={{ overflow: 'auto', width: '35%' }}>
                             <div className="list-group">
                                 {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true">
                                     The current button
                                 </button> */}
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
-                                <button type="button" className="list-group-item list-group-item-action d-flex">
-                                    <div className='col-2 p-0'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                    </div>
-                                    <div className='d-flex flex-column col-7 align-self-center'>
-                                        <span className='fw-bold font13'>Apple Inc.</span>
-                                        <span className='font10 text-secondary'>1300 ꜩ</span>
-                                    </div>
-                                    <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                </button>
+
                                 <button type="button" className="list-group-item list-group-item-action d-flex">
                                     <div className='col-2 p-0'>
                                         <Avatar alt="Remy Sharp" src={appleLogo} />
@@ -227,7 +144,7 @@ export const InvestmentRequest = () => {
                             </div>
                         </div>
                         <div style={{ width: '65%' }}>
-                            <div className='container bg-white w-75 my-5 p-0 rounded'>
+                            <div className='container bg-white w-100 p-0 rounded'>
                                 <div className='row m-0 p-0 border'>
                                     <div className='col-5 font15 fw-bold text-center font-digitalClock m-0 p-3 bg-dark text-white rounded'>
                                         <h5 className='fw-bold'>Remaining Time</h5>
