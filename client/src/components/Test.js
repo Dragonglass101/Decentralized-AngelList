@@ -1,51 +1,37 @@
-import React, { useState } from 'react'
-import ipfs from '../ipfs';
+import React, { useState, useEffect } from 'react'
+import { TezosToolkit, MichelsonMap } from '@taquito/taquito';
+import { BigNumber } from 'bignumber.js';
+import { getStorage } from '../utils/operation';
 
 export const Test = () => {
-    const [ipfsHash, setipfsHash] = useState("");
-    const [buffer, setbuffer] = useState(null);
+    const contractAddress = 'KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4';
 
-    function captureFile(event) {
-        event.preventDefault()
-        const file = event.target.files[0]
-        const reader = new window.FileReader()
-        reader.readAsArrayBuffer(file)
-        reader.onloadend = () => {
-          setbuffer(Buffer(reader.result))
-        }
-      }
-    
-      function onSubmit(event) {
-        event.preventDefault();
-        console.log("on submit handler")
-        ipfs.files.add(buffer, (error, result) => {
-          if(error) {
-            console.error(error)
-            return
-          }
-          setipfsHash(result[0].hash);
-        })
-      }
+    const Tezos = new TezosToolkit('https://jakartanet.smartpy.io');
 
-      function checkValBuff(){
-        console.log(buffer);
-        console.log(ipfsHash);
-      }
+    // const newEmptyMapWithArg = new MichelsonMap({
+    //     prim: 'map',
+    //     args: [{ prim: 'string' }, { prim: 'mutez' }],
+    // });
+    // console.log(newEmptyMapWithArg);
+
+    // async function getStorage(){
+    //   const contract = await Tezos.contract.at(contractAddress);
+    //   const storage = await contract.storage();
+    //   console.log(storage);
+    //   const feestoregister = storage["feesToRegister"]
+    //   console.log(feestoregister.toNumber());
+    //   const st = new MichelsonMap();
+    //   console.log(st)
+    // }
+    // getStorage();
+
+    getStorage();
+
 
     return (
         <div className="pure-g">
             <div className="pure-u-1-1">
-                <h1>Your Image</h1>
-                <p>This image is stored on IPFS & The Ethereum Blockchain!</p>
-                {ipfs=="" ? 
-                <img src={`https://ipfs.io/ipfs/${ipfs}`} alt=""/> : <></>}
-                <h2>Upload Image</h2>
-                <form onSubmit={onSubmit} >
-                <input type='file' onChange={captureFile} />
-                <input type='submit' />
-                </form>
             </div>
-            <button onClick={checkValBuff}>Check buffer value</button>
         </div>
     )
 }

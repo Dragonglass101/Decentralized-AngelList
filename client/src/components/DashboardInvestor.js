@@ -75,6 +75,19 @@ export const DashboardInvestor = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+    const navigationList = ['Dashboard', 'Search Startups', 'Track Investments', 'My Wallet'];
+    const navigationIconList = [];
+
+    const listElement = [];
+    for(let i=0;i<navigationList.length;i++){
+        listElement.push(
+            <ListItem button key={navigationList[i]}>
+                <ListItemText primary={navigationList[i]} />
+            </ListItem>
+        )
+    }
+
     return (
         <>
             <div className={classes.root}>
@@ -135,12 +148,7 @@ export const DashboardInvestor = () => {
                     <div className={classes.toolbar} />
                     <Divider />
                     <List>
-                        {['Dashboard', 'Search Startups', 'Track Investments', 'My Wallet'].map((text, index) => (
-                            <ListItem button key={text}>
-                                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
+                        {listElement}
                     </List>
                     <Divider style={{ color: 'grey', backgroundColor: 'grey', marginTop: '350px' }} />
                     <List>
