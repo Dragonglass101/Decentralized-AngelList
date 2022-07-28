@@ -8,7 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import { connectWallet, getActiveAccount, disconnectWallet } from "../utils/wallet";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -54,11 +54,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
-  const [account, setAccount] = useState("");
   const classes = useStyles();
   const [open, setopen] = useState(true);
-  const [wallet, setWallet] = useState(null);
-  const navigate = useNavigate();
 
   const handleSideNavClose = () => {
     setopen(false);
@@ -67,30 +64,20 @@ const Navbar = () => {
     setopen(true);
   };
 
-  const handleConnectWallet = async () => {
-    const { wallet } = await connectWallet();
-    setWallet(wallet);
-  };
-  const handleDisconnectWallet = async () => {
-    if(window.confirm("Do you want to signout")){
-      const { wallet } = await disconnectWallet();
-      setWallet(wallet);
-    }
-  };
+  const navigationList = ['Dashboard', 'Search Startups', 'Pending Requests', 'Track Investments', 'My Wallet'];
+  const navigationPathList = ["/dashboard-investor", "/startups-list-investor", "/investment-request", "#", "#"]
+  const navigationIconList = [];
 
-  function redirectToSignup(){
-    navigate("/sign-up");
+  const listElement = [];
+  for(let i=0;i<navigationList.length;i++){
+      listElement.push(
+        <Link to={navigationPathList[i]} style={{color: "inherit"}}>
+          <ListItem button key={navigationList[i]}>
+              <ListItemText primary={navigationList[i]} />
+          </ListItem>
+        </Link>
+      )
   }
-
-  useEffect(() => {
-    const func = async () => {
-      const account = await getActiveAccount();
-      if (account) {
-        setWallet(account.address);
-      }
-    };
-    func();
-  }, []);
   return (
     <>
     <div className={classes.root}>
@@ -104,15 +91,10 @@ const Navbar = () => {
             open={open}
             anchor="left"
         >
-          <button onClick={handleSideNavClose}>close</button>
             <div className={classes.toolbar} />
             <Divider />
             <List>
-                {['Dashboard', 'Search Startups', 'Track Investments', 'My Wallet'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                {listElement}
             </List>
             <Divider style={{ color: 'grey', backgroundColor: 'grey', marginTop: '350px' }} />
             <List>
@@ -124,37 +106,6 @@ const Navbar = () => {
             </List>
         </Drawer>
     </div>
-
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div className="container-fluid">
-      <a className="navbar-brand" href="#">Navbar</a>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav">
-              <a className="nav-link active" aria-current="page" href="/">Home</a>
-            <div>
-            {!open ?
-            <button className="btn btn-primary" onClick={handleSideNavOpen} style={{marginLeft: "100px"}}>
-              Open SideNav
-            </button> : null}
-            <button
-              className="btn btn-danger"
-                  onClick={wallet ? handleDisconnectWallet : redirectToSignup}
-              style={{marginLeft: "800px"}}
-            >
-              {wallet
-                ? wallet.slice(0, 4) +
-                  "..." +
-                  wallet.slice(wallet.length - 4, wallet.length)
-                : "Signup"}
-            </button>
-          </div>
-        </div>
-        </div>
-      </div>
-    </nav>
     </>
   );
 };

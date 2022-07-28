@@ -1,26 +1,11 @@
 import React from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
 
-
-import searchIcon from '../images/search.png'
 import appleLogo from '../images/apple-logo.png'
-import pieChart from '../images/pie-chart.png'
+import Navbar from './Navbar';
 
 const drawerWidth = 240;
 
@@ -80,41 +65,7 @@ export const InvestmentRequest = () => {
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar className='d-flex justify-content-between'>
-                        <Typography className='fw-bold ms-2' variant="h6" noWrap>
-                            Investment Requests
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <Drawer
-                    className={classes.drawer}
-                    style={{ backgroundColor: 'rgb(26,27,47)', color: 'rgb(26,27,47)' }}
-                    variant="permanent"
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                    anchor="left"
-                >
-                    <div className={classes.toolbar} />
-                    <Divider />
-                    <List>
-                        {['Dashboard', 'Search Startups', 'Track Investments', 'My Wallet'].map((text, index) => (
-                            <ListItem button key={text}>
-                                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider style={{ color: 'grey', backgroundColor: 'grey', marginTop: '350px' }} />
-                    <List>
-                        {['Help and Support'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
+                <Navbar/>
                 <main className={classes.content}>
 
                     <div id='request-page-container' className='container cardColorGreyish p-0 rounded my-4 d-flex' style={{ height: '80vh' }}>
