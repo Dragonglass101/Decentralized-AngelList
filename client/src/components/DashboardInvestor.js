@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Chip from '@material-ui/core/Chip';
 
 
 import searchIcon from '../images/search.png'
@@ -68,9 +69,9 @@ export const DashboardInvestor = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -93,48 +94,7 @@ export const DashboardInvestor = () => {
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar className='d-flex justify-content-between'>
-                        <Typography className='fw-bold ms-2' variant="h6" noWrap>
-                            Startups List
-                        </Typography>
-                        <div className='d-flex'>
-                            <div className={classes.search}>
-                                <img className='mx-2 ' width='26px' height='26px' src={searchIcon}></img>
-                                <InputBase
-                                    placeholder="Search…"
-                                    classes={{
-                                        root: classes.inputRoot,
-                                        input: classes.inputInput,
-                                    }}
-                                    inputProps={{ 'aria-label': 'search' }}
-                                />
-                            </div>
-                            {/* <div class="dropdown">
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M3 18v-2h6v2Zm0-5v-2h12v2Zm0-5V6h18v2Z" /></svg>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </div> */}
-                            <Button aria-controls="simple-menu" variant='contained' aria-haspopup="true" onClick={handleClick}>
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24"><path d="M3 18v-2h6v2Zm0-5v-2h12v2Zm0-5V6h18v2Z" /></svg>
-                            </Button>
-                            <Menu
-                                id="simple-menu"
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={handleClose}>Sort</MenuItem>
-                                <MenuItem onClick={handleClose}>My Sort</MenuItem>
-                                <MenuItem onClick={handleClose}>Sort</MenuItem>
-                            </Menu>
-                        </div>
-                    </Toolbar>
+                    
                 </AppBar>
                 <Drawer
                     className={classes.drawer}
@@ -160,37 +120,149 @@ export const DashboardInvestor = () => {
                     </List>
                 </Drawer>
                 <main className={classes.content}>
-                    <div id='startup-list'>
-                        <h5 className='fw-bold mx-2 mt-4'>Recomended Startups</h5>
-                        <div className='d-flex flex-wrap'>
-                            <div className="card cardColorPinkish rounded m-2" style={{ width: '18rem', border: '0px' }}>
-                                <div className="card-body">
-                                    <div className='d-flex justify-content-between align-items-center mb-3'>
-                                        <Avatar alt="Remy Sharp" src={appleLogo} />
-                                        <div className='p-2 d-flex'>
-                                            <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>13%</span>
-                                        </div>
+
+                    <div id='recent-transaction' className='container mt-3 bg-white ms-0' style={{ width: '75%' }}>
+                        <h6 className='fw-bold pt-3 mb-4'>Recent Transactions</h6>
+                        <div className='row align-items-center'>
+                            <div className='col-1'>
+                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                            </div>
+                            <div className='col-3'>
+                                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
+                                <p className='font13 text-secondary'>SAFE</p>
+                            </div>
+                            <div className='col-3'>
+                                <p className='font15 fw-bold'>Mar 20, 2022</p>
+                            </div>
+                            <div className='col-3'>
+                                <p className='font15 fw-bold'>1300 ꜩ</p>
+                            </div>
+                            <div className='col-2'>
+                                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+                            </div>
+                        </div>
+
+                        <Divider className='mt-2 mb-3' />
+
+                        <div className='row'>
+                            <div className='col-1'>
+                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                            </div>
+                            <div className='col-3'>
+                                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
+                                <p className='font13 text-secondary'>SAFE</p>
+                            </div>
+                            <div className='col-3'>
+                                <p className='font15 fw-bold'>Mar 20, 2022</p>
+                            </div>
+                            <div className='col-3'>
+                                <p className='font15 fw-bold'>1300 ꜩ</p>
+                            </div>
+                            <div className='col-2'>
+                                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+                            </div>
+                        </div>
+
+                        <Divider className='mt-2 mb-3' />
+                    </div>
+
+                    <div id='cap-table' className='container rounded25 background-cream p-4 ms-0' style={{ width: '40%' }}>
+                        <h4 className='fw-bold'>Cap table</h4>
+                        <div className='container p-0 bg-white my-3 d-flex rounded' style={{ height: '35px', overflow: 'hidden' }}>
+                            <div id='founder-percent' className='h-100 background-darkBlue' style={{ width: '64.20%' }}></div>
+                            <div id='employee-percent' className='h-100 background-chocolate' style={{ width: '23.76%' }}></div>
+                            <div id='seriesA-percent' className='h-100 bg-black' style={{ width: '6.02%' }}></div>
+                            <div id='seriesB-percent' className='h-100 bg-white' style={{ width: '6.02%' }}></div>
+                        </div>
+                        <div id='cap-table-enteries'>
+                            <div className='container'>
+                                <div className='mb-3 px-4 d-flex justify-content-between text-secondary'>
+                                    <span className='font10'>Authorized</span>
+                                    <span className='font10'>Issued</span>
+                                    <span className='font10'>Ownership</span>
+                                </div>
+                                <div className='mb-4'>
+                                    <div className='d-flex align-items-center'>
+                                        <div className='rounded background-darkBlue me-2' style={{ height: '15px', width: '15px' }}></div>
+                                        <span className='fw-bold font15'>Founders</span>
                                     </div>
-                                    <h5 className="card-title fw-bold">Company Name</h5>
-                                    <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                    <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
-                                    <div className='d-flex align-items-center justify-content-between'>
-                                        <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
-                                        <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
-                                        <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
+                                    <div className='d-flex justify-content-between my-1 px-4'>
+                                        <span className='font13'>50,000,000</span>
+                                        <span className='font13'>50,000,000</span>
+                                        <span className='font13'>70.22%</span>
                                     </div>
+                                </div>
+
+                                <div className='mb-4'>
+                                    <div className='d-flex align-items-center'>
+                                        <div className='rounded background-chocolate me-2' style={{ height: '15px', width: '15px' }}></div>
+                                        <span className='fw-bold font15'>Employees</span>
+                                    </div>
+                                    <div className='d-flex justify-content-between my-1 px-4'>
+                                        <span className='font13'>30,000,000</span>
+                                        <span className='font13'>10,000,000</span>
+                                        <span className='font13'>23.76%</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id='stock-enteries' className='container rounded25 cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
+                        <h4 className='fw-bold'>Stocks</h4>
+                        <div className='container'>
+                            <div className='row mb-2'>
+                                <div className='col-2'>
+                                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
+                                </div>
+                                <div className='col-4'>
+                                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
+                                    <p className='font10 text-secondary'>Founder</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>2,000,000</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>25%</p>
+                                </div>
+                            </div>
+
+                            <div className='row mb-2'>
+                                <div className='col-2'>
+                                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
+                                </div>
+                                <div className='col-4'>
+                                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
+                                    <p className='font10 text-secondary'>Founder</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>2,000,000</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>25%</p>
+                                </div>
+                            </div>
+
+                            <div className='row mb-2'>
+                                <div className='col-2'>
+                                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
+                                </div>
+                                <div className='col-4'>
+                                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
+                                    <p className='font10 text-secondary'>Founder</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>2,000,000</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>25%</p>
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
-                    <div id='dashboard' className='container h-100'>
-                        <div className='row h-100'>
-                            <div className='col-4 h-100'>
-
-                            </div>
-                        </div>
-                    </div>
                 </main>
             </div>
         </>
