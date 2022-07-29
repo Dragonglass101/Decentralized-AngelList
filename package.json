@@ -22,7 +22,6 @@
         "SmartPy"
     ],
     "dependencies": {
-        "@material-ui/icons": "^4.11.3",
         "@taquito/taquito": "^13.0.1",
         "bs58check": "^2.1.2",
         "chalk": "^4.1.0",
