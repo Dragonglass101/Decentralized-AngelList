@@ -71,7 +71,7 @@ export const StartupsListInvestor = () => {
                         <h5 className='fw-bold mx-2 mt-4'>Recomended Startups</h5>
                         <div className='d-flex flex-wrap'>
 
-                            <div className="shadow-sm card cardColorPinkish rounded m-2" style={{ width: '18rem', border: '0px' }}>
+                            <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
                                 <div className="card-body">
                                     <div className='d-flex justify-content-between align-items-center mb-3'>
                                         <Avatar alt="Remy Sharp" src={appleLogo} />
@@ -90,7 +90,7 @@ export const StartupsListInvestor = () => {
                                 </div>
                             </div>
 
-                            <div className="shadow-sm card cardColorPinkish rounded m-2" style={{ width: '18rem', border: '0px' }}>
+                            <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
                                 <div className="card-body">
                                     <div className='d-flex justify-content-between align-items-center mb-3'>
                                         <Avatar alt="Remy Sharp" src={appleLogo} />
@@ -109,7 +109,7 @@ export const StartupsListInvestor = () => {
                                 </div>
                             </div>
 
-                            <div className="shadow-sm card cardColorPinkish rounded m-2" style={{ width: '18rem', border: '0px' }}>
+                            <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
                                 <div className="card-body">
                                     <div className='d-flex justify-content-between align-items-center mb-3'>
                                         <Avatar alt="Remy Sharp" src={appleLogo} />
@@ -128,7 +128,7 @@ export const StartupsListInvestor = () => {
                                 </div>
                             </div>
 
-                            <div className="shadow-sm card cardColorPinkish rounded m-2" style={{ width: '18rem', border: '0px' }}>
+                            <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
                                 <div className="card-body">
                                     <div className='d-flex justify-content-between align-items-center mb-3'>
                                         <Avatar alt="Remy Sharp" src={appleLogo} />
@@ -147,7 +147,7 @@ export const StartupsListInvestor = () => {
                                 </div>
                             </div>
 
-                            <div className="shadow-sm card cardColorPinkish rounded m-2" style={{ width: '18rem', border: '0px' }}>
+                            <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
                                 <div className="card-body">
                                     <div className='d-flex justify-content-between align-items-center mb-3'>
                                         <Avatar alt="Remy Sharp" src={appleLogo} />

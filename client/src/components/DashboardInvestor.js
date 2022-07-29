@@ -9,6 +9,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
 
 import appleLogo from '../images/apple-logo.png'
+import walletImg from '../images/wallet.png'
+
 import Navbar from './Navbar';
 
 const drawerWidth = 240;
@@ -62,160 +64,200 @@ export const DashboardInvestor = () => {
         setAnchorEl(event.currentTarget);
     };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <>
             <div className={classes.root}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
-                    
+
                 </AppBar>
-                <Navbar/>
+                <Navbar />
                 <main className={classes.content}>
 
-                    <div id='recent-transaction' className='shadow-sm container mt-3 bg-white ms-0' style={{ width: '75%' }}>
-                        <h6 className='fw-bold pt-3 mb-4'>Recent Transactions</h6>
-                        <div className='row align-items-center'>
-                            <div className='col-1'>
-                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                            </div>
-                            <div className='col-3'>
-                                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                                <p className='font13 text-secondary'>SAFE</p>
-                            </div>
-                            <div className='col-3'>
-                                <p className='font15 fw-bold'>Mar 20, 2022</p>
-                            </div>
-                            <div className='col-3'>
-                                <p className='font15 fw-bold'>1300 ꜩ</p>
-                            </div>
-                            <div className='col-2'>
-                                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-                            </div>
+                    <h5 className='fw-bold'>Dashboard</h5>
+                    <div className='d-flex'>
+                        <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{width:'20%'}}>
+                            <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
+                            <h5 className='font13 fw-bold text-secondary'>Balance</h5>
+                            <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
                         </div>
 
-                        <Divider className='mt-2 mb-3' />
+                        <div id='recent-transaction' className='shadow-sm container mt-3 bg-white ms-0 rounded25 px-5 py-2' style={{ width: '80%', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
+                            <h6 className='fw-bold pt-3 mb-4 pb-2'>Recent Investments</h6>
+                            <div className='row align-items-center'>
+                                <div className='col-1'>
+                                    <Avatar alt="Remy Sharp" src={appleLogo} />
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
+                                    <p className='font13 text-secondary'>SAFE</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>Mar 20, 2022</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>1300 ꜩ</p>
+                                </div>
+                                <div className='col-2'>
+                                    <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+                                </div>
+                            </div>
 
-                        <div className='row'>
-                            <div className='col-1'>
-                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                            <Divider className='mt-2 mb-3' />
+
+
+                            <div className='row align-items-center'>
+                                <div className='col-1'>
+                                    <Avatar alt="Remy Sharp" src={appleLogo} />
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
+                                    <p className='font13 text-secondary'>SAFE</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>Mar 20, 2022</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>1300 ꜩ</p>
+                                </div>
+                                <div className='col-2'>
+                                    <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+                                </div>
                             </div>
-                            <div className='col-3'>
-                                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                                <p className='font13 text-secondary'>SAFE</p>
+
+                            <Divider className='mt-2 mb-3' />
+
+
+                            <div className='row align-items-center'>
+                                <div className='col-1'>
+                                    <Avatar alt="Remy Sharp" src={appleLogo} />
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
+                                    <p className='font13 text-secondary'>SAFE</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>Mar 20, 2022</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>1300 ꜩ</p>
+                                </div>
+                                <div className='col-2'>
+                                    <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+                                </div>
                             </div>
-                            <div className='col-3'>
-                                <p className='font15 fw-bold'>Mar 20, 2022</p>
+
+                            <Divider className='mt-2 mb-3' />
+
+                            <div className='row'>
+                                <div className='col-1'>
+                                    <Avatar alt="Remy Sharp" src={appleLogo} />
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
+                                    <p className='font13 text-secondary'>SAFE</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>Mar 20, 2022</p>
+                                </div>
+                                <div className='col-3'>
+                                    <p className='font15 fw-bold'>1300 ꜩ</p>
+                                </div>
+                                <div className='col-2'>
+                                    <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+                                </div>
                             </div>
-                            <div className='col-3'>
-                                <p className='font15 fw-bold'>1300 ꜩ</p>
-                            </div>
-                            <div className='col-2'>
-                                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-                            </div>
+
+                            <Divider className='mt-2 mb-3' />
                         </div>
-
-                        <Divider className='mt-2 mb-3' />
                     </div>
 
-                    <div id='cap-table' className='shadow-sm container rounded25 background-cream p-4 ms-0' style={{ width: '40%' }}>
-                        <h4 className='fw-bold'>Cap table</h4>
-                        <div className='container p-0 bg-white my-3 d-flex rounded' style={{ height: '35px', overflow: 'hidden' }}>
-                            <div id='founder-percent' className='h-100 background-darkBlue' style={{ width: '64.20%' }}></div>
-                            <div id='employee-percent' className='h-100 background-chocolate' style={{ width: '23.76%' }}></div>
-                            <div id='seriesA-percent' className='h-100 bg-black' style={{ width: '6.02%' }}></div>
-                            <div id='seriesB-percent' className='h-100 bg-white' style={{ width: '6.02%' }}></div>
-                        </div>
-                        <div id='cap-table-enteries'>
+                    <div className='d-flex'>
+                        <div id='stock-enteries' className='d-inline-block shadow-sm container rounded25 cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
+                            {/* <h4 className='font15 fw-bold mb-3'>Stocks Owned</h4> */}
+                            <h6 className='fw-bold pt-3 mb-4'>Stocks Owned</h6>
                             <div className='container'>
-                                <div className='mb-3 px-4 d-flex justify-content-between text-secondary'>
-                                    <span className='font10'>Authorized</span>
-                                    <span className='font10'>Issued</span>
-                                    <span className='font10'>Ownership</span>
-                                </div>
-                                <div className='mb-4'>
-                                    <div className='d-flex align-items-center'>
-                                        <div className='rounded background-darkBlue me-2' style={{ height: '15px', width: '15px' }}></div>
-                                        <span className='fw-bold font15'>Founders</span>
+                                <div className='row mb-2'>
+                                    <div className='col-2'>
+                                        <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
                                     </div>
-                                    <div className='d-flex justify-content-between my-1 px-4'>
-                                        <span className='font13'>50,000,000</span>
-                                        <span className='font13'>50,000,000</span>
-                                        <span className='font13'>70.22%</span>
+                                    <div className='col-4'>
+                                        <p className='font13 fw-bold mb-0'>Foina Founder</p>
+                                        <p className='font10 text-secondary'>Founder</p>
                                     </div>
-                                </div>
-
-                                <div className='mb-4'>
-                                    <div className='d-flex align-items-center'>
-                                        <div className='rounded background-chocolate me-2' style={{ height: '15px', width: '15px' }}></div>
-                                        <span className='fw-bold font15'>Employees</span>
+                                    <div className='col-3'>
+                                        <p className='font13 fw-bold mb-0'>2,000,000</p>
                                     </div>
-                                    <div className='d-flex justify-content-between my-1 px-4'>
-                                        <span className='font13'>30,000,000</span>
-                                        <span className='font13'>10,000,000</span>
-                                        <span className='font13'>23.76%</span>
+                                    <div className='col-3'>
+                                        <p className='font13 fw-bold mb-0'>25%</p>
                                     </div>
                                 </div>
 
+                                <div className='row mb-2'>
+                                    <div className='col-2'>
+                                        <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
+                                    </div>
+                                    <div className='col-4'>
+                                        <p className='font13 fw-bold mb-0'>Foina Founder</p>
+                                        <p className='font10 text-secondary'>Founder</p>
+                                    </div>
+                                    <div className='col-3'>
+                                        <p className='font13 fw-bold mb-0'>2,000,000</p>
+                                    </div>
+                                    <div className='col-3'>
+                                        <p className='font13 fw-bold mb-0'>25%</p>
+                                    </div>
+                                </div>
+
+                                <div className='row mb-2'>
+                                    <div className='col-2'>
+                                        <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
+                                    </div>
+                                    <div className='col-4'>
+                                        <p className='font13 fw-bold mb-0'>Foina Founder</p>
+                                        <p className='font10 text-secondary'>Founder</p>
+                                    </div>
+                                    <div className='col-3'>
+                                        <p className='font13 fw-bold mb-0'>2,000,000</p>
+                                    </div>
+                                    <div className='col-3'>
+                                        <p className='font13 fw-bold mb-0'>25%</p>
+                                    </div>
+                                </div>
                             </div>
+
                         </div>
-                    </div>
 
-                    <div id='stock-enteries' className='shadow-sm container rounded25 cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
-                        <h4 className='fw-bold'>Stocks</h4>
-                        <div className='container'>
-                            <div className='row mb-2'>
-                                <div className='col-2'>
-                                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
+                        <div className='rounded25 mt-4 p-4 my-3 shadow-sm h-100 cardColorPinkish' style={{ width: '45%' }}>
+                        <h6 className='fw-bold pt-3 mb-4'>Interested in</h6>
+                            <div id='companies-interested-in' className='d-flex' style={{ height: '100px', overflow: 'auto' }}>
+                                <div className='me-4'>
+                                    <Avatar />
+                                    <h6 className='text-secondary font13 mt-2'>Apple</h6>
                                 </div>
-                                <div className='col-4'>
-                                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                                    <p className='font10 text-secondary'>Founder</p>
+                                <div className='me-4'>
+                                    <Avatar />
+                                    <h6 className='text-secondary font13 mt-2'>Apple</h6>
                                 </div>
-                                <div className='col-3'>
-                                    <p className='font13 fw-bold mb-0'>2,000,000</p>
+                                <div className='me-4'>
+                                    <Avatar />
+                                    <h6 className='text-secondary font13 mt-2'>Apple</h6>
                                 </div>
-                                <div className='col-3'>
-                                    <p className='font13 fw-bold mb-0'>25%</p>
-                                </div>
-                            </div>
 
-                            <div className='row mb-2'>
-                                <div className='col-2'>
-                                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
+                                <div className='me-4'>
+                                    <Avatar />
+                                    <h6 className='text-secondary font13 mt-2'>Apple</h6>
                                 </div>
-                                <div className='col-4'>
-                                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                                    <p className='font10 text-secondary'>Founder</p>
-                                </div>
-                                <div className='col-3'>
-                                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                                </div>
-                                <div className='col-3'>
-                                    <p className='font13 fw-bold mb-0'>25%</p>
-                                </div>
-                            </div>
-
-                            <div className='row mb-2'>
-                                <div className='col-2'>
-                                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                                </div>
-                                <div className='col-4'>
-                                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                                    <p className='font10 text-secondary'>Founder</p>
-                                </div>
-                                <div className='col-3'>
-                                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                                </div>
-                                <div className='col-3'>
-                                    <p className='font13 fw-bold mb-0'>25%</p>
+                                <div className='me-4'>
+                                    <Avatar />
+                                    <h6 className='text-secondary font13 mt-2'>Apple</h6>
                                 </div>
                             </div>
                         </div>
-
                     </div>
 
                 </main>

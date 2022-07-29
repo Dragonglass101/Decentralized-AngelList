@@ -98,18 +98,18 @@ const Navbar = () => {
                     anchor="left"
                 >
                     {/* <div className={classes.toolbar} /> */}
-                    <div className="px-2 mt-4 mb-4 d-flex justify-content-around align-items-center">
-                        <div className="col-3">
-                            <Avatar  />
+                    <div className="mx-1 mt-4 mb-4 d-flex justify-content-around align-items-center">
+                        <div className="col-2">
+                            <Avatar style={{width:'30px', height:'30px'}} />
                         </div>
-                        <h4 className=" col-7 font15 fw-bold m-0 text-white">Rayfan Tio S.</h4>
-                        <ExitToAppIcon style={{color:'rgb(255 ,94, 94)' }} className="col-3"/>
+                        <h5 className=" col-7 font13 fw-bold m-0 text-white ps-3">Rayfan Tio S.</h5>
+                        <ExitToAppIcon style={{color:'rgb(255 ,94, 94)', cursor:'pointer' }} className="col-3"/>
                     </div>
                     <Divider style={{ color: 'grey', backgroundColor: 'grey', variant:'middle' }} />
                     <List>
                         {listElement}
                     </List>
-                    <Divider style={{ color: 'grey', backgroundColor: 'grey', marginTop: '320px' }} />
+                    <Divider style={{ color: 'grey', backgroundColor: 'grey', marginBottom: 'auto' }} />
                     <List>
                         {['Help and Support'].map((text, index) => (
                             <ListItem button key={text}>

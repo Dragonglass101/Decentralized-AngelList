@@ -74,7 +74,7 @@ export const InvestmentRequest = () => {
                 <Navbar />
                 <main className={classes.content}>
 
-                    <h4 className='fw-bold'>Companies List</h4>
+                    <h5 className='fw-bold'>Companies List</h5>
                     <div id='request-page-container' className='container p-0 rounded my-2 d-flex' style={{ height: '85vh' }}>
                         <div style={{ width: '30%' }}>
                             <div className='shadow-sm' style={{ overflow: 'auto' }}>
