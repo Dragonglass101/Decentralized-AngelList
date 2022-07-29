@@ -7,8 +7,20 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import SearchIcon from '@material-ui/icons/Search';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import MenuIcon from '@material-ui/icons/Menu';
+import appleLogo from '../images/apple-logo.png'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
 import { connectWallet, getActiveAccount, disconnectWallet } from "../utils/wallet";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Wallet } from "@taquito/taquito";
+import { Avatar } from "@material-ui/core";
+
 
 const drawerWidth = 240;
 
@@ -54,78 +66,63 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
-  const [account, setAccount] = useState("");
-  const classes = useStyles();
-  const [open, setopen] = useState(true);
-  const [wallet, setWallet] = useState(null);
-  const navigate = useNavigate();
+    const classes = useStyles();
+    const [currentindex, setcurrentindex] = useState(-1)
 
-  const handleSideNavClose = () => {
-    setopen(false);
-  };
-  const handleSideNavOpen = () => {
-    setopen(true);
-  };
-
-  const handleConnectWallet = async () => {
-    const { wallet } = await connectWallet();
-    setWallet(wallet);
-  };
-  const handleDisconnectWallet = async () => {
-    if(window.confirm("Do you want to signout")){
-      const { wallet } = await disconnectWallet();
-      setWallet(wallet);
+    const navigationList = ['Dashboard', 'Search Startups', 'Pending Requests', 'Track Investments', 'My Wallet'];
+    const navigationPathList = ["/dashboard-investor", "/startups-list-investor", "/investment-request", "#", "#"]
+    const navigationIconList = [<DashboardIcon />, <SearchIcon />, <ReceiptIcon />, <AccountBalanceWalletIcon />, <AssessmentIcon />];
+    const currentLocation = window.location.pathname;
+    const listElement = [];
+    for (let i = 0; i < navigationList.length; i++) {
+        listElement.push(
+            <Link to={navigationPathList[i]} style={{ color: "inherit" }}>
+                <ListItem className={currentLocation === navigationPathList[i] ? "background-selected" : ""} button key={navigationList[i]} onClick={()=>{ console.log(i);setcurrentindex(i)}}>
+                    {navigationIconList[i]}
+                    <ListItemText className="ms-2" primary={navigationList[i]} />
+                </ListItem>
+            </Link>
+        )
     }
-  };
-
-  function redirectToSignup(){
-    navigate("/sign-up");
-  }
-
-  useEffect(() => {
-    const func = async () => {
-      const account = await getActiveAccount();
-      if (account) {
-        setWallet(account.address);
-      }
-    };
-    func();
-  }, []);
-  return (
-    <>
-    <div className={classes.root}>
-        <Drawer
-            className={classes.drawer}
-            style={{ backgroundColor: 'rgb(26,27,47)', color: 'rgb(26,27,47)' }}
-            variant="persistent"
-            classes={{
-                paper: classes.drawerPaper,
-            }}
-            open={open}
-            anchor="left"
-        >
-          <button onClick={handleSideNavClose}>close</button>
-            <div className={classes.toolbar} />
-            <Divider />
-            <List>
-                {['Dashboard', 'Search Startups', 'Track Investments', 'My Wallet'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
-            <Divider style={{ color: 'grey', backgroundColor: 'grey', marginTop: '350px' }} />
-            <List>
-                {['Help and Support'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
-            </List>
-        </Drawer>
-    </div>
-    </>
-  );
+    return (
+        <>
+            <div className={classes.root}>
+                <Drawer
+                    className={classes.drawer}
+                    style={{ backgroundColor: 'rgb(26,27,47)', color: 'rgb(26,27,47)' }}
+                    variant="persistent"
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                    open={true}
+                    anchor="left"
+                >
+                    {/* <div className={classes.toolbar} /> */}
+                    <div className="px-2 mt-4 mb-4 d-flex justify-content-around align-items-center">
+                        <div className="col-3">
+                            <Avatar  />
+                        </div>
+                        <h4 className=" col-7 font15 fw-bold m-0 text-white">Rayfan Tio S.</h4>
+                        <ExitToAppIcon style={{color:'rgb(255 ,94, 94)' }} className="col-3"/>
+                    </div>
+                    <Divider style={{ color: 'grey', backgroundColor: 'grey', variant:'middle' }} />
+                    <List>
+                        {listElement}
+                    </List>
+                    <Divider style={{ color: 'grey', backgroundColor: 'grey', marginTop: '320px' }} />
+                    <List>
+                        {['Help and Support'].map((text, index) => (
+                            <ListItem button key={text}>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </Drawer>
+            </div>
+        </>
+    );
 };
 
 export default Navbar;
+
+

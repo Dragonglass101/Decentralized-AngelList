@@ -1,26 +1,15 @@
 import React from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 
-
-import searchIcon from '../images/search.png'
 import appleLogo from '../images/apple-logo.png'
-import pieChart from '../images/pie-chart.png'
+import Navbar from './Navbar';
 
 const drawerWidth = 240;
 
@@ -73,9 +62,10 @@ export const DashboardInvestor = () => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
     return (
         <>
             <div className={classes.root}>
@@ -83,37 +73,10 @@ export const DashboardInvestor = () => {
                 <AppBar position="fixed" className={classes.appBar}>
                     
                 </AppBar>
-                <Drawer
-                    className={classes.drawer}
-                    style={{ backgroundColor: 'rgb(26,27,47)', color: 'rgb(26,27,47)' }}
-                    variant="permanent"
-                    classes={{
-                        paper: classes.drawerPaper,
-                    }}
-                    anchor="left"
-                >
-                    <div className={classes.toolbar} />
-                    <Divider />
-                    <List>
-                        {['Dashboard', 'Search Startups', 'Track Investments', 'My Wallet'].map((text, index) => (
-                            <ListItem button key={text}>
-                                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider style={{ color: 'grey', backgroundColor: 'grey', marginTop: '350px' }} />
-                    <List>
-                        {['Help and Support'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                </Drawer>
+                <Navbar/>
                 <main className={classes.content}>
 
-                    <div id='recent-transaction' className='container mt-3 bg-white ms-0' style={{ width: '75%' }}>
+                    <div id='recent-transaction' className='shadow-sm container mt-3 bg-white ms-0' style={{ width: '75%' }}>
                         <h6 className='fw-bold pt-3 mb-4'>Recent Transactions</h6>
                         <div className='row align-items-center'>
                             <div className='col-1'>
@@ -158,7 +121,7 @@ export const DashboardInvestor = () => {
                         <Divider className='mt-2 mb-3' />
                     </div>
 
-                    <div id='cap-table' className='container rounded25 background-cream p-4 ms-0' style={{ width: '40%' }}>
+                    <div id='cap-table' className='shadow-sm container rounded25 background-cream p-4 ms-0' style={{ width: '40%' }}>
                         <h4 className='fw-bold'>Cap table</h4>
                         <div className='container p-0 bg-white my-3 d-flex rounded' style={{ height: '35px', overflow: 'hidden' }}>
                             <div id='founder-percent' className='h-100 background-darkBlue' style={{ width: '64.20%' }}></div>
@@ -201,7 +164,7 @@ export const DashboardInvestor = () => {
                         </div>
                     </div>
 
-                    <div id='stock-enteries' className='container rounded25 cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
+                    <div id='stock-enteries' className='shadow-sm container rounded25 cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
                         <h4 className='fw-bold'>Stocks</h4>
                         <div className='container'>
                             <div className='row mb-2'>
