@@ -80,13 +80,13 @@ export const DashboardInvestor = () => {
 
                     <h5 className='fw-bold'>Dashboard</h5>
                     <div className='d-flex'>
-                        <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{width:'20%'}}>
+                        <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{ width: '20%' }}>
                             <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
                             <h5 className='font13 fw-bold text-secondary'>Balance</h5>
                             <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
                         </div>
 
-                        <div id='recent-transaction' className='shadow-sm container mt-3 ms-0 rounded25 px-5 py-2' style={{ width: '80%',backgroundColor:'rgb(177 248 232 / 25%)', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
+                        {/* <div id='recent-transaction' className='shadow-sm container mt-3 ms-0 rounded25 px-5 py-2' style={{ width: '80%', backgroundColor: 'rgb(177 248 232 / 25%)', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
                             <h6 className='fw-bold pt-3 mb-4 pb-2'>Recent Investments</h6>
                             <div className='row align-items-center'>
                                 <div className='col-1'>
@@ -173,11 +173,51 @@ export const DashboardInvestor = () => {
                             </div>
 
                             <Divider className='mt-2 mb-3' />
+                        </div> */}
+
+                        <div className='shadow-sm rounded p-3 px-5' style={{ width: '80%', height: '295px', overflow: 'hidden' }}>
+                            <h6 className='fw-bold pt-3 mb-3 ms-2 pb-2'>Recent Transactions</h6>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Company</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Investment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            <img style={{width:'32px', height:'32px', borderRadius:'50%'}} alt="Remy Sharp" src={appleLogo} />
+                                        </th>
+                                        <td className='align-middle'>Company Name</td>
+                                        <td className='align-middle'>Mar 20, 2022</td>
+                                        <td className='align-middle'>36,000 ꜩ</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <img style={{width:'32px', height:'32px', borderRadius:'50%'}} alt="Remy Sharp" src={appleLogo} />
+                                        </th>
+                                        <td className='align-middle'>Company Name</td>
+                                        <td className='align-middle'>Mar 20, 2022</td>
+                                        <td className='align-middle'>36,000 ꜩ</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <img style={{width:'32px', height:'32px', borderRadius:'50%'}} alt="Remy Sharp" src={appleLogo} />
+                                        </th>
+                                        <td className='align-middle'>Company Name</td>
+                                        <td className='align-middle'>Mar 20, 2022</td>
+                                        <td className='align-middle'>36,000 ꜩ</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                     <div className='d-flex'>
-                        <div id='stock-enteries' className='d-inline-block shadow-sm container rounded25 p-4 ms-0 mt-4' style={{ width: '50%' , backgroundColor:'rgb(207 248 255 / 63%)'}}>
+                        <div id='stock-enteries' className='d-inline-block shadow-sm container rounded25 p-4 ms-0 mt-4' style={{ width: '50%', backgroundColor: 'rgb(207 248 255 / 63%)' }}>
                             {/* <h4 className='font15 fw-bold mb-3'>Stocks Owned</h4> */}
                             <h6 className='fw-bold pt-3 mb-4'>Stocks Owned</h6>
                             <div className='container'>
@@ -233,7 +273,7 @@ export const DashboardInvestor = () => {
                         </div>
 
                         <div className='rounded25 mt-4 p-4 my-3 shadow-sm h-100 cardColorPinkish' style={{ width: '45%' }}>
-                        <h6 className='fw-bold pt-3 mb-4'>Interested in</h6>
+                            <h6 className='fw-bold pt-3 mb-4'>Interested in</h6>
                             <div id='companies-interested-in' className='d-flex' style={{ height: '100px', overflow: 'auto' }}>
                                 <div className='me-4'>
                                     <Avatar />
