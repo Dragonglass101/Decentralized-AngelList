@@ -66,31 +66,49 @@
     font-family: 'Uchen';
 }
 
-.background-selected:hover, .background-selected:focus, .background-selected:active, .background-selected:visited {
+.background-selected:hover,
+.background-selected:focus,
+.background-selected:active,
+.background-selected:visited {
     background-color: rgb(36, 42, 56) !important;
     border-radius: 15px !important;
     font-weight: bold !important;
 }
 
-a :hover, a:active, a:focus, a:visited {
+a :hover,
+a:active,
+a:focus,
+a:visited {
     background-color: rgb(36, 42, 56) !important;
     border-radius: 15px !important;
     font-weight: bold !important;
-    /* color: rgb(18, 185, 129) !important; */
 }
-#green-karo{
+
+.highlight-karo {
+    background-color: rgb(36, 42, 56) !important;
+    border-radius: 15px !important;
+    font-weight: bold !important;
+}
+
+.green-karo {
     color: rgb(18, 185, 129) !important;
 }
 
-a :active > .menu-icon-color, a :active > .menu-item-color, a:active > .background-selected{
+a :active>.menu-icon-color,
+a :active>.menu-item-color,
+a:active>.background-selected {
     color: rgb(18, 185, 129) !important;
 }
 
-a :hover > .menu-icon-color, a :hover > .menu-item-color, a:active > .background-selected{
+a :hover>.menu-icon-color,
+a :hover>.menu-item-color,
+a:active>.background-selected {
     color: rgb(18, 185, 129) !important;
 }
 
-a :visited > .menu-icon-color, a :visited > .menu-item-color, a:active > .background-selected{
+a :visited>.menu-icon-color,
+a :visited>.menu-item-color,
+a:active>.background-selected {
     color: rgb(18, 185, 129) !important;
 }
 

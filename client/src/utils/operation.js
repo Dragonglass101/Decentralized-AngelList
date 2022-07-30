@@ -47,12 +47,16 @@ export const verifyInvestor = async(
 
 export const getStorage = async() => {
     try {
+        // const body = await axios.get(
+        //     "https://api.jakartanet.tzkt.io" +
+        //     "/v1/contracts/" +
+        //     "KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4" +
+        //     "/storage"
+        // );
         const body = await axios.get(
-            "https://api.jakartanet.tzkt.io" +
-            "/v1/contracts/" +
-            "KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4" +
-            "/storage"
+            `https://api.jakartanet.tzkt.io/v1/accounts/tz1dWJkEg7saFChP84YiVgQX2vy2gMxGWiAw/balance`
         );
+
         console.log(body);
         return body.data;
     } catch (error) {
