@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Navbar = () => {
+const DashboardNavbar = () => {
     const classes = useStyles();
     const [currentindex, setcurrentindex] = useState(-1)
 
@@ -123,6 +123,6 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default DashboardNavbar;
 
 

@@ -14,7 +14,7 @@ import { StartupsListInvestor } from "./components/StartupsListInvestor"
 import { InvestmentRequest } from "./components/InvestmentRequest"
 // import { SideNav } from "./components/SideNav"
 import { Test } from "./components/Test";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
   
   function App() {
     return (

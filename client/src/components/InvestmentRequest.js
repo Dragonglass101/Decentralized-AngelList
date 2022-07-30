@@ -11,7 +11,7 @@ import appleLogo from '../images/apple-logo.png'
 import walletImg from '../images/wallet.png'
 import walletSvg from '../images/wallet.svg'
 import whatsappImg from '../images/whtsp.png'
-import Navbar from './Navbar';
+import Navbar from './InvestorNavbar';
 
 const drawerWidth = 240;
 
@@ -189,7 +189,7 @@ export const InvestmentRequest = () => {
                                     </div>
                                 </div>
 
-                                <div className='container p-0 py-5' style={{ overflow: 'auto', height: '60vh' }}>
+                                <div className='container p-0 py-5' style={{ overflow: 'auto', height: '68vh' }}>
                                     <div className='d-flex align-items-center justify-content-around'>
                                         <div className='d-flex flex-column mb-3 text-center mx-auto align-items-center justify-content-center'>
                                             <Avatar alt="Remy Sharp" src={whatsappImg} />

@@ -5,7 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 
 import appleLogo from '../images/apple-logo.png';
-import Navbar from './Navbar';
+import Navbar from './InvestorNavbar';
 
 const drawerWidth = 240;
 

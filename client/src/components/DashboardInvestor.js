@@ -11,7 +11,7 @@ import Chip from '@material-ui/core/Chip';
 import appleLogo from '../images/apple-logo.png'
 import walletImg from '../images/wallet.png'
 
-import Navbar from './Navbar';
+import Navbar from './InvestorNavbar';
 
 const drawerWidth = 240;
 
@@ -86,7 +86,7 @@ export const DashboardInvestor = () => {
                             <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
                         </div>
 
-                        <div id='recent-transaction' className='shadow-sm container mt-3 bg-white ms-0 rounded25 px-5 py-2' style={{ width: '80%', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
+                        <div id='recent-transaction' className='shadow-sm container mt-3 ms-0 rounded25 px-5 py-2' style={{ width: '80%',backgroundColor:'rgb(177 248 232 / 25%)', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
                             <h6 className='fw-bold pt-3 mb-4 pb-2'>Recent Investments</h6>
                             <div className='row align-items-center'>
                                 <div className='col-1'>
@@ -177,7 +177,7 @@ export const DashboardInvestor = () => {
                     </div>
 
                     <div className='d-flex'>
-                        <div id='stock-enteries' className='d-inline-block shadow-sm container rounded25 cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
+                        <div id='stock-enteries' className='d-inline-block shadow-sm container rounded25 p-4 ms-0 mt-4' style={{ width: '50%' , backgroundColor:'rgb(207 248 255 / 63%)'}}>
                             {/* <h4 className='font15 fw-bold mb-3'>Stocks Owned</h4> */}
                             <h6 className='fw-bold pt-3 mb-4'>Stocks Owned</h6>
                             <div className='container'>
