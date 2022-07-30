@@ -73,6 +73,7 @@ const InvestorNavbar = () => {
     const [currentindex, setcurrentindex] = useState(-1)
 
     const currentLocation = window.location.pathname;
+    console.log(currentLocation);
     return (
         <>
             <div className={classes.root}>
@@ -99,34 +100,40 @@ const InvestorNavbar = () => {
                         {/* <Divider style={{ color: 'grey', backgroundColor: 'grey', variant: 'middle' }} /> */}
                         
                         <Link to="/dashboard-investor" style={{ color: "inherit", textDecoration:'unset' }}>
-                            <ListItem style={{marginBottom:'10px'}} button key='Dashboard'>
-                                <HomeIcon className="menu-icon-color"/>
+                            <ListItem 
+                            className={(currentLocation === "/dashboard-investor"?"highlight-karo":"")}
+                            style={{marginBottom:'10px'}} button key='Dashboard'>
+                                <HomeIcon className={(currentLocation === "/dashboard-investor"?"green-karo":"") + " menu-icon-color"}/>
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Dashboard</span>
+                                <span className={(currentLocation === "/dashboard-investor"?"green-karo":"") +" font13 fw-bold ms-2 menu-item-color"}>Dashboard</span>
                             </ListItem>
                         </Link>
                         <Link to="/investment-request" style={{ color: "inherit", textDecoration:'unset' }}>
-                            <ListItem className="background-selected" style={{marginBottom:'10px'}} button key='Track Investments'>
-                                <EqualizerIcon className="menu-icon-color"/>
-                                {/* <ListItemText className="ms-2" primary='Track Investments' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Track Investments</span>
+                            <ListItem 
+                            className={(currentLocation === "/investment-request"?"highlight-karo":"")}
+                            style={{marginBottom:'10px'}} button key='Track Investments'>
+                                <ReceiptIcon className={(currentLocation === "/investment-request"?"green-karo":"") + " menu-icon-color"}/>
+                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
+                                <span className={(currentLocation === "/investment-request"?"green-karo":"") +" font13 fw-bold ms-2 menu-item-color"}>Track Investments</span>
                             </ListItem>
                         </Link>
                         <Link to="/startups-list-investor" style={{ color: "inherit", textDecoration:'unset' }}>
-                            <ListItem className="background-selected"  style={{marginBottom:'10px'}} button key='Dashboard'>
-                                <ListAltIcon className="menu-icon-color"/>
-                                {/* <ListItemText className="ms-2" primary='Startups List' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Startups List</span>
+                            <ListItem 
+                            className={(currentLocation === "/startups-list-investor"?"highlight-karo":"")}
+                            style={{marginBottom:'10px'}} button key='Startups List'>
+                                <ListAltIcon className={(currentLocation === "/startups-list-investor"?"green-karo":"") + " menu-icon-color"}/>
+                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
+                                <span className={(currentLocation === "/startups-list-investor"?"green-karo":"") +" font13 fw-bold ms-2 menu-item-color"}>Startups List</span>
                             </ListItem>
                         </Link>
-                        <Link to="/dashboard-investor" style={{ color: "inherit", textDecoration:'unset' }}>
+                        <Link to="#" style={{ color: "inherit", textDecoration:'unset' }}>
                             <ListItem className="background-selected" style={{marginBottom:'10px'}} button key='Dashboard'>
                                 <DashboardIcon className="menu-icon-color"/>
                                 {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
                                 <span className="font13 fw-bold ms-2 menu-item-color">Dashboard</span>
                             </ListItem>
                         </Link>
-                        <Link to="/dashboard-investor" style={{ color: "inherit", textDecoration:'unset' }}>
+                        <Link to="#" style={{ color: "inherit", textDecoration:'unset' }}>
                             <ListItem className="background-selected" style={{marginBottom:'10px'}} button key='Dashboard'>
                                 <DashboardIcon className="menu-icon-color"/>
                                 {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
