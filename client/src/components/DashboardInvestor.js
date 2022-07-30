@@ -175,10 +175,10 @@ export const DashboardInvestor = () => {
                             <Divider className='mt-2 mb-3' />
                         </div> */}
 
-                        <div className='shadow-sm rounded p-3 px-5' style={{ width: '80%', height: '295px', overflow: 'hidden' }}>
+                        <div className='shadow-sm bg-white rounded15 p-3 px-5' style={{ width: '80%', cursor:'pointer'}}>
                             <h6 className='fw-bold pt-3 mb-3 ms-2 pb-2'>Recent Transactions</h6>
-                            <table class="table table-hover">
-                                <thead>
+                            <table className="table" style={{overflow: 'hidden', height:'200px'}}>
+                                <thead className='table-light'>
                                     <tr>
                                         <th scope="col"></th>
                                         <th scope="col">Company</th>
@@ -211,13 +211,29 @@ export const DashboardInvestor = () => {
                                         <td className='align-middle'>Mar 20, 2022</td>
                                         <td className='align-middle'>36,000 ꜩ</td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <img style={{width:'32px', height:'32px', borderRadius:'50%'}} alt="Remy Sharp" src={appleLogo} />
+                                        </th>
+                                        <td className='align-middle'>Company Name</td>
+                                        <td className='align-middle'>Mar 20, 2022</td>
+                                        <td className='align-middle'>36,000 ꜩ</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            <img style={{width:'32px', height:'32px', borderRadius:'50%'}} alt="Remy Sharp" src={appleLogo} />
+                                        </th>
+                                        <td className='align-middle'>Company Name</td>
+                                        <td className='align-middle'>Mar 20, 2022</td>
+                                        <td className='align-middle'>36,000 ꜩ</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
 
                     <div className='d-flex'>
-                        <div id='stock-enteries' className='d-inline-block shadow-sm container rounded25 p-4 ms-0 mt-4' style={{ width: '50%', backgroundColor: 'rgb(207 248 255 / 63%)' }}>
+                        <div id='stock-enteries' className='d-inline-block shadow-sm container rounded15 p-4 ms-0 mt-4 bg-white' style={{ width: '50%' }}>
                             {/* <h4 className='font15 fw-bold mb-3'>Stocks Owned</h4> */}
                             <h6 className='fw-bold pt-3 mb-4'>Stocks Owned</h6>
                             <div className='container'>
@@ -272,7 +288,7 @@ export const DashboardInvestor = () => {
 
                         </div>
 
-                        <div className='rounded25 mt-4 p-4 my-3 shadow-sm h-100 cardColorPinkish' style={{ width: '45%' }}>
+                        <div className='rounded15 mt-4 p-4 my-3 shadow-sm bg-white h-100 cardColorPinkish' style={{ width: '45%' }}>
                             <h6 className='fw-bold pt-3 mb-4'>Interested in</h6>
                             <div id='companies-interested-in' className='d-flex' style={{ height: '100px', overflow: 'auto' }}>
                                 <div className='me-4'>
