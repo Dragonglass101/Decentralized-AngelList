@@ -195,7 +195,7 @@ export const InvestmentRequest = () => {
                                             <Avatar alt="Remy Sharp" src={whatsappImg} />
                                             <h4 className='font-numbers my-auto pt-2'>Apple Inc.</h4>
                                         </div>
-                                        <table className="table w-50 mx-auto">
+                                        <table className="table w-50 mx-auto shadow-sm">
                                             <thead>
                                                 <tr>
                                                 </tr>

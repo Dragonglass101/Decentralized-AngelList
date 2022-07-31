@@ -1,6 +1,12 @@
-html, body{
-    overflow-y: hidden !important;
+@font-face {
+    font-family: devils_font;
+    src: url(../fonts/Devil.ttf);
 }
+
+html * {
+    font-family: kanit;
+}
+
 
 .fitHeight {
     height: fit-content !important;
@@ -59,7 +65,11 @@ html, body{
 }
 
 .sidebar-background {
-    background-color: rgb(18, 24, 39);
+    background-color: rgb(18, 24, 39) !important;
+}
+
+.sidebar-color {
+    color: rgb(18, 24, 39) !important;
 }
 
 .background-whatsappScreen {
@@ -113,4 +123,37 @@ a:visited {
 
 .background-paper {
     background-color: rgb(250, 250, 252);
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    /* remove scrollbar space */
+    background: transparent;
+}
+
+/* / optional: show position indicator in red */
+*/ ::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+color-green-spent {
+    color: rgb(37, 186, 168) !important;
+}
+
+.banner {
+    background: rgb(17 22 48);
+    border-radius: 17px 17px 0px 0px;
+    color: white;
+}
+
+.background-light-purple {
+    background-color: rgb(238, 240, 255);
+}
+
+.button-purple {
+    background-color: rgb(33, 0, 95) !important;
 }

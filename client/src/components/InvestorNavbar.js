@@ -10,17 +10,17 @@ import Button from '@material-ui/core/Button';
 
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
-import ReceiptIcon from '@material-ui/icons/Receipt';
+import ReceiptRoundedIcon from '@material-ui/icons/ReceiptRounded';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import MenuIcon from '@material-ui/icons/Menu';
 import appleLogo from '../images/apple-logo.png'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import HomeIcon from '@material-ui/icons/Home';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 
 import { connectWallet, getActiveAccount, disconnectWallet } from "../utils/wallet";
 import { Link, useNavigate } from "react-router-dom";
@@ -113,7 +113,7 @@ const InvestorNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/dashboard-investor" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Dashboard'>
-                                <HomeIcon className={(currentLocation === "/dashboard-investor" ? "green-karo" : "") + " menu-icon-color"} />
+                                <HomeRoundedIcon className={(currentLocation === "/dashboard-investor" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/dashboard-investor" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Dashboard</span>
                             </ListItem>
@@ -123,7 +123,7 @@ const InvestorNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/investment-request" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Track Investments'>
-                                <ReceiptIcon className={(currentLocation === "/investment-request" ? "green-karo" : "") + " menu-icon-color"} />
+                                <ReceiptRoundedIcon className={(currentLocation === "/investment-request" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/investment-request" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Track Investments</span>
                             </ListItem>
@@ -133,7 +133,7 @@ const InvestorNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/startups-list-investor" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Startups List'>
-                                <ListAltIcon className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " menu-icon-color"} />
+                                <ListAltRoundedIcon className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Startups List</span>
                             </ListItem>
@@ -141,7 +141,7 @@ const InvestorNavbar = () => {
 
                         <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Cart'>
-                                <ShoppingCartIcon className="menu-icon-color" />
+                                <ShoppingCartRoundedIcon className="menu-icon-color" />
                                 {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
                                 <span className="font13 fw-bold ms-2 menu-item-color">Cart</span>
                             </ListItem>
@@ -149,7 +149,7 @@ const InvestorNavbar = () => {
 
                         <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Account'>
-                                <AccountCircleIcon className="menu-icon-color" />
+                                <AccountCircleRoundedIcon className="menu-icon-color" />
                                 {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
                                 <span className="font13 fw-bold ms-2 menu-item-color">Account</span>
                             </ListItem>
@@ -163,7 +163,7 @@ const InvestorNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/dashboard-investor" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Dashboard'>
-                                <HomeIcon className={(currentLocation === "/dashboard-investor" ? "green-karo" : "") + " menu-icon-color"} />
+                                <HomeRoundedIcon className={(currentLocation === "/dashboard-investor" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/dashboard-investor" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Dashboard</span>
                             </ListItem>
@@ -173,7 +173,7 @@ const InvestorNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/investment-request" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Track Investments'>
-                                <ReceiptIcon className={(currentLocation === "/investment-request" ? "green-karo" : "") + " menu-icon-color"} />
+                                <ReceiptRoundedIcon className={(currentLocation === "/investment-request" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/investment-request" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Track Investments</span>
                             </ListItem>
@@ -183,7 +183,7 @@ const InvestorNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/startups-list-investor" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Startups List'>
-                                <ListAltIcon className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " menu-icon-color"} />
+                                <ListAltRoundedIcon className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Startups List</span>
                             </ListItem>
@@ -191,7 +191,7 @@ const InvestorNavbar = () => {
 
                         <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Cart'>
-                                <ShoppingCartIcon className="menu-icon-color" />
+                                <ShoppingCartRoundedIcon className="menu-icon-color" />
                                 {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
                                 <span className="font13 fw-bold ms-2 menu-item-color">Cart</span>
                             </ListItem>
@@ -199,7 +199,7 @@ const InvestorNavbar = () => {
 
                         <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Account'>
-                                <AccountCircleIcon className="menu-icon-color" />
+                                <AccountCircleRoundedIcon className="menu-icon-color" />
                                 {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
                                 <span className="font13 fw-bold ms-2 menu-item-color">Account</span>
                             </ListItem>
