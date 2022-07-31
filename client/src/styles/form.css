@@ -3,6 +3,10 @@
     src: url(../fonts/Devil.ttf);
 }
 
+html * {
+    font-family: kanit;
+}
+
 
 .fitHeight {
     height: fit-content !important;
@@ -61,11 +65,11 @@
 }
 
 .sidebar-background {
-    background-color: rgb(18, 24, 39);
+    background-color: rgb(18, 24, 39) !important;
 }
 
 .sidebar-color {
-    color : rgb(18, 24, 39) !important;
+    color: rgb(18, 24, 39) !important;
 }
 
 .background-whatsappScreen {
@@ -136,12 +140,20 @@ a:visited {
     background: #FF0000;
 }
 
-color-green-spent{
-    color: rgb(37,186,168) !important;
+color-green-spent {
+    color: rgb(37, 186, 168) !important;
 }
 
-.banner{
+.banner {
     background: rgb(17 22 48);
     border-radius: 17px 17px 0px 0px;
     color: white;
+}
+
+.background-light-purple {
+    background-color: rgb(238, 240, 255);
+}
+
+.button-purple {
+    background-color: rgb(33, 0, 95) !important;
 }
