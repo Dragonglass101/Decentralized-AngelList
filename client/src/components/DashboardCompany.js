@@ -17,12 +17,28 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from '@material-ui/core/Chip';
 
-import Navbar from './InvestorNavbar';
+import Navbar from './CompanyNavbar';
+import NavFloating from './NavFloating';
 
 import searchIcon from '../images/search.png'
 import appleLogo from '../images/apple-logo.png'
 import pieChart from '../images/pie-chart.png'
 import walletImg from '../images/wallet.png'
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import PaymentIcon from '@material-ui/icons/Payment';
+
+//Transaction Debit/credit/pending
+import SyncProblemIcon from '@material-ui/icons/SyncProblem';
+import EjectIcon from '@material-ui/icons/Eject';
+import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
+import TrendingDownRoundedIcon from '@material-ui/icons/TrendingDownRounded';
+import TrendingUpRoundedIcon from '@material-ui/icons/TrendingUpRounded';
+
+import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
+import SearchIcon from '@material-ui/icons/Search';
 
 const drawerWidth = 240;
 
@@ -48,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(0),
+  },
+  padded: {
     padding: theme.spacing(3),
   },
   search: {
@@ -86,7 +105,107 @@ export const DashboardCompany = () => {
         </AppBar>
         <Navbar />
         <main className={classes.content}>
-          <div className='d-flex align-items-start'>
+
+          <NavFloating />
+
+          <div className={classes.padded}>
+
+            <div className='d-flex'>
+              <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{ width: '20%' }}>
+                <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
+                <h5 className='font13 fw-bold text-secondary'>Balance</h5>
+                <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
+              </div>
+
+
+              <div className='bg-white rounded15' style={{ width: '80%', cursor: 'pointer' }}>
+                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Recent Transactions</h6>
+                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
+                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
+                  <thead className='table-light'>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Account Holder</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody className='font13 text-secondary'>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Account Name</td>
+                      <td className='align-middle'>Mar 20, 2022</td>
+                      <td className='align-middle fw-bold text-black'><TrendingUpRoundedIcon className='color-credit me-2' />36,000 ꜩ</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Account Name</td>
+                      <td className='align-middle'>Mar 20, 2022</td>
+                      <td className='align-middle fw-bold text-black'><TrendingDownRoundedIcon className='color-debit me-2' />36,000 ꜩ</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Account Name</td>
+                      <td className='align-middle'>Mar 20, 2022</td>
+                      <td className='align-middle fw-bold text-black'><SyncProblemIcon className='me-2' />36,000 ꜩ</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className='d-flex mt-5'>
+
+              <div className='bg-white rounded15' style={{ width: '70%', cursor: 'pointer' }}>
+                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Stocks Owned</h6>
+                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
+                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
+                  <thead className='table-light'>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Stakeholder</th>
+                      <th scope="col">Shares Owned</th>
+                      <th scope="col">Ownership</th>
+                    </tr>
+                  </thead>
+                  <tbody className='font13 text-secondary'>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* <div className='d-flex align-items-start'>
 
             <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{ width: '20%' }}>
               <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
@@ -282,7 +401,7 @@ export const DashboardCompany = () => {
             </div>
 
             <Divider className='mt-2 mb-3' />
-          </div>
+          </div> */}
 
         </main>
       </div>
