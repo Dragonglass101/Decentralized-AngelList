@@ -12,6 +12,7 @@ import { DashboardInvestor} from "./components/DashboardInvestor";
 import { DashboardCompany} from "./components/DashboardCompany";
 import { StartupsListInvestor } from "./components/StartupsListInvestor"
 import { InvestmentRequest } from "./components/InvestmentRequest"
+import { Home } from "./components/Home"
 // import { SideNav } from "./components/SideNav"
 import { Test } from "./components/Test";
 // import Navbar from "./components/Navbar";
@@ -32,6 +33,7 @@ import { Test } from "./components/Test";
           <Route path="/test" element={<Test/>} />
           <Route path='/startups-list-investor' element={<StartupsListInvestor/>} />
           <Route path='/investment-request' element={<InvestmentRequest/>} />
+          <Route path='/home' element={<Home/>} />
         </Routes>
     </Router>
     );
