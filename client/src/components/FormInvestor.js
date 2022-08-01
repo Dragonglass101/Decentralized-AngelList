@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import { connectWallet } from "../utils/wallet";
 import {verifyInvestor} from "../utils/operation"
 
-import ipfs from '../ipfs';
+import ipfs_api from "../ipfs_api";
+import ipfs_mini from "../ipfs_mini";
 
 import "../styles/FormInvestor.css";
 
@@ -18,19 +19,20 @@ export const FormInvestor = () => {
   const [identity, setIdentity] = useState("Individual");
   const [details, setDetails] = useState({
     amountToAccredition: 10,
-    email: "",        // done
-    howAccredited: 0, // done
-    linkedIn: "",     // done
-    name: "",         // done
-    number: 0,     // done
+    email: "",        
+    howAccredited: 0, 
+    linkedIn: "",     
+    name: "",         
+    number: 0,        
     percentageNetworth: 2,
-    walletID: "",     // done
+    walletID: "",
 
     bufferPhoto: null,
-    bufferResume: null
+    bufferResume: null,
   });
   const [photoCID, setphotoCID] = useState(null);
-  const [resumeCID, setresumeCID] = useState(null)
+  const [resumeCID, setresumeCID] = useState(null);
+  const [investorDetailsCID, setInvestorDetailsCID] = useState(null);
 
   const [wallet, setWallet] = useState(null);
   const handleConnectWallet = async () => {
@@ -39,23 +41,48 @@ export const FormInvestor = () => {
   };
 
   useEffect(() => {
-    console.log(photoCID, resumeCID)
+    console.log(investorDetailsCID)
       const onverifyInvestor = async () =>{
         console.log(photoCID, resumeCID)
         try{
           // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
-          await verifyInvestor(details["amountToAccredition"], details["email"], details["howAccredited"],details["linkedIn"],details["name"],details["number"],details["percentageNetworth"],photoCID, resumeCID,wallet);
+          await verifyInvestor(details["investorDetailsCID"],wallet);
           alert("Transaction Confirmed! You are now an Accredited Investor");
         }catch(error){
           alert("Transaction Failed:", error.message);
-        } 
+        }
     
         setLoading(false);
         
       }
-      if(photoCID != null && resumeCID != null)
+      if(investorDetailsCID != null)
         onverifyInvestor();
-  }, [resumeCID, photoCID])
+  }, [investorDetailsCID]);
+  useEffect(() => {
+    console.log(photoCID, resumeCID);
+
+    const uploadInvestorDetailsIpfs = async ()=>{
+      let investorData = {
+        amountToAccredition: 10,
+        email: details["email"],
+        howAccredited: details["howAccredited"],
+        linkedIn: details["linkedIn"],
+        name: details["name"],
+        number: details["number"],
+        percentageNetworth: details["percentageNetworth"]
+      }
+      ipfs_mini.addJSON(investorData, (err, hash) => {
+        if (err)
+            console.error(err);
+        console.log("hash of JSON", hash);
+        setInvestorDetailsCID(hash);
+      });
+    }
+    if(photoCID != null && resumeCID != null)
+      uploadInvestorDetailsIpfs();
+    
+  }, [photoCID, resumeCID])
+  
 
   function capturePhoto(event) {
     event.preventDefault()
@@ -77,7 +104,7 @@ export const FormInvestor = () => {
   }
 
   function uploadPhoto() {
-    ipfs.files.add(details["bufferPhoto"], (error, result) => {
+    ipfs_api.files.add(details["bufferPhoto"], (error, result) => {
       if(error) {
         console.error(error)
         return
@@ -86,7 +113,7 @@ export const FormInvestor = () => {
     })
   }
   function uploadResume() {
-    ipfs.files.add(details["bufferResume"], (error, result) => {
+    ipfs_api.files.add(details["bufferResume"], (error, result) => {
       if(error) {
         console.error(error)
         return

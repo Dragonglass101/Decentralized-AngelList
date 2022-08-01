@@ -65,7 +65,7 @@ export const Signup = () => {
               </div>
               <h5 className="card-title fw-bold mb-1">Investors</h5>
               <p className="card-text font13 text-secondary">You can invest into Rolling Funds now. Apply to invest in Syndicates(deal-by-deal) and Venture Funds below.</p>
-              <Button className='d-block w-100 mt-4' style={{ textTransform: 'capitalize' }} variant='contained' color="primary">Apply to Invest</Button>
+              <Link to="/form-investor"><Button className='d-block w-100 mt-4' style={{ textTransform: 'capitalize' }} variant='contained' color="primary">Apply</Button></Link>
             </div>
           </div>
 
@@ -76,7 +76,7 @@ export const Signup = () => {
               </div>
               <h5 className="card-title fw-bold mb-1">Founders</h5>
               <p className="card-text font13 text-secondary">Create a fundraising-ready startup with everything from incorporation, banking, to equity management tools in one place.</p>
-              <Button className='d-block w-100 mt-4' style={{ textTransform: 'capitalize' }} variant='contained' color="primary">Create a Startup</Button>
+              <Link to="/form-company"><Button className='d-block w-100 mt-4' style={{ textTransform: 'capitalize' }} variant='contained' color="primary">Apply</Button></Link>
             </div>
           </div>
 
@@ -87,7 +87,7 @@ export const Signup = () => {
               </div>
               <h5 className="card-title fw-bold mb-1">Employee</h5>
               <p className="card-text font13 text-secondary">Apply to run a Rolling Fund. Start raising with Syndicates (deal-by-deal) or Venture Funds below.</p>
-              <Button className='d-block w-100 mt-4' style={{ textTransform: 'capitalize' }} variant='contained' color="primary">Create DevilList Syndicate</Button>
+              <Link to="/form-employee"><Button className='d-block w-100 mt-4' style={{ textTransform: 'capitalize' }} variant='contained' color="primary">Apply</Button></Link>
             </div>
           </div>
 

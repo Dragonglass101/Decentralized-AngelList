@@ -1,37 +1,18 @@
 import { tezos } from "./tezos";
-import { wallet } from "./wallet";
-import { TezosToolkit, MichelsonMap } from "@taquito/taquito";
-import axios from "axios"
 
 export const verifyInvestor = async(
-    amountToAccredition,
-    email,
-    howAccredited,
-    linkedIn,
-    name,
-    number,
-    percentageNetworth,
-    photoCID,
-    resumeCID,
+    investorDetailsCID,
     walletID
 ) => {
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4"
+            "KT1UTMqaz9z8LzpRCwb19jPMKMfU9aHwFijf"
         );
 
         const op = await contract.methods
             .verifyInvestor(
-                amountToAccredition,
-                email,
-                howAccredited,
-                linkedIn,
-                name,
-                number,
-                percentageNetworth,
-                photoCID,
-                resumeCID,
+                investorDetailsCID,
                 walletID
             )
             .send({
@@ -42,24 +23,5 @@ export const verifyInvestor = async(
     } catch (error) {
         console.log(error.message);
         throw error;
-    }
-};
-
-export const getStorage = async() => {
-    try {
-        // const body = await axios.get(
-        //     "https://api.jakartanet.tzkt.io" +
-        //     "/v1/contracts/" +
-        //     "KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4" +
-        //     "/storage"
-        // );
-        const body = await axios.get(
-            `https://api.jakartanet.tzkt.io/v1/accounts/tz1dWJkEg7saFChP84YiVgQX2vy2gMxGWiAw/balance`
-        );
-
-        console.log(body);
-        return body.data;
-    } catch (error) {
-        return error;
     }
 };
