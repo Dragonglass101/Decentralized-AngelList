@@ -131,13 +131,13 @@ const CompanyNavbar = () => {
                             </ListItem>
                         </Link>
 
-                        <Link to="/startups-list-investor" style={{ color: "inherit", textDecoration: 'unset' }}>
+                        <Link to="/make-payment" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem
-                                className={(currentLocation === "/startups-list-investor" ? "highlight-karo" : "")}
+                                className={(currentLocation === "/make-payment" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Startups List'>
-                                <ListAltRoundedIcon className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " menu-icon-color"} />
+                                <AccountBalanceWalletIcon className={(currentLocation === "/make-payment" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
-                                <span className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Startups List</span>
+                                <span className={(currentLocation === "/make-payment" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Make Payment</span>
                             </ListItem>
                         </Link>
 

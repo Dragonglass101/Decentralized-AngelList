@@ -3,7 +3,7 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import { Divider } from '@material-ui/core';
+import { Divider, Tooltip } from '@material-ui/core';
 
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -13,6 +13,8 @@ import walletSvg from '../images/wallet.svg'
 import whatsappImg from '../images/whtsp.png'
 import Navbar from './InvestorNavbar';
 import NavFloating from './NavFloating';
+
+import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
 
 const drawerWidth = 240;
 
@@ -79,152 +81,182 @@ export const InvestmentRequest = () => {
                 <main className={classes.content}>
                     <NavFloating />
                     <div className={classes.padded}>
-                        <h5 className='fw-bold'>Companies List</h5>
-                        <div id='request-page-container' className='container p-0 rounded my-2 d-flex' style={{ height: '85vh' }}>
-                            <div style={{ width: '30%' }}>
-                                <div className='shadow-sm' style={{ overflow: 'auto' }}>
-                                    <div>
-                                        <div className="input-group">
-                                            <input style={{ border: '0px', backgroundColor: 'ghostwhite' }} type="text" className="form-control shadow" placeholder="   Search ..." aria-label="Recipient's username" aria-describedby="button-addon2" />
-                                            <button style={{ backgroundColor: 'rgb(26, 27, 47)' }} className="btn" type="button" id="button-addon2">
-                                                <SearchIcon style={{ color: 'white' }} />
-                                            </button>
+                        <div id='request-page-container' className='container ps-0 rounded shadow' style={{ height: '550px' }}>
+                            <div className='row'>
+                                <div className='col-4'>
+                                    <div className="input-group w-100 h-100">
+                                        <input style={{ border: '0px', backgroundColor: 'ghostwhite' }} type="text" className="form-control shadow h-100" placeholder="   Search ..." aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                        <button style={{ backgroundColor: 'rgb(26, 27, 47)' }} className="btn" type="button" id="button-addon2">
+                                            <SearchIcon style={{ color: 'white' }} />
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className='col-8 sidebar-background rounded text-white d-flex align-items-center'>
+                                    <h4 className='col-5 m-0'>Company Name</h4>
+                                    <div className='col-7 d-flex justify-content-around align-items-center'>
+                                        <div className='col-2'>
+                                            <TimerRoundedIcon />
+                                        </div>
+                                        <div className='col-10 font15 fw-bold h-100 m-0 py-1 text-dark rounded d-flex justify-content-around'>
+                                            <div className='text-center'>
+                                                <p className='font-digitalClock text-white fw-bold m-0'>07</p>
+                                                <span className='text-secondary font10'>Days</span>
+                                            </div>
+                                            <h4 className='text-secondary'>:</h4>
+                                            <div className='text-center'>
+                                                <p className='font-digitalClock text-white fw-bold m-0'>12</p>
+                                                <span className='text-secondary font10'>Hrs</span>
+                                            </div>
+                                            <h4 className='text-secondary'>:</h4>
+                                            <div className='text-center'>
+                                                <p className='font-digitalClock text-white fw-bold m-0'>47</p>
+                                                <span className='text-secondary font10'>Mins</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="list-group" >
-                                        {/* <button type="button" className="list-group-item list-group-item-action active" aria-current="true">
-                                    The current button
-                                </button> */}
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-
-                                    </div>
-
-                                </div>
-                                <br /><br />
-                                <div className='d-flex flex-column align-items-center justify-content-center' id='walletImg'>
-                                    <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
-                                    <h5 className='font13 fw-bold text-secondary'>Balance</h5>
-                                    <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
                                 </div>
                             </div>
+                            <div className='row'>
+                                <div className='col-4'>
+                                    <div className="list-group" style={{ overflow: 'auto', height: '493px' }}>
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                                            </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
 
-                            <Divider orientation="vertical" variant="middle" />
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                                            </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
 
-                            <div className='' style={{ width: '65%' }}>
-                                <div className='container bg-white w-100 p-0 rounded'>
-                                    <div className='row m-0 p-0 rounded shadow-sm'>
-                                        <div className='col-5 fw-bold d-flex align-items-center justify-content-center text-center font-numbers m-0 p-3 sidebar-background text-white rounded'>
-                                            <h4 className='fw-bold'>Remaining Time</h4>
-                                        </div>
-                                        <div className='col-7 font15 fw-bold h-100 m-0 p-3 text-dark rounded d-flex justify-content-around'>
-                                            <div>
-                                                <h4 className='font-digitalClock fw-bold'>07</h4>
-                                                <span className='text-secondary'>Days</span>
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
                                             </div>
-                                            <h4 className='text-secondary'>:</h4>
-                                            <div>
-                                                <h4 className='font-digitalClock fw-bold'>12</h4>
-                                                <span className='text-secondary'>Hrs</span>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
                                             </div>
-                                            <h4 className='text-secondary'>:</h4>
-                                            <div>
-                                                <h4 className='font-digitalClock fw-bold'>47</h4>
-                                                <span className='text-secondary'>Mins</span>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
+
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
                                             </div>
-                                        </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
+
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                                            </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
+
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                                            </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
+
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                                            </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
+
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                                            </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
+
+                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                                            <div className='col-2 p-0'>
+                                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                                            </div>
+                                            <div className='d-flex flex-column col-7 align-self-center'>
+                                                <span className='fw-bold font13'>Apple Inc.</span>
+                                                <span className='font10 text-secondary'>1300 ꜩ</span>
+                                            </div>
+                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                                        </button>
+                                        <Divider variant='middle' />
+
+
                                     </div>
+                                </div>
+                                <div className='col-8 px-0' style={{ height: 'fit-content', height: '493px' }}>
+                                    <div id='contract-content' style={{ height: '433px', overflow: 'auto' }}>
+                                        <table className="table mt-4 w-75 mx-auto shadow-sm">
+                                            <thead style={{ fontSize: '20px' }}>
+                                                <td>
+                                                    SAFE Contract
+                                                </td>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>Ownership<p className='font10 text-secondary m-0'>on valuation cap</p></th>
+                                                    <td>13%</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Valuation Cap</th>
+                                                    <td>1300 ꜩ</td>
 
-                                    <div className='container p-0 py-5' style={{ overflow: 'auto', height: '68vh' }}>
-                                        <div className='d-flex align-items-center justify-content-around'>
-                                            <div className='d-flex flex-column mb-3 text-center mx-auto align-items-center justify-content-center'>
-                                                <Avatar alt="Remy Sharp" src={whatsappImg} />
-                                                <h4 className='font-numbers my-auto pt-2'>Apple Inc.</h4>
-                                            </div>
-                                            <table className="table w-50 mx-auto shadow-sm">
-                                                <thead>
-                                                    <tr>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th>Ownership<p className='font10 text-secondary m-0'>on valuation cap</p></th>
-                                                        <td>13%</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Valuation Cap</th>
-                                                        <td>1300 ꜩ</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Investment Amount</th>
+                                                    <td>3400 ꜩ</td>
 
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Investment Amount</th>
-                                                        <td>3400 ꜩ</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
 
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <h4 className='font-numbers fw-bold text-center pt-4 pb-2'>Terms & Conditions</h4>
+                                        <h4 className='font-numbers fw-bold text-center pt-3 pb-2'>Terms & Conditions</h4>
                                         <div id='tnc' className='mx-auto' style={{ fontSize: '12px', width: '90%' }}>
                                             <p>THIS INSTRUMENT AND ANY SECURITIES ISSUABLE PURSUANT HERETO HAVE NOT BEEN REGISTERED UNDER THE SECURITIES ACT OF 1933, AS AMENDED (THE &ldquo;<strong>SECURITIES ACT</strong>&rdquo;), OR UNDER THE SECURITIES LAWS OF CERTAIN STATES.&nbsp;&nbsp;THESE SECURITIES MAY NOT BE OFFERED, SOLD OR OTHERWISE TRANSFERRED, PLEDGED OR HYPOTHECATED EXCEPT AS PERMITTED IN THIS SAFE AND UNDER THE ACT AND APPLICABLE STATE SECURITIES LAWS PURSUANT TO AN EFFECTIVE REGISTRATION STATEMENT OR AN EXEMPTION THEREFROM. &nbsp;</p>
                                             <p><br /></p>
@@ -300,29 +332,25 @@ export const InvestmentRequest = () => {
                                             <p>&nbsp; &nbsp; (g) &nbsp; &nbsp;The parties acknowledge and agree that for United States federal and state income tax purposes this Safe is, and at all times has been, intended to be characterized as stock, and more particularly as common stock for purposes of Sections 304, 305, 306, 354, 368, 1036 and 1202 of the Internal Revenue Code of 1986, as amended.&nbsp;&nbsp;Accordingly, the parties agree to treat this Safe consistent with the foregoing intent for all United States federal and state income tax purposes (including, without limitation, on their respective tax returns or other informational statements).</p>
                                             <p>(<em>Signature page follows</em>)</p>
                                             <p>IN WITNESS WHEREOF, the undersigned have caused this Safe to be duly executed and delivered.</p>
-                                            {/* <p><br/></p>
-                                        <p>[<strong>COMPANY]</strong></p>
-                                        <p><br/></p>
-                                        <p>By:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>
-                                        <p>&nbsp; &nbsp; [<em>name</em>]</p>
-                                        <p>[<em>title</em>]</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Address:&nbsp; &nbsp; &nbsp;</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Email:&nbsp; &nbsp;&nbsp;</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<strong>INVESTOR:</strong></p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; By: &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Name:&nbsp; &nbsp;&nbsp;</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Title:&nbsp; &nbsp;&nbsp;</p>
-                                        <p><br/></p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Address:&nbsp; &nbsp;&nbsp;</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>
-                                        <p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Email: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p> */}
                                         </div>
                                     </div>
-                                    <div className='row m-0 rounded text-white text-center sidebar-background d-flex'>
-                                        <h3 className='col-6 m-0 p-0 font-numbers fw-bold my-auto' style={{ fontSize: '24px' }}>36,000 ꜩ</h3>
-                                        <Button size='small' className='col-3 m-0 my-3 mx-2 w-100 fw-bold' style={{ textTransform: 'capitalize', fontSize: '20px' }} variant='contained' color="primary">Invest</Button>
-                                        <button className='col-2 btn btn-danger my-3 fw-bold' style={{ fontSize: '20px' }}>Deny</button>
+
+                                    <div className='sidebar-background rounded' style={{ height: '60px' }}>
+                                        <div className='d-flex justify-content-around align-items-center h-100'>
+                                            <h4 className='text-white'>1300 ꜩ</h4>
+                                            <div className='d-flex justify-content-around'>
+                                                <Tooltip title='Deposit Fund' aria-label='deposit-fund'>
+                                                    <Button className='me-3 text-black background-accept' variant='contained'>
+                                                        Sign Contract
+                                                    </Button>
+                                                </Tooltip>
+                                                <Tooltip title='Reject Contract' aria-label='reject-contract'>
+                                                    <Button variant='contained' className='background-deny'>
+                                                        Refuse
+                                                    </Button>
+                                                </Tooltip>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -330,7 +358,7 @@ export const InvestmentRequest = () => {
                         </div>
                     </div>
                 </main>
-            </div>
+            </div >
         </>
     )
 }

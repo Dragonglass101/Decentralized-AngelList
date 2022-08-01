@@ -215,3 +215,7 @@ color-green-spent {
 .background-deny{
     background: rgb(200, 51, 51) !important;
 }
+
+.background-highlight-selected{
+    background-color: rgb(36, 42, 56) !important;
+}
