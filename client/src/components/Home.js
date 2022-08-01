@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link, useNavigate } from "react-router-dom";
 
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
@@ -39,9 +40,11 @@ export const Home = () => {
                     <Button className='mx-2' variant="outlined" color="primary">
                         Log in
                     </Button>
-                    <Button className='mx-2' variant="contained" color="primary">
-                        Join
-                    </Button>
+                    <Link to='/sign-up'>
+                        <Button className='mx-2' variant="contained" color="primary">
+                            Join
+                        </Button>
+                    </Link>
                 </div>
             </nav>
 
@@ -52,7 +55,7 @@ export const Home = () => {
                     <button class="btn button-purple text-white btn-lg" type="button">Invest Now</button>
                 </div>
                 <div class="container-fluid py-4" style={{ width: '45%' }}>
-                    <img className='w-100' src={angellist_logo}/>
+                    <img className='w-100' src={angellist_logo} />
                 </div>
             </div>
 

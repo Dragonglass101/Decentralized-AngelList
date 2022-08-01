@@ -49,7 +49,7 @@ html * {
 }
 
 .background-darkBlue {
-    background-color: rgb(36, 53, 194);
+    background-color: rgb(36, 53, 194) !important;
 }
 
 .background-chocolate {
@@ -156,4 +156,36 @@ color-green-spent {
 
 .button-purple {
     background-color: #21005f !important;
+}
+
+.color-credit {
+    color: #82d616;
+}
+
+.color-debit {
+    color: #ea0606;
+}
+
+.background-primary {
+    background-color: rgb(64, 80, 181) !important;
+}
+
+.background-purplepink {
+    background-color: rgb(80, 72, 228) !important;
+}
+
+.left-chat {
+    border-radius: 0px 20px 20px 20px;
+}
+
+.right-chat {
+    border-radius: 20px 0px 20px 20px;
+}
+
+.background-maroon {
+    background-color: rgb(79, 65, 109) !important;
+}
+
+.background-light {
+    background-color: rgb(245, 247, 251) !important;
 }
