@@ -75,7 +75,7 @@ export const StartupsListInvestor = () => {
                     <NavFloating />
                     <div className={classes.padded}>
                         <div id='startup-list'>
-                            <h5 className='fw-bold mx-2 mt-4'>Recomended Startups</h5>
+                            <h5 className='fw-bold mx-2'>Recomended Startups</h5>
                             <div className='d-flex flex-wrap'>
 
                                 <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>

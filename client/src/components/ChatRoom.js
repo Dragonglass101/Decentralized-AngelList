@@ -19,6 +19,7 @@ import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Grid } from '@material-ui/core';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import Navbar from './CompanyNavbar';
 import NavFloating from './NavFloating';
@@ -34,6 +35,8 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import PaymentIcon from '@material-ui/icons/Payment';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
+import ThumbDownRoundedIcon from '@material-ui/icons/ThumbDownRounded';
+import ThumbUpRoundedIcon from '@material-ui/icons/ThumbUpRounded';
 
 //Transaction Debit/credit/pending
 import SyncProblemIcon from '@material-ui/icons/SyncProblem';
@@ -128,7 +131,7 @@ export const ChatRoom = () => {
                                         <SearchIcon style={{ color: 'white' }} />
                                     </button>
                                 </div>
-                                <div className='container shadow mt-4 rounded15' style={{overflow:'auto', height:'380px'}}>
+                                <div className='container shadow mt-4 rounded15' style={{ overflow: 'auto', height: '380px' }}>
                                     <div className='row p-3'>
                                         <div className='col-3'>
                                             <Avatar />
@@ -228,8 +231,8 @@ export const ChatRoom = () => {
                             </div> */}
 
                             {/* When There is Ongoing Conversation */}
-                            <div className='shadow-sm m-3 p-3 rounded15 bg-white' style={{ width: '60%', height:'505px' }}>
-                                <div id='chat-window' style={{ height: '85%', overflow:'auto'  }}>
+                            <div className='shadow-sm m-3 p-3 rounded15 bg-white' style={{ width: '60%', height: '505px' }}>
+                                <div id='chat-window' style={{ height: '85%', overflow: 'auto' }}>
                                     <div className='w-75' id='left-side-chat'>
                                         <div className='d-flex my-3'>
                                             <div className='text-center'>
@@ -266,39 +269,148 @@ export const ChatRoom = () => {
                                         </div>
                                     </div>
 
-                                    <div className='w-75' id='left-side-chat'>
+                                    <div className='w-75' id='left-side-request'>
                                         <div className='d-flex my-3'>
                                             <div className='text-center'>
                                                 <Avatar />
                                                 <span className='font13 text-dark'>09:00</span>
                                             </div>
-                                            <div className='ms-3 background-light d-flex align-items-center p-3 text-dark left-chat'>
-                                                <span>Hi there, how are you. I am Rahul Jain, so nice to meet to you. Fuck you Bitch.
-                                                    I still see some shadows in my room, I Lorem Ipsum.
-                                                </span>
+                                            <div className='ms-3 p-4 text-dark left-chat background-chat-request'>
+                                                <div className='mb-3'>
+                                                    <div className='d-flex justify-content-between align-items-center text-light'>
+                                                        <h6>Ownership</h6>
+                                                        <span>13%</span>
+                                                    </div>
+
+                                                    <div className='d-flex justify-content-between align-items-center text-light'>
+                                                        <h6>Valuation Cap</h6>
+                                                        <span>1300 ꜩ</span>
+                                                    </div>
+
+                                                    <div className='d-flex justify-content-between align-items-center text-light'>
+                                                        <h6>Investment</h6>
+                                                        <span>1300 ꜩ</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className='d-flex justify-content-between align-items-center'>
+                                                    <Button className='me-3 text-black background-accept' variant='contained'>
+                                                        <ThumbUpRoundedIcon className='text-black me-2' />
+                                                        Accept
+                                                    </Button>
+                                                    <Button variant='contained' className='background-deny'>
+                                                        <ThumbDownRoundedIcon className='me-2' />
+                                                        Deny
+                                                    </Button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className='w-75 ms-auto' id='right-side-chat'>
                                         <div className='d-flex my-3 justify-content-end'>
-                                            <div className='me-3 background-maroon d-flex align-items-center p-3 text-white right-chat'>
+                                            <div className='me-3 background-light d-flex align-items-center p-3 text-dark right-chat'>
                                                 <span>Hi there, how are you. I am Rahul Jain, so nice to meet to you. Fuck you Bitch.
                                                     I still see some shadows in my room, I Lorem Ipsum.
                                                 </span>
                                             </div>
-                                            <div className='text-center'>
+                                            <div className='text-center me-1'>
                                                 <Avatar />
                                                 <span className='font13 text-dark'>09:00</span>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div className='w-75 ms-auto' id='right-side-request'>
+                                        <div className='d-flex my-3 justify-content-end'>
+                                            <div className='me-3 p-4 text-dark right-chat background-chat-request'>
+                                                <div className='mb-3'>
+                                                    <div className='d-flex justify-content-between align-items-center text-light'>
+                                                        <h6>Ownership</h6>
+                                                        <span>13%</span>
+                                                    </div>
+
+                                                    <div className='d-flex justify-content-between align-items-center text-light'>
+                                                        <h6>Valuation Cap</h6>
+                                                        <span>1300 ꜩ</span>
+                                                    </div>
+
+                                                    <div className='d-flex justify-content-between align-items-center text-light'>
+                                                        <h6>Investment</h6>
+                                                        <span>1300 ꜩ</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className='d-flex justify-content-between align-items-center'>
+                                                    <Button className='me-3 text-black background-accept' variant='contained'>
+                                                        <ThumbUpRoundedIcon className='text-black me-2' />
+                                                        Accept
+                                                    </Button>
+                                                    <Button variant='contained' className='background-deny'>
+                                                        <ThumbDownRoundedIcon className='me-2' />
+                                                        Deny
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                            <div className='text-center me-1'>
+                                                <Avatar />
+                                                <span className='font13 text-dark'>09:00</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div id='chat-text' className='d-flex justify-content-center align-items-center bg-light rounded15' style={{ height: '15%' }}>
-                                    <input className="col-9 ms-auto form-control rounded-pill ps-4" type="text" placeholder="Type a message" aria-label="default input example" />
-                                    <div className='col-2 text-white'>
-                                        <div className='d-flex justify-content-center align-items-center rounded-circle' style={{width:'40px', height:'40px', backgroundColor:'rgb(58,165,138)'}}>
-                                            <TelegramIcon />
+                                    <input className="col-9 mx-auto form-control rounded-pill px-4" type="text" placeholder="Type a message" aria-label="default input example" />
+                                    <div className='col-3 text-white mx-auto d-flex justify-content-around'>
+                                        <Tooltip title='Send Message' aria-label='send-message'>
+                                            <button className='btn d-flex justify-content-center align-items-center rounded-circle text-white' style={{ width: '40px', height: '40px', backgroundColor: 'rgb(58,165,138)' }}>
+                                                <TelegramIcon />
+                                            </button>
+                                        </Tooltip>
+
+                                        <Tooltip title='Propose a Deal' aria-label='propose-a-deal'>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn d-flex justify-content-center align-items-center rounded-circle sidebar-background text-white' style={{ width: '40px', height: '40px' }}>
+                                                <PaymentIcon />
+                                            </button>
+                                        </Tooltip>
+
+                                        <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div className="modal-dialog my-auto">
+                                                <div className="modal-content">
+                                                    <div className="modal-header bg-dark">
+                                                        <h5 className="modal-title" id="exampleModalLabel">Create an Offer</h5>
+                                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div className="modal-body">
+                                                        <div className="input-group mb-3">
+                                                            <span className="input-group-text">Investment</span>
+                                                            <input type="text" className="form-control" aria-label="Investment" />
+                                                            <span className="input-group-text">ꜩ</span>
+                                                        </div>
+
+                                                        <div className="input-group mb-3">
+                                                            <span className="input-group-text">Ownership</span>
+                                                            <input type="text" className="form-control" aria-label="Ownership" />
+                                                            <span className="input-group-text">%</span>
+                                                        </div>
+
+                                                        <div className="input-group mb-3">
+                                                            <span className="input-group-text">Valuation Cap</span>
+                                                            <input type="text" className="form-control" aria-label="Valuation Cap" />
+                                                            <span className="input-group-text">ꜩ</span>
+                                                        </div>
+
+
+
+
+                                                    </div>
+                                                    <div className="modal-footer">
+                                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" className="btn background-primary text-white">Send Proposal</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

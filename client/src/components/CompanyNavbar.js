@@ -21,6 +21,7 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
+import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 
 import { connectWallet, getActiveAccount, disconnectWallet } from "../utils/wallet";
 import { Link, useNavigate } from "react-router-dom";
@@ -124,7 +125,7 @@ const CompanyNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/chatroom" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Chat Room'>
-                                <ReceiptRoundedIcon className={(currentLocation === "/chatroom" ? "green-karo" : "") + " menu-icon-color"} />
+                                <ForumRoundedIcon className={(currentLocation === "/chatroom" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/chatroom" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Chat Room</span>
                             </ListItem>

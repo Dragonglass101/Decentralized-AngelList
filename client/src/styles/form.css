@@ -93,14 +93,14 @@ html * {
     font-weight: bold !important;
 }
 
-a :hover,
+/* a:hover,
 a:active,
 a:focus,
 a:visited {
     background-color: rgb(36, 42, 56) !important;
     border-radius: 15px !important;
     font-weight: bold !important;
-}
+} */
 
 .highlight-karo {
     background-color: rgb(36, 42, 56) !important;
@@ -125,20 +125,30 @@ a:visited {
     background-color: rgb(250, 250, 252);
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     display: none;
-}
+} */
 
+/* width */
 ::-webkit-scrollbar {
-    width: 0px;
-    /* remove scrollbar space */
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
     background: transparent;
-}
-
-/* / optional: show position indicator in red */
-*/ ::-webkit-scrollbar-thumb {
-    background: #FF0000;
-}
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 20px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
 color-green-spent {
     color: rgb(37, 186, 168) !important;
@@ -170,6 +180,10 @@ color-green-spent {
     background-color: rgb(64, 80, 181) !important;
 }
 
+.background-secondary{
+    background-color: #f50057 !important;
+}
+
 .background-purplepink {
     background-color: rgb(80, 72, 228) !important;
 }
@@ -188,4 +202,16 @@ color-green-spent {
 
 .background-light {
     background-color: rgb(245, 247, 251) !important;
+}
+
+.background-chat-request{
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+.background-accept{
+    background: rgb(37, 186, 168) !important;
+}
+
+.background-deny{
+    background: rgb(200, 51, 51) !important;
 }
