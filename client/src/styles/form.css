@@ -3,6 +3,16 @@
     src: url(../fonts/Devil.ttf);
 }
 
+@font-face {
+    font-family: devils_tail_font;
+    src: url(../fonts/DevilTail.otf);
+}
+
+@font-face {
+    font-family: devils_lairs_font;
+    src: url(../fonts/DevilLairs.ttf);
+}
+
 html * {
     font-family: kanit;
 }
