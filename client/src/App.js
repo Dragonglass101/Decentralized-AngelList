@@ -25,7 +25,7 @@ import { Test } from "./components/Test";
       <Router>
         {/* <Navbar/> */}
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<Signup />} />
           <Route path="/sign-in" element={<Signin />} />
           <Route path="/form-investor" element={<FormInvestor />} />
@@ -36,8 +36,8 @@ import { Test } from "./components/Test";
           <Route path="/test" element={<Test/>} />
           <Route path='/startups-list-investor' element={<StartupsListInvestor/>} />
           <Route path='/investment-request' element={<InvestmentRequest/>} />
-          <Route path='/home' element={<Home/>} />
           <Route path='/chatroom' element={<ChatRoom/>} />
+          <Route path="*" element={<Home/>} />
           <Route path='/make-payment' element={<MakePayment/>} />
           <Route path='/profile-company' element={<ProfileCompany/>} />
         </Routes>

@@ -73,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
 
 const InvestorNavbar = () => {
     const classes = useStyles();
-    const [currentindex, setcurrentindex] = useState(-1)
 
     const currentLocation = window.location.pathname;
     console.log(currentLocation);
