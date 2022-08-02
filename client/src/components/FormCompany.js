@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../styles/form.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -12,6 +12,7 @@ import Divider from '@material-ui/core/Divider';
 
 import { connectWallet } from "../utils/wallet";
 import ipfs_mini from "../ipfs_mini";
+import { signupCompany } from '../utils/operation';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Getting Started', 'Company Details', 'Founders', 'Ownership', 'Company Terms', 'Costs', 'Sign and Submit'];
+    return ['Getting Started', 'Company Details', 'Company Terms', 'Costs', 'Sign and Submit'];
 }
 
 export const FormCompany = () => {
@@ -35,7 +36,8 @@ export const FormCompany = () => {
     const [error, seterror] = useState(null);
     const [success, setsuccess] = useState("");
     const [loading, setloading] = useState(false);
-    const [foundersIpfsList, setfoundersIpfsList] = useState([]);
+    const [companyValuation, setcompanyValuation] = useState();
+    const [companyDetailsCID, setcompanyDetailsCID] = useState();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
@@ -51,22 +53,24 @@ export const FormCompany = () => {
         startupState: "",
         startupCountry: "",
         startupWebsiteUrl: "",
-
-        founderFirstName: "",
-        founderLastName: "",
-        founderEmail: "",
-        founderNationality: "",
-        founderLinkedin: "",
-        founderDOB: "",
-        founderNumber: "",
-        founderAddress: "",
-        founderCity: "",
-        founderState: "",
-        founderZipCode: "",
-        founderCountry: "",
-
-        founderDetailsCID: "",
       });
+
+      useEffect(() => {
+          const onVerifyCompany = async () =>{
+            try{
+              // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
+              await signupCompany(companyDetailsCID, companyValuation, wallet);
+              alert("Transaction Confirmed! You are now an Accredited Investor");
+            }catch(error){
+              alert("Transaction Failed:", error.message);
+            }
+        
+            setloading(false);
+            
+          }
+          if(companyDetailsCID != null)
+            onVerifyCompany();
+      }, [companyDetailsCID]);
 
     const [wallet, setWallet] = useState(null);
     const handleConnectWallet = async () => {
@@ -97,49 +101,20 @@ export const FormCompany = () => {
             startupState: details["startupState"],
             startupCountry: details["startupCountry"],
             startupWebsiteUrl: details["startupWebsiteUrl"],
-            foundersIpfsList: foundersIpfsList
+            companyValuation: companyValuation
         }
-        await uploadDataIpfs(startupDetails, "startupDetails");
-        
+        await uploadDataIpfs(startupDetails);
+        console.log("hello")        
     }
 
-    const uploadDataIpfs = async(data, uploadType) => {
+    const uploadDataIpfs = async(data) => {
         ipfs_mini.addJSON(data, (err, hash) => {
             if (err)
                 console.error(err);
-            if(uploadType === "founderDetails"){
-                const tempArr = foundersIpfsList;
-                tempArr.push(hash);
-                setfoundersIpfsList(tempArr);
-            }
-            if(uploadType === "startupDetails")
-                setDetails(hash);
+            setcompanyDetailsCID(hash);
             
             setloading(false);
         });
-    }
-
-    async function handleFounderSubmit(e){
-        e.preventDefault();
-        console.log("add founder")
-        setloading(true);
-        const founderDetails = {
-            founderFirstName: details["founderFirstName"], 
-            founderLastName: details["founderLastName"], 
-            founderEmail: details["founderEmail"],
-            founderNationality: details["founderNationality"],
-            founderLinkedin: details["founderLinkedin"],
-            founderNumber: details["founderNumber"],
-            founderDOB: details["founderDOB"],
-            founderAddress: details["founderAddress"],
-            founderCity: details["founderCity"],
-            founderState: details["founderState"],
-            founderZipCode: details["founderZipCode"],
-            founderCountry: details["founderCountry"],
-        }
-        await uploadDataIpfs(founderDetails, "founderDetails")
-
-        document.getElementById("founderForm").reset();
     }
 
     return (
@@ -158,7 +133,6 @@ export const FormCompany = () => {
                 <div>
                     <div>
                         <Typography className={classes.instructions}>
-                            {/* {getStepContent(activeStep)} */}
                         <form onSubmit={handleSubmit}>
                             <div className={"container " + `${activeStep != 0 ? "hidden" : ""}`}>
                                 <h4 className='row fw-bold'>Getting Started</h4>
@@ -226,6 +200,14 @@ export const FormCompany = () => {
                                             setDetails({ ...details, linkedIn: ("https://linkedin.com/in/"+e.target.value) })
                                         } required/>
                                     </div>
+                                    <div className="mb-3 col-6">
+                                        <label for="exampleInputEmail1" className="form-label font13 fw-bold">Company Valuation</label>
+                                        <input type="number" className="form-control font13" id="exampleInputEmail1" 
+                                        aria-describedby="emailHelp" 
+                                        onChange={(e) =>{ setcompanyValuation(e.target.value);}}
+                                        required/>
+                                        {/* <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div> */}
+                                    </div>
                                     <div className="form-group">
                                         <label for="exampleFormControlTextarea1" className='fw-bold'>What will your company do?
                                             <span className='fw-normal text-secondary' style={{ fontSize: '10px' }}>(Required. In a few sentences, describe your products/services, how you plan to finance the company, and founder backgrounds.)</span>
@@ -279,11 +261,9 @@ export const FormCompany = () => {
                                 </form>
                             </div>
 
-                            <div className={"container " + `${activeStep != 3 ? "hidden" : ""}`}>
+                            {/* <div className={"container " + `${activeStep != 3 ? "hidden" : ""}`}>
                                 <h4 className='row fw-bold'>Titles and Ownership</h4>
-                                {/* <span className='row'>Assign titles and ownership amounts.</span> */}
                                 <form className='row rounded border p-4'>
-                                    {/* <h5>Title and Ownership</h5> */}
                                     <span className='mb-3' style={{ fontSize: '13px' }}>Assign title and ownership amount</span>
                                     <div className="col-4 mb-3">
                                         <label for="inputState" className="form-label font13 fw-bold">Stakeholder Name</label>
@@ -302,9 +282,9 @@ export const FormCompany = () => {
                                         <span className="input-group-text font13" id="basic-addon2">%</span>
                                     </div>
                                 </form>
-                            </div>
+                            </div> */}
 
-                            <div className={"container " + `${activeStep != 4 ? "hidden" : ""}`}>
+                            <div className={"container " + `${activeStep != 2 ? "hidden" : ""}`}>
                                 <h4 className='row fw-bold'>Company Terms</h4>
                                 <span className='row font15 text-secondary'>Here is the configuration for your company.</span>
                                 <table className="table mb-3 font13 mt-3">
@@ -359,7 +339,7 @@ export const FormCompany = () => {
                                 </div>
                             </div>
 
-                            <div className={"container " + `${activeStep != 5 ? "hidden" : ""}`}>
+                            <div className={"container " + `${activeStep != 3 ? "hidden" : ""}`}>
                                 <h4 className='row fw-bold'>Costs</h4>
                                 <div className='row border rounded text-center my-4'>
                                     <h3>$500</h3>
@@ -434,7 +414,7 @@ export const FormCompany = () => {
 
                             </div>
 
-                            <div className={"container " + `${activeStep != 6 ? "hidden" : ""}`}>
+                            <div className={"container " + `${activeStep != 4 ? "hidden" : ""}`}>
                                 <h4 className='fw-bold'>Agreement</h4>
                                 <span className='font15'>
                                     Before submitting, please review & accept the below mentioned documents and the terms and conditions. After submitting, you will be redirected to payment. After
@@ -469,121 +449,6 @@ export const FormCompany = () => {
                                 null
                             }
                         </form>
-                        <div className={"container " + `${activeStep != 2 ? "hidden" : ""}`}>
-                            <h4 className='row fw-bold'>Founders</h4>
-                            <span className='row font15 text-secondary'>This is where you can list co-founders if you have them. The co-founders you list here will join the Board of Directors.</span>
-                            <form id="founderForm" onSubmit={handleFounderSubmit} className='row rounded border mt-3 p-4'>
-                                <div className="col-4 mb-3">
-                                    <label for="inputState" className="form-label font13 fw-bold">First Name</label>
-                                    <input type="text" className="form-control font13" aria-label="First name"  
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderFirstName: e.target.value })
-                                      }/>
-                                </div>
-                                <div className="col-4 mb-3">
-                                    <label for="inputState" className="form-label font13 fw-bold">Last Name</label>
-                                    <input type="text" className="form-control font13" aria-label="Last name" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderLastName: e.target.value })
-                                      }/>
-                                </div>
-                                <div className="col-4 mb-3">
-                                    <label for="inputState" className="form-label font13 fw-bold">Email</label>
-                                    <input type="email" className="form-control font13" aria-label="Last name" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderEmail: e.target.value })
-                                      }/>
-                                </div>
-                                <div className="col-6 mb-3">
-                                    <label for="inputState" className="form-label font13 fw-bold">Nationality</label>
-                                    <select id="inputState" className="form-select font13" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderNationality: e.target.value })
-                                      }>
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                                <div className='col-6 mb-3'>
-                                    <label for="inputState" className="form-label font13 fw-bold">Personal Website
-                                        <span style={{ fontSize: '10px' }}>  ( GitHub, Linkedin, Twitter, or other profile )</span>
-                                    </label>
-                                    <input type="url" className="form-control font13" aria-label="Last name" placeholder='https://example.com' 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderLinkedin: e.target.value })
-                                      }/>
-
-                                </div>
-                                <div className="col-4 mb-3">
-                                    <label for="inputState" className="form-label font13 fw-bold">Date of Birth</label>
-                                    <input style={{ textTransform: 'uppercase' }} type="date" className="form-control font13" aria-label="Last name" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderDOB: e.target.value })
-                                      }/>
-                                </div>
-                                <div className='col-4 mb-3'>
-                                    <label for="inputState" className="form-label font13 fw-bold">Phone Number</label>
-                                    <div className="input-group font13">
-                                        <button className="btn btn-outline-secondary dropdown-toggle fitHeight p-1 m-auto font13" type="button" data-bs-toggle="dropdown" aria-expanded="false">+91</button>
-                                        <ul className="dropdown-menu firHeight">
-                                            <li><a className="dropdown-item" href="#">Action</a></li>
-                                            <li><a className="dropdown-item" href="#">Another action</a></li>
-                                            <li><a className="dropdown-item" href="#">Something else here</a></li>
-                                            <li><hr className="dropdown-divider" /></li>
-                                            <li><a className="dropdown-item" href="#">Separated link</a></li>
-                                        </ul>
-                                        <input type="number" className="form-control font13" aria-label="Text input with dropdown button" 
-                                        onChange={(e) =>
-                                            setDetails({ ...details, founderNumber: e.target.value })
-                                          }/>
-                                    </div>
-                                </div>
-                                <div className="col-12 mb-3">
-                                    <label for="inputAddress" className="form-label font13 fw-bold">Address</label>
-                                    <input type="text" className="form-control font13" id="inputAddress" placeholder="1234 Main St" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderAddress: e.target.value })
-                                      }/>
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputCity" className="form-label font13 fw-bold">City</label>
-                                    <input type="text" className="form-control font13" id="inputCity" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderCity: e.target.value })
-                                      }/>
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputZip" className="form-label font13 fw-bold">Zip Code</label>
-                                    <input type="text" className="form-control font13" id="inputZip" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderZipCode: e.target.value })
-                                      }/>
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputState" className="form-label font13 fw-bold">State</label>
-                                    <select id="inputState" className="form-select font13" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderState: e.target.value })
-                                      }>
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputState" className="form-label font13 fw-bold">Country</label>
-                                    <select id="inputState" className="form-select font13" 
-                                    onChange={(e) =>
-                                        setDetails({ ...details, founderCountry: e.target.value })
-                                      }>
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                                <div className='text-center mt-3'>
-                                    <button type="submit" className='btn btn-dark my-2'>{loading === true ? "Loading..." : "Add Founder"}</button>
-                                </div>
-                            </form>
-                        </div>
                         </Typography>
                         <div className='container d-flex justify-content-between my-4'>
                             <Button

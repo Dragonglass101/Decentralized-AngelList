@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { disconnectWallet, getActiveAccount } from '../utils/wallet';
 
 import searchIcon from '../images/search.png'
 import appleLogo from '../images/apple-logo.png'
@@ -12,6 +13,14 @@ import PaymentIcon from '@material-ui/icons/Payment';
 import SearchIcon from '@material-ui/icons/Search';
 
 export const NavFloating = () => {
+    const [wallet, setWallet] = useState(null);
+    const onDisConnectWallet = async () => {
+        console.log("Disconnecting");
+        await disconnectWallet();
+        const activeAccount = await getActiveAccount();
+        setWallet(activeAccount);
+        console.log("Disconnected");
+      };
     return (
         <>
             <nav className='d-flex justify-content-between align-items-center shadow rounded15 px-3' style={{ height: '70px', marginBottom: '30px' }}>
@@ -32,7 +41,7 @@ export const NavFloating = () => {
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
-                    <IconButton color='inherit'>
+                    <IconButton color='inherit' onClick={onDisConnectWallet}>
                         <ExitToAppRoundedIcon className='me-auto' />
                     </IconButton>
                 </div>
