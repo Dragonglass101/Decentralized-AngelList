@@ -229,3 +229,10 @@ color-green-spent {
 .background-highlight-selected{
     background-color: rgb(36, 42, 56) !important;
 }
+
+/* Playing with Charts  */
+.doughnut{
+    position:relative;
+    top:-30px;
+    left:-25px;
+}
