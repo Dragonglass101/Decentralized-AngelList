@@ -141,6 +141,16 @@ const CompanyNavbar = () => {
                             </ListItem>
                         </Link>
 
+                        <Link to="/profile-company" style={{ color: "inherit", textDecoration: 'unset' }}>
+                            <ListItem
+                                className={(currentLocation === "/profile-company" ? "highlight-karo" : "")}
+                                style={{ marginBottom: '10px' }} button key='Startups List'>
+                                <AccountCircleRoundedIcon className={(currentLocation === "/profile-company" ? "green-karo" : "") + " menu-icon-color"} />
+                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
+                                <span className={(currentLocation === "/profile-company" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Company Profile</span>
+                            </ListItem>
+                        </Link>
+
                         <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Cart'>
                                 <ShoppingCartRoundedIcon className="menu-icon-color" />
@@ -149,13 +159,7 @@ const CompanyNavbar = () => {
                             </ListItem>
                         </Link>
 
-                        <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Account'>
-                                <AccountCircleRoundedIcon className="menu-icon-color" />
-                                {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Account</span>
-                            </ListItem>
-                        </Link>
+
 
                     </List>
 
