@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link, useNavigate } from "react-router-dom";
+import { getRootStorage } from '../utils/Api';
+import { getActiveAccount, connectWallet } from '../utils/wallet';
 
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
@@ -23,6 +25,58 @@ import small_devils_logo from '../images/logo/small_devils_logo.png'
 import { Button } from '@material-ui/core';
 
 export const Home = () => {
+
+    const navigate = useNavigate();
+    const [connectAndLogin, setconnectAndLogin] = useState(false);
+
+    const [wallet, setWallet] = useState(null);
+    useEffect(() => {
+        if(wallet){
+            setconnectAndLogin(true);
+        }
+        (async () => {
+          const activeAccount = await getActiveAccount();
+          setWallet(activeAccount);
+        })();
+      }, []);
+
+      useEffect(() => {
+        const connectAndLoginFun = async () => {
+            const storage = await getRootStorage();
+
+            for( let companyAddress of storage["all_companies"]){
+                console.log(wallet.address, companyAddress)
+                if(wallet.address === companyAddress)
+                    navigate("/dashboard-company", true);
+            }
+            for( let investorAddress of storage["all_investors"]){
+                console.log(wallet.address, investorAddress)
+                if(wallet.address === investorAddress)
+                    navigate("/dashboard-investor");
+            }
+            for( let employeeAddress of storage["all_employee"]){
+                console.log(wallet.address, employeeAddress)
+                if(wallet.address === employeeAddress)
+                    navigate("/dashboard-company");
+            }
+        }
+        if(wallet && connectAndLogin)
+            connectAndLoginFun()
+      }, [wallet, connectAndLogin]);
+    
+    const handleConnectWallet = async () => {
+        const { wallet } = await connectWallet();
+        setWallet(wallet);
+    };
+
+    async function handleLogin(){
+        if(!wallet){
+            await handleConnectWallet();
+            setconnectAndLogin(true);
+        }
+        setconnectAndLogin(true);
+    }
+
     return (
         <>
             <nav className='d-flex justify-content-between align-items-center shadow rounded15 px-3' style={{ height: '70px', marginBottom: '30px' }}>
@@ -40,7 +94,7 @@ export const Home = () => {
                 </div>
 
                 <div className='d-flex justify-content-between align-items-center'>
-                    <Button className='mx-2' variant="outlined" color="primary">
+                    <Button className='mx-2' variant="outlined" color="primary" onClick={handleLogin}>
                         Log in
                     </Button>
                     <Link to='/sign-up'>

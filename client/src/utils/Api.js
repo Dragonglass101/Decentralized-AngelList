@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const contractAddress = "KT1UTMqaz9z8LzpRCwb19jPMKMfU9aHwFijf";
+const contractAddress = "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28";
 
 export const getBalance = async(address) => {
     try {
@@ -20,7 +20,7 @@ export const getRootStorage = async() => {
         const body = await axios.get(
             "https://api.jakartanet.tzkt.io" +
             "/v1/contracts/" +
-            "KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4" +
+            contractAddress +
             "/storage"
         );
 
