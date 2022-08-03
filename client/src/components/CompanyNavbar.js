@@ -22,6 +22,7 @@ import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
+import walletImg from '../images/wallet.png'
 
 import { connectWallet, getActiveAccount, disconnectWallet } from "../utils/wallet";
 import { Link, useNavigate } from "react-router-dom";
@@ -109,6 +110,59 @@ const CompanyNavbar = () => {
                             <h6 className="font10 m-0">Your tier: Premium</h6>
                         </div>
 
+                        <Button className="mt-3 d-block w-100" variant="outlined" color="primary" data-bs-toggle="modal" data-bs-target="#RaiseFund">
+                            Raise Fund
+                        </Button>
+
+                        {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#RaiseFund">
+                            Launch demo modal
+                        </button> */}
+
+                        <div className="modal fade" id="RaiseFund" tabindex="-1" aria-labelledby="RaiseFundLabel" aria-hidden="true">
+                            <div className="modal-dialog my-auto">
+                                <div className="modal-content">
+                                    <div className="modal-header bg-dark">
+                                        <h5 className="modal-title" id="RaiseFundLabel">Raise Funds</h5>
+                                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div className="modal-body">
+                                        {/* <div className="input-group mb-3">
+                                            <span className="input-group-text">Investment</span>
+                                            <input type="text" className="form-control" aria-label="Investment" />
+                                            <span className="input-group-text">ꜩ</span>
+                                        </div> */}
+
+                                        <select className="form-select mb-3" aria-label="Default select example">
+                                            <option selected>Select Investment Type</option>
+                                            <option value="1">SAFE</option>
+                                            <option value="2">Direct</option>
+                                            <option value="3">SAFT</option>
+                                        </select>
+
+                                        <div className="input-group mb-3">
+                                            <span className="input-group-text">Ownership</span>
+                                            <input type="text" className="form-control" aria-label="Ownership" />
+                                            <span className="input-group-text">%</span>
+                                        </div>
+
+                                        <div className="input-group mb-3">
+                                            <span className="input-group-text">Valuation Cap</span>
+                                            <input type="text" className="form-control" aria-label="Valuation Cap" />
+                                            <span className="input-group-text">ꜩ</span>
+                                        </div>
+
+
+
+
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" className="btn background-primary text-white">Raise</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <Divider className="mt-3" style={{ color: 'grey', backgroundColor: 'grey', marginBottom: 'auto' }} />
                         <h6 className="font10 ps-2 mt-4">GENERAL</h6>
                         <Link to="/dashboard-company" style={{ color: "inherit", textDecoration: 'unset' }}>
@@ -164,53 +218,15 @@ const CompanyNavbar = () => {
                     </List>
 
                     <List className="mx-auto" style={{ width: '90%' }}>
-                        <h6 className="font10 ps-2 mt-2">GENERAL</h6>
-                        <Link to="/dashboard-company" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem
-                                className={(currentLocation === "/dashboard-company" ? "highlight-karo" : "")}
-                                style={{ marginBottom: '10px' }} button key='Dashboard'>
-                                <HomeRoundedIcon className={(currentLocation === "/dashboard-company" ? "green-karo" : "") + " menu-icon-color"} />
-                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
-                                <span className={(currentLocation === "/dashboard-company" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Dashboard</span>
-                            </ListItem>
-                        </Link>
-
-                        <Link to="/investment-request" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem
-                                className={(currentLocation === "/investment-request" ? "highlight-karo" : "")}
-                                style={{ marginBottom: '10px' }} button key='Track Investments'>
-                                <ReceiptRoundedIcon className={(currentLocation === "/investment-request" ? "green-karo" : "") + " menu-icon-color"} />
-                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
-                                <span className={(currentLocation === "/investment-request" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Track Investments</span>
-                            </ListItem>
-                        </Link>
-
-                        <Link to="/startups-list-investor" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem
-                                className={(currentLocation === "/startups-list-investor" ? "highlight-karo" : "")}
-                                style={{ marginBottom: '10px' }} button key='Startups List'>
-                                <ListAltRoundedIcon className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " menu-icon-color"} />
-                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
-                                <span className={(currentLocation === "/startups-list-investor" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Startups List</span>
-                            </ListItem>
-                        </Link>
-
-                        <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Cart'>
-                                <ShoppingCartRoundedIcon className="menu-icon-color" />
-                                {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Cart</span>
-                            </ListItem>
-                        </Link>
-
-                        <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Account'>
-                                <AccountCircleRoundedIcon className="menu-icon-color" />
-                                {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Account</span>
-                            </ListItem>
-                        </Link>
-
+                        <div className="d-flex py-3 ps-4 my-2" style={{ borderRadius: '5px', backgroundColor: 'rgb(25, 33, 48)' }}>
+                            <div style={{ width: '50%' }}>
+                                <img style={{ width: '50%', height: 'fit-content' }} src={walletImg} />
+                            </div>
+                            <div>
+                                <h6 className="font15 menu-item-color mb-1">Wallet</h6>
+                                <h6 className="font10 m-0">36,000ꜩ</h6>
+                            </div>
+                        </div>
                     </List>
 
 

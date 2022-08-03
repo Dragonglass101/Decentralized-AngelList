@@ -40,6 +40,78 @@ import TrendingUpRoundedIcon from '@material-ui/icons/TrendingUpRounded';
 import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
+// Step 2 - Include the react-fusioncharts component
+import ReactFC from "react-fusioncharts";
+
+// Step 3 - Include the fusioncharts library
+import FusionCharts from "fusioncharts";
+
+// Step 4 - Include the chart type
+import Column2D from "fusioncharts/fusioncharts.charts";
+
+// Step 5 - Include the theme as fusion
+import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+
+// Step 6 - Adding the chart and theme as dependency to the core fusioncharts
+ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
+
+const chartData = [
+  {
+    label: "Founders",
+    value: "285040"
+  },
+  {
+    label: "Employees",
+    value: "146330"
+  },
+  {
+    label: "Investor A",
+    value: "105070"
+  },
+  {
+    label: "Investor B",
+    value: "49100"
+  },
+  {
+    label: "Option Pool",
+    value: "49100"
+  }
+];
+
+// Create a JSON object to store the chart configurations
+const chartConfigs = {
+  type: "doughnut2d", // The chart type
+  width: "50%", // Width of the chart
+  height: "400", // Height of the chart
+  dataFormat: "json", // Data type
+  dataSource: {
+    // Chart Configuration
+    chart: {
+      // caption: "Companies Market Share",
+      // subCaption: "Last year",
+      numberPrefix: "$",
+      bgColor: "#fbfafa",
+      startingAngle: "310",
+      showLegend: "1",
+      defaultCenterLabel: "Total Shares: $64.08K",
+      centerLabel: "$label: $value",
+      centerLabelBold: "1",
+      enableSmartLabels: "0",
+      showLegend:'0',
+      // showTooltip: "0",
+      // showPercentValues: "1",
+      valuePosition:'inside',
+      labelPosition: "inside",
+      minAngleForLabel: "360",
+      showPercentInTooltip: "1",
+      decimals: "0",
+      theme: "fusion"
+    },
+    // Chart Data - from step 2
+    data: chartData
+  }
+};
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -110,14 +182,119 @@ export const DashboardCompany = () => {
 
           <div className={classes.padded}>
 
-            <div className='d-flex'>
-              <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{ width: '20%' }}>
-                <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
-                <h5 className='font13 fw-bold text-secondary'>Balance</h5>
-                <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
+            <div className='d-flex align-items-center'>
+
+              <div className='rounded15' style={{ width: '50%', cursor: 'pointer' }}>
+                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Stocks Owned</h6>
+                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
+                  <thead className='table-light'>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Stakeholder</th>
+                      <th scope="col">Shares Owned</th>
+                      <th scope="col">Ownership</th>
+                    </tr>
+                  </thead>
+                  <tbody className='font13 text-secondary'>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
 
+              <div style={{ height: '340px', overflow: 'hidden' }}>
+                <ReactFC className='doughnut' {...chartConfigs} />
+              </div>
 
+            </div>
+
+            <div className='d-flex mt-5'>
+
+              <div className='bg-white rounded15' style={{ width: '80%', cursor: 'pointer' }}>
+                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Cap Table</h6>
+                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
+                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
+                  <thead className='table-light'>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Stakeholder</th>
+                      <th scope="col">Common Shares</th>
+                      <th scope="col">Common Options</th>
+                      <th scope="col">Preferred Shares</th>
+                      <th scope="col">Total Shares</th>
+                      <th scope="col">Ownership</th>
+                    </tr>
+                  </thead>
+                  <tbody className='font13 text-secondary'>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle sidebar-color'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle sidebar-color'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                      </th>
+                      <td className='align-middle'>Company Name</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle'>2,000,000</td>
+                      <td className='align-middle sidebar-color'>2,000,000</td>
+                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className='d-flex'>
               <div className='bg-white rounded15' style={{ width: '80%', cursor: 'pointer' }}>
                 <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Recent Transactions</h6>
                 {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
@@ -160,50 +337,10 @@ export const DashboardCompany = () => {
               </div>
             </div>
 
-            <div className='d-flex mt-5'>
 
-              <div className='bg-white rounded15' style={{ width: '70%', cursor: 'pointer' }}>
-                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Stocks Owned</h6>
-                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
-                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                  <thead className='table-light'>
-                    <tr>
-                      <th scope="col"></th>
-                      <th scope="col">Stakeholder</th>
-                      <th scope="col">Shares Owned</th>
-                      <th scope="col">Ownership</th>
-                    </tr>
-                  </thead>
-                  <tbody className='font13 text-secondary'>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
           </div>
+
+
 
           {/* <div className='d-flex align-items-start'>
 
