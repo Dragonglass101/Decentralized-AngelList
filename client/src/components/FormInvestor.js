@@ -5,7 +5,7 @@ import Select from "react-select";
 import Button from '@material-ui/core/Button';
 
 import { connectWallet } from "../utils/wallet";
-import {verifyInvestor} from "../utils/operation"
+import { signupInvestor } from "../utils/operation";
 
 import ipfs_api from "../ipfs_api";
 import ipfs_mini from "../ipfs_mini";
@@ -25,7 +25,6 @@ export const FormInvestor = () => {
     name: "",         
     number: 0,        
     percentageNetworth: 2,
-    walletID: "",
 
     bufferPhoto: null,
     bufferResume: null,
@@ -42,11 +41,10 @@ export const FormInvestor = () => {
 
   useEffect(() => {
     console.log(investorDetailsCID)
-      const onverifyInvestor = async () =>{
+      const investorSignup = async () =>{
         console.log(photoCID, resumeCID)
         try{
-          // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
-          await verifyInvestor(details["investorDetailsCID"],wallet);
+          await signupInvestor(investorDetailsCID);
           alert("Transaction Confirmed! You are now an Accredited Investor");
         }catch(error){
           alert("Transaction Failed:", error.message);
@@ -56,7 +54,7 @@ export const FormInvestor = () => {
         
       }
       if(investorDetailsCID != null)
-        onverifyInvestor();
+        investorSignup();
   }, [investorDetailsCID]);
   useEffect(() => {
     console.log(photoCID, resumeCID);

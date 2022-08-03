@@ -1,8 +1,7 @@
 import { tezos } from "./tezos";
 
-export const verifyInvestor = async(
-    investorDetailsCID,
-    walletID
+export const signupInvestor = async(
+    investorDetailsCID
 ) => {
     try {
         const contract = await tezos.wallet.at(
@@ -11,9 +10,8 @@ export const verifyInvestor = async(
         );
 
         const op = await contract.methods
-            .verifyInvestor(
-                investorDetailsCID,
-                walletID
+            .investor_signup(
+                investorDetailsCID
             )
             .send({
                 amount: 50,
@@ -28,8 +26,7 @@ export const verifyInvestor = async(
 
 export const signupCompany = async(
     startupDetailsCID,
-    companyValuation,
-    walletID
+    companyValuation
 ) => {
     try {
         const contract = await tezos.wallet.at(
@@ -40,8 +37,7 @@ export const signupCompany = async(
         const op = await contract.methods
             .company_signup(
                 startupDetailsCID,
-                companyValuation,
-                walletID
+                companyValuation
             )
             .send({
                 amount: 50,

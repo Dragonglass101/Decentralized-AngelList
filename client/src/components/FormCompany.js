@@ -59,8 +59,8 @@ export const FormCompany = () => {
           const onVerifyCompany = async () =>{
             try{
               // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
-              await signupCompany(companyDetailsCID, companyValuation, wallet);
-              alert("Transaction Confirmed! You are now an Accredited Investor");
+              await signupCompany(companyDetailsCID, companyValuation);
+              alert("Transaction Confirmed! You are now a verified company");
             }catch(error){
               alert("Transaction Failed:", error.message);
             }
