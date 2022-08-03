@@ -7,7 +7,7 @@ export const verifyInvestor = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28"
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
         );
 
         const op = await contract.methods
@@ -34,7 +34,7 @@ export const signupCompany = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28"
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
         );
 
         const op = await contract.methods
@@ -72,7 +72,7 @@ export const addFounders = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28"
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
         );
 
         const op = await contract.methods
@@ -99,7 +99,7 @@ export const raiseFunds = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28"
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
         );
 
         const op = await contract.methods
