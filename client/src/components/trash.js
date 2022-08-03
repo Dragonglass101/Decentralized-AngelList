@@ -77,10 +77,3 @@ export const Trash = () => {
         </>
     )
 }
-
-
-
-
-
-
-

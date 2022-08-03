@@ -7,8 +7,6 @@ export const getBalance = async(address) => {
         const body = await axios.get(
             `https://api.jakartanet.tzkt.io/v1/accounts/${address}/balance`
         );
-
-        console.log(body);
         return body.data;
     } catch (error) {
         return error;
