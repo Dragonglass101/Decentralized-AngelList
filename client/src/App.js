@@ -18,6 +18,7 @@ import { MakePayment } from "./components/MakePayment"
 import { AddFounders } from "./components/AddFounders";
 import { ProfileCompany } from "./components/ProfileCompany"
 import { CapTable } from "./components/CapTable"
+import { TrackTransactionsCompany } from "./components/TrackTransactionsCompany"
 
 import { Trash } from "./components/Trash"
 // import { SideNav } from "./components/SideNav"
@@ -47,6 +48,7 @@ import { Test } from "./components/Test";
           <Route path='/profile-company' element={<ProfileCompany/>} />
           <Route path='/trash' element={<Trash/>} />
           <Route path='/cap-table' element={<CapTable/>} />
+          <Route path='/track-transactions-company' element={<TrackTransactionsCompany/>} />
         </Routes>
     </Router>
     );
