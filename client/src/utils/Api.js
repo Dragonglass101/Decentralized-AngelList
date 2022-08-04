@@ -29,10 +29,21 @@ export const getRootStorage = async() => {
     }
 }
 
-export const getBigMapByID = async(bigMapId) => {
+export const getAllKeysBigMapByID = async(bigMapId) => {
     try {
         const body = await axios.get(
-            `https://api.jakartanet.tzkt.io/v1/bigmaps/${bigMapId}`
+            `https://api.jakartanet.tzkt.io/v1/bigmaps/${bigMapId}/keys`
+        )
+        return body.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getKeyBigMapByID = async(bigMapId, key) => {
+    try {
+        const body = await axios.get(
+            `https://api.jakartanet.tzkt.io/v1/bigmaps/${bigMapId}/keys/${key}`
         )
         return body.data;
     } catch (error) {

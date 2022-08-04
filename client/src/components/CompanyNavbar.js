@@ -16,7 +16,7 @@ import walletImg from '../images/wallet.png'
 
 import { getActiveAccount } from "../utils/wallet";
 import { Link } from "react-router-dom";
-import { getBalance } from "../utils/Api";
+import { getBalance, getAllKeysBigMapByID, getRootStorage, getKeyBigMapByID } from "../utils/Api";
 import { useRef } from "react";
 import { raiseFunds } from "../utils/operation";
 
@@ -74,6 +74,8 @@ const CompanyNavbar = () => {
     const ownershipRaised = useRef();
     const typeOfInvestement = useRef();
 
+    const companyBigMapID = 64865;
+
     const [wallet, setWallet] = useState(null);
     useEffect(() => {
         if(!wallet){
@@ -81,6 +83,9 @@ const CompanyNavbar = () => {
             const activeAccount = await getActiveAccount();
             setWallet(activeAccount);
         })();}
+        else{
+
+        }
       }, []);
     
     useEffect(() => {
@@ -105,7 +110,6 @@ const CompanyNavbar = () => {
         setLoading(false);
     }
     
-
     const currentLocation = window.location.pathname;
     document.body.style.background = 'rgb(250,250,252)';
     return (
@@ -229,11 +233,12 @@ const CompanyNavbar = () => {
                             </ListItem>
                         </Link>
 
-                        <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Cart'>
+                        <Link to="/add-founders" style={{ color: "inherit", textDecoration: 'unset' }}>
+                            <ListItem 
+                            className={(currentLocation === "/add-founders" ? "highlight-karo" : "")} style={{ marginBottom: '10px' }} button key='Add founders'>
                                 <ShoppingCartRoundedIcon className="menu-icon-color" />
                                 {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Cart</span>
+                                <span className={(currentLocation === "/add-founders" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Add Founders</span>
                             </ListItem>
                         </Link>
 

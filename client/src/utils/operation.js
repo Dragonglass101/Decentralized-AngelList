@@ -49,9 +49,10 @@ export const signupCompany = async(
         throw error;
     }
 };
+
 /*
 common_options sp.TNat
-common_shares sp.TNat
+common_shares sp.TNat 
 fd_percent sp.TNat
 fd_shares sp.TNat
 investment sp.TMutez
@@ -60,10 +61,14 @@ stakeHolder_name sp.TString
 stakeHolder_profile_Id sp.TString
 stakeHolder_type sp.Tstring
 */
-
 export const addFounders = async(
-    founderDetailsCID,
-    walletID
+    commonOptions,
+    commonShares,
+    investment,
+    preferredShares,
+    stakeHolderName,
+    stakeHolderProfileId,
+    stakeHolderType
 ) => {
     try {
         const contract = await tezos.wallet.at(
@@ -73,9 +78,8 @@ export const addFounders = async(
 
         const op = await contract.methods
             .add_member_to_company(
-                5, 5, 0, 0, 1000, 10, "Anurag",
-                founderDetailsCID,
-                "founder"
+                commonOptions, commonShares, 0, 0, investment, preferredShares, stakeHolderName,
+                stakeHolderProfileId, stakeHolderType
             )
             .send({
                 amount: 0,
