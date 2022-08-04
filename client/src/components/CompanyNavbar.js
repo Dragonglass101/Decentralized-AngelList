@@ -5,20 +5,10 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import SearchIcon from '@material-ui/icons/Search';
-import ReceiptRoundedIcon from '@material-ui/icons/ReceiptRounded';
-import AssessmentIcon from '@material-ui/icons/Assessment';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import MenuIcon from '@material-ui/icons/Menu';
-import appleLogo from '../images/apple-logo.png'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
@@ -27,10 +17,11 @@ import AssessmentRoundedIcon from '@material-ui/icons/AssessmentRounded';
 
 import walletImg from '../images/wallet.png'
 
-import { connectWallet, getActiveAccount, disconnectWallet } from "../utils/wallet";
-import { Link, useNavigate } from "react-router-dom";
-import { Wallet } from "@taquito/taquito";
-import { Avatar } from "@material-ui/core";
+import { getActiveAccount } from "../utils/wallet";
+import { Link } from "react-router-dom";
+import { getBalance } from "../utils/Api";
+import { useRef } from "react";
+import { raiseFunds } from "../utils/operation";
 
 
 const drawerWidth = 240;
@@ -79,10 +70,46 @@ const useStyles = makeStyles((theme) => ({
 const CompanyNavbar = () => {
     const classes = useStyles();
     const [currentindex, setcurrentindex] = useState(-1)
+    const [loading, setLoading] = useState(false);
+    const [balance, setbalance] = useState(null)
+
+    const investementRaised = useRef();
+    const ownershipRaised = useRef();
+    const typeOfInvestement = useRef();
+
+    const [wallet, setWallet] = useState(null);
+    useEffect(() => {
+        if(!wallet){
+            (async () => {
+            const activeAccount = await getActiveAccount();
+            setWallet(activeAccount);
+        })();}
+      }, []);
+    
+    useEffect(() => {
+      const retrieveBalance = async () => {
+        const bal = await getBalance(wallet.address);
+        setbalance(bal)
+      }
+      if(wallet && !balance)
+        retrieveBalance();
+    }, [wallet])
+
+    async function handleRaiseFund(){
+        console.log(typeof Number(investementRaised.current.value), typeof Number(ownershipRaised.current.value), typeof typeOfInvestement.current.value);
+        setLoading(true)
+        try{
+            await raiseFunds(Number(investementRaised.current.value), Number(ownershipRaised.current.value), typeOfInvestement.current.value);
+            alert("Transaction Confirmed! Fund has been raised");
+        }catch(error){
+            alert("Transaction Failed:", error.message);
+        }
+    
+        setLoading(false);
+    }
+    
 
     const currentLocation = window.location.pathname;
-    console.log(currentLocation);
-
     document.body.style.background = 'rgb(250,250,252)';
     return (
         <>
@@ -135,32 +162,29 @@ const CompanyNavbar = () => {
                                             <span className="input-group-text">ꜩ</span>
                                         </div> */}
 
-                                        <select className="form-select mb-3" aria-label="Default select example">
+                                        <select ref={typeOfInvestement} className="form-select mb-3" aria-label="Default select example">
                                             <option selected>Select Investment Type</option>
-                                            <option value="1">SAFE</option>
-                                            <option value="2">Direct</option>
-                                            <option value="3">SAFT</option>
+                                            <option value="SAFE">SAFE</option>
+                                            <option value="DirectEquity">Direct</option>
+                                            <option value="SAFT">SAFT</option>
                                         </select>
 
                                         <div className="input-group mb-3">
                                             <span className="input-group-text">Ownership</span>
-                                            <input type="text" className="form-control" aria-label="Ownership" />
+                                            <input ref={ownershipRaised} type="number" className="form-control" aria-label="Ownership" />
                                             <span className="input-group-text">%</span>
                                         </div>
 
                                         <div className="input-group mb-3">
-                                            <span className="input-group-text">Valuation Cap</span>
-                                            <input type="text" className="form-control" aria-label="Valuation Cap" />
+                                            <span className="input-group-text">Investement</span>
+                                            <input ref={investementRaised} type="number" className="form-control" aria-label="Valuation Cap" />
                                             <span className="input-group-text">ꜩ</span>
                                         </div>
-
-
-
 
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" className="btn background-primary text-white">Raise</button>
+                                        <button onClick={handleRaiseFund} type="button" className="btn background-primary text-white">{loading ? "loading..." : "Raise"}</button>
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +253,7 @@ const CompanyNavbar = () => {
                             </div>
                             <div>
                                 <h6 className="font15 menu-item-color mb-1">Wallet</h6>
-                                <h6 className="font13 m-0">36,000ꜩ</h6>
+                                <h6 className="font13 m-0"> {(balance - (balance%10000))/1000000} ꜩ</h6>
                             </div>
                         </div>
                     </List>

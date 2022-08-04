@@ -237,10 +237,3 @@ export const Trash = () => {
         </>
     )
 }
-
-
-
-
-
-
-

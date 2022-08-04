@@ -14,8 +14,10 @@ import SearchIcon from '@material-ui/icons/Search';
 
 import devils_logo_img from '../images/logo/devils_logo_800px_trans.png'
 import small_devils_logo from '../images/logo/small_devils_logo.png'
+import { useNavigate } from 'react-router-dom';
 
 export const NavFloating = () => {
+    const navigate = useNavigate();
     const [wallet, setWallet] = useState(null);
     const onDisConnectWallet = async () => {
         console.log("Disconnecting");
@@ -23,6 +25,7 @@ export const NavFloating = () => {
         const activeAccount = await getActiveAccount();
         setWallet(activeAccount);
         console.log("Disconnected");
+        navigate("/");
       };
     return (
         <>

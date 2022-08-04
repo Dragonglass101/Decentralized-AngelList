@@ -1,19 +1,17 @@
 import { tezos } from "./tezos";
 
-export const verifyInvestor = async(
-    investorDetailsCID,
-    walletID
+export const signupInvestor = async(
+    investorDetailsCID
 ) => {
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28"
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
         );
 
         const op = await contract.methods
-            .verifyInvestor(
-                investorDetailsCID,
-                walletID
+            .investor_signup(
+                investorDetailsCID
             )
             .send({
                 amount: 50,
@@ -28,20 +26,18 @@ export const verifyInvestor = async(
 
 export const signupCompany = async(
     startupDetailsCID,
-    companyValuation,
-    walletID
+    companyValuation
 ) => {
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28"
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
         );
 
         const op = await contract.methods
             .company_signup(
                 startupDetailsCID,
-                companyValuation,
-                walletID
+                companyValuation
             )
             .send({
                 amount: 50,
@@ -72,7 +68,7 @@ export const addFounders = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1NVPnVfJGAfJETT7AJdLSgUHvtckAX9r28"
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
         );
 
         const op = await contract.methods
@@ -80,6 +76,31 @@ export const addFounders = async(
                 5, 5, 0, 0, 1000, 10, "Anurag",
                 founderDetailsCID,
                 "founder"
+            )
+            .send({
+                amount: 0,
+                mutez: false,
+            });
+        await op.confirmation(1);
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+};
+
+
+export const raiseFunds = async(
+    investment, ownership, type
+) => {
+    try {
+        const contract = await tezos.wallet.at(
+            //Contract Address
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
+        );
+
+        const op = await contract.methods
+            .raise_fund_for_company(
+                investment, ownership, type
             )
             .send({
                 amount: 0,

@@ -10,7 +10,7 @@
         "deploy": "node ./utils/ConseilJsUtils/deployContract.js",
         "get-entry-points": "bash ./utils/scripts/getEntryPoints.sh",
         "client-install": "npm install --prefix client",
-        "naked": "npm start --prefix client"
+        "dapp": "npm start --prefix client"
     },
     "repository": {
         "type": "git",

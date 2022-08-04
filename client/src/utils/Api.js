@@ -1,14 +1,12 @@
 import axios from "axios"
 
-const contractAddress = "KT1UTMqaz9z8LzpRCwb19jPMKMfU9aHwFijf";
+const contractAddress = "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T";
 
 export const getBalance = async(address) => {
     try {
         const body = await axios.get(
             `https://api.jakartanet.tzkt.io/v1/accounts/${address}/balance`
         );
-
-        console.log(body);
         return body.data;
     } catch (error) {
         return error;
@@ -20,7 +18,7 @@ export const getRootStorage = async() => {
         const body = await axios.get(
             "https://api.jakartanet.tzkt.io" +
             "/v1/contracts/" +
-            "KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4" +
+            contractAddress +
             "/storage"
         );
 
