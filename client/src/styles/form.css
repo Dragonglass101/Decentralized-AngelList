@@ -234,9 +234,18 @@ color-green-spent {
     background-color: rgb(36, 42, 56) !important;
 }
 
+.color-purple-border{
+    border-color: rgb(18, 24, 39) !important;
+    border: 2px solid  !important;
+    border-radius: 10px;
+    color:rgb(18, 24, 39) !important;
+    background: transparent !important;
+}
+
 /* Playing with Charts  */
 .doughnut{
     position:relative;
     top:-30px;
     left:-25px;
 }
+
