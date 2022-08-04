@@ -22,6 +22,9 @@ import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
+
+import AssessmentRoundedIcon from '@material-ui/icons/AssessmentRounded';
+
 import walletImg from '../images/wallet.png'
 
 import { connectWallet, getActiveAccount, disconnectWallet } from "../utils/wallet";
@@ -205,11 +208,13 @@ const CompanyNavbar = () => {
                             </ListItem>
                         </Link>
 
-                        <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Cart'>
-                                <ShoppingCartRoundedIcon className="menu-icon-color" />
-                                {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Cart</span>
+                        <Link to="/cap-table" style={{ color: "inherit", textDecoration: 'unset' }}>
+                            <ListItem
+                                className={(currentLocation === "/cap-table" ? "highlight-karo" : "")}
+                                style={{ marginBottom: '10px' }} button key='Startups List'>
+                                <AssessmentRoundedIcon className={(currentLocation === "/cap-table" ? "green-karo" : "") + " menu-icon-color"} />
+                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
+                                <span className={(currentLocation === "/cap-table" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Cap Table</span>
                             </ListItem>
                         </Link>
 
@@ -224,7 +229,7 @@ const CompanyNavbar = () => {
                             </div>
                             <div>
                                 <h6 className="font15 menu-item-color mb-1">Wallet</h6>
-                                <h6 className="font10 m-0">36,000ꜩ</h6>
+                                <h6 className="font13 m-0">36,000ꜩ</h6>
                             </div>
                         </div>
                     </List>

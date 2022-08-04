@@ -17,6 +17,7 @@ import { ChatRoom } from "./components/ChatRoom"
 import { MakePayment } from "./components/MakePayment"
 import { AddFounders } from "./components/AddFounders";
 import { ProfileCompany } from "./components/ProfileCompany"
+import { CapTable } from "./components/CapTable"
 
 import { Trash } from "./components/Trash"
 // import { SideNav } from "./components/SideNav"
@@ -45,6 +46,7 @@ import { Test } from "./components/Test";
           <Route path='/make-payment' element={<MakePayment/>} />
           <Route path='/profile-company' element={<ProfileCompany/>} />
           <Route path='/trash' element={<Trash/>} />
+          <Route path='/cap-table' element={<CapTable/>} />
         </Routes>
     </Router>
     );
