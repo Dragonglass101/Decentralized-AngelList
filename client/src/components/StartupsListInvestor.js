@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,6 +14,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import SearchIcon from '@material-ui/icons/Search';
+import { getRootStorage } from '../utils/Api';
 
 const drawerWidth = 240;
 
@@ -63,16 +64,19 @@ const useStyles = makeStyles((theme) => ({
 
 export const StartupsListInvestor = () => {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
     const [age, setAge] = React.useState('');
+    const [storage, setstorage] = useState();
+
+    useEffect(() => {
+      const retrieveStorage = async () => {
+        const st = await getRootStorage();
+        console.log(st);
+        setstorage(st);
+      }
+      if(!storage)
+        retrieveStorage();
+    }, [])
+    
 
     const handleChange = (event) => {
         setAge(event.target.value);

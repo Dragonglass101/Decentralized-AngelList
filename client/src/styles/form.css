@@ -218,6 +218,10 @@ color-green-spent {
     background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
 }
 
+.color-chat-request{
+    color: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%) !important;
+}
+
 .background-accept{
     background: rgb(37, 186, 168) !important;
 }

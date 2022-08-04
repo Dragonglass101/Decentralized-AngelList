@@ -296,7 +296,7 @@ export const AddFounders = () => {
                                 </div>
                                 <div className="col-md-6 mb-3">
                                     <label for="inputstakeholdertype" className="form-label font13 fw-bold">Stakeholder Type</label>
-                                    <input type="number" className="form-control font13" id="inputstakeholdertype" 
+                                    <input type="text" className="form-control font13" id="inputstakeholdertype" 
                                     onChange={(e) =>
                                         setDetails({ ...details, stakeHolderType: e.target.value })
                                     } required/>
