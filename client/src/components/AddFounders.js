@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import Navbar from './InvestorNavbar'
+import CompanyNavbar from './CompanyNavbar';
 import NavFloating from './NavFloating'
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
 }));
+
 // stakeHolder_name = sp.TString, stakeHolder_profile_Id = sp.TString, stakeHolder_type = sp.TString, 
 // investment = sp.TMutez, common_shares = sp.TNat, common_options = sp.TNat,
 // preferred_shares = sp.TNat, fd_shares = sp.TNat, fd_percent = sp.TNat
@@ -65,8 +66,14 @@ export const AddFounders = () => {
     useEffect(() => {
         const onVerifyFounder = async () =>{
           try{
-            // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
-            await addFounders(founderDetailsCID, wallet);
+            await addFounders(details["commonOptions"], 
+                                details["commonShares"], 
+                                details["investement"], 
+                                details["prefferedShares"], 
+                                (details["founderFirstName"] + " " + details["founderLastName"]),
+                                founderDetailsCID,
+                                details["stakeHolderType"]
+                                );
             alert("Transaction Confirmed! You are now an Accredited Investor");
           }catch(error){
             alert("Transaction Failed:", error.message);
@@ -97,7 +104,13 @@ export const AddFounders = () => {
         founderCity: "",
         founderState: "",
         founderZipCode: "",
-        founderCountry: ""
+        founderCountry: "",
+
+        commonShares: null,
+        commonOptions: null,
+        prefferedShares: null,
+        investement: null,
+        stakeHolderType: null
     });
 
     const uploadDataIpfs = async(data) => {
@@ -105,8 +118,6 @@ export const AddFounders = () => {
             if (err)
                 console.error(err);
             setfounderDetailsCID(hash);
-            
-            setloading(false);
         });
     }
 
@@ -140,7 +151,7 @@ export const AddFounders = () => {
         <AppBar position="fixed" className={classes.appBar} required>
 
         </AppBar>
-        <Navbar />
+        <CompanyNavbar />
 
         <main className={classes.content} required>
             <NavFloating />
@@ -255,13 +266,47 @@ export const AddFounders = () => {
                                         <option>...</option>
                                     </select>
                                 </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputcommonshares" className="form-label font13 fw-bold">Common Shares</label>
+                                    <input type="number" className="form-control font13" id="inputcommonshares" 
+                                    onChange={(e) =>
+                                        setDetails({ ...details, commonShares: e.target.value })
+                                    } required/>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputcommonoptions" className="form-label font13 fw-bold">Common Options</label>
+                                    <input type="number" className="form-control font13" id="inputcommonoptions" 
+                                    onChange={(e) =>
+                                        setDetails({ ...details, commonOptions: e.target.value })
+                                    } required/>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputprefferedshare" className="form-label font13 fw-bold">Preffered Shares</label>
+                                    <input type="number" className="form-control font13" id="inputprefferedshare" 
+                                    onChange={(e) =>
+                                        setDetails({ ...details, prefferedShares: e.target.value })
+                                    } required/>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputinvestement" className="form-label font13 fw-bold">Investement</label>
+                                    <input type="number" className="form-control font13" id="inputinvestement" 
+                                    onChange={(e) =>
+                                        setDetails({ ...details, investement: e.target.value })
+                                    } required/>
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputstakeholdertype" className="form-label font13 fw-bold">Stakeholder Type</label>
+                                    <input type="text" className="form-control font13" id="inputstakeholdertype" 
+                                    onChange={(e) =>
+                                        setDetails({ ...details, stakeHolderType: e.target.value })
+                                    } required/>
+                                </div>
                                 <div className='text-center mt-3'>
-                                    <button type="submit" className='btn btn-dark my-2'>{loading === true ? "Loading..." : "Add Founder"}</button>
+                                    <button type="submit" className='btn btn-dark my-2'>{loading === true ? "Loading..." : "Add"}</button>
                                 </div>
                             </form>
                         </div>
-            </div>
-
+                </div>
         </main>
     </div>
 </>

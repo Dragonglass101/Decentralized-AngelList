@@ -49,21 +49,18 @@ export const signupCompany = async(
         throw error;
     }
 };
-/*
-common_options sp.TNat
-common_shares sp.TNat
-fd_percent sp.TNat
-fd_shares sp.TNat
-investment sp.TMutez
-preferred_shares sp.TNat
-stakeHolder_name sp.TString
-stakeHolder_profile_Id sp.TString
-stakeHolder_type sp.Tstring
-*/
 
+/*
+common_options sp.TNat  common_shares sp.TNat   fd_percent sp.TNat  fd_shares sp.TNat  investment sp.TMutez  preferred_shares sp.TNat  stakeHolder_name sp.TString  stakeHolder_profile_Id sp.TString  stakeHolder_type sp.Tstring
+*/
 export const addFounders = async(
-    founderDetailsCID,
-    walletID
+    commonOptions,
+    commonShares,
+    investment,
+    preferredShares,
+    stakeHolderName,
+    stakeHolderProfileId,
+    stakeHolderType
 ) => {
     try {
         const contract = await tezos.wallet.at(
@@ -73,9 +70,8 @@ export const addFounders = async(
 
         const op = await contract.methods
             .add_member_to_company(
-                5, 5, 0, 0, 1000, 10, "Anurag",
-                founderDetailsCID,
-                "founder"
+                commonOptions, commonShares, 0, 0, investment, preferredShares, stakeHolderName,
+                stakeHolderProfileId, stakeHolderType
             )
             .send({
                 amount: 0,
@@ -112,3 +108,26 @@ export const raiseFunds = async(
         throw error;
     }
 };
+
+// company_wallet = sp.TAddress, investment = sp.TMutez, valuation_cap = sp.TMutez, direct_equity = sp.TNat, type = sp.TString)
+export const requestFromInvestor = async(companyWallet, directEquity, investment, type, valuationCap) => {
+    try {
+        const contract = await tezos.wallet.at(
+            //Contract Address
+            "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T"
+        );
+
+        const op = await contract.methods
+            .raise_fund_for_company(
+                companyWallet, directEquity, investment, type, valuationCap
+            )
+            .send({
+                amount: 0,
+                mutez: false,
+            });
+        await op.confirmation(1);
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+}
