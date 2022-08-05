@@ -261,29 +261,6 @@ export const FormCompany = () => {
                                 </form>
                             </div>
 
-                            {/* <div className={"container " + `${activeStep != 3 ? "hidden" : ""}`}>
-                                <h4 className='row fw-bold'>Titles and Ownership</h4>
-                                <form className='row rounded border p-4'>
-                                    <span className='mb-3' style={{ fontSize: '13px' }}>Assign title and ownership amount</span>
-                                    <div className="col-4 mb-3">
-                                        <label for="inputState" className="form-label font13 fw-bold">Stakeholder Name</label>
-                                        <input type="text" className="form-control font13" aria-label="First name" placeholder='Founder-XX' disabled />
-                                    </div>
-
-                                    <div className="col-4 mb-3">
-                                        <label for="inputState" className="form-label font13 fw-bold">Appointed Officer Role</label>
-                                        <select id="inputState" className="form-select font13">
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
-                                        </select>
-                                    </div>
-                                    <div className="input-group align-items-end col-3 mb-3">
-                                        <input type="text" className="form-control font13" placeholder="Ownership" aria-label="Recipient's username" aria-describedby="basic-addon2" />
-                                        <span className="input-group-text font13" id="basic-addon2">%</span>
-                                    </div>
-                                </form>
-                            </div> */}
-
                             <div className={"container " + `${activeStep != 2 ? "hidden" : ""}`}>
                                 <h4 className='row fw-bold'>Company Terms</h4>
                                 <span className='row font15 text-secondary'>Here is the configuration for your company.</span>

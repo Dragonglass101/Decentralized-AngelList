@@ -249,3 +249,14 @@ color-green-spent {
     left:-25px;
 }
 
+.chatSelected:hover{
+    background-color: rgb(245, 247, 251) !important;
+}
+
+.chatSelected:focus,
+.chatSelected:checked,
+.chatSelected:target,
+.chatSelected:active,
+.chatSelected:visited {
+    background-color: rgb(232, 238, 249) !important;
+}

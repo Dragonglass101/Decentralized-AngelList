@@ -79,13 +79,13 @@ export const StartupsListInvestor = () => {
     const companyBigMapID = 64865;
 
     useEffect(() => {
-      const retrieveStorage = async () => {
-        const st = await getRootStorage();
-        console.log(st);
-        setstorage(st);
-      }
-      if(!storage)
-        retrieveStorage();
+        const retrieveStorage = async () => {
+            const st = await getRootStorage();
+            console.log(st);
+            setstorage(st);
+        }
+        if (!storage)
+            retrieveStorage();
     }, [])
 
     async function fetchJSON(url) {
@@ -94,9 +94,9 @@ export const StartupsListInvestor = () => {
         return jsonfile;
     }
 
-    async function makeCards(){
+    async function makeCards() {
         const allCards = [];
-        for( let companyAddress of storage["companies_for_funding"]){
+        for (let companyAddress of storage["companies_for_funding"]) {
             console.log(companyAddress);
 
             const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
@@ -121,10 +121,48 @@ export const StartupsListInvestor = () => {
                         <p className="card-text font13 text-secondary">{companyJSON.whatWillCompanyDo}</p>
                         <div className='d-flex align-items-center justify-content-between'>
                             <h6 className='fw-bold mb-0'>{fundraiseDetails.investment} ꜩ</h6>
+
                             <Button onClick={()=>{setcompanyWalletAddress(companyAddress)}}style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary" data-bs-toggle="modal" data-bs-target="#requestingBtn">Request</Button>
                             <Link to={"/view-startup-profile?profile=" + companyProfileHash}>
-                                <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
+                                <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary" >View Profile</Button>
                             </Link>
+
+                            <div className="modal fade" id="RaiseFund" tabindex="-1" aria-labelledby="RaiseFundLabel" aria-hidden="true">
+                                <div className="modal-dialog my-auto">
+                                    <div className="modal-content">
+                                        <div className="modal-header bg-dark">
+                                            <h5 className="modal-title" id="RaiseFundLabel">Raise Funds</h5>
+                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div className="modal-body">
+
+                                            <select className="form-select mb-3" aria-label="Default select example">
+                                                <option selected>Select Investment Type</option>
+                                                <option value="SAFE">SAFE</option>
+                                                <option value="DirectEquity">Direct</option>
+                                                <option value="SAFT">SAFT</option>
+                                            </select>
+
+                                            <div className="input-group mb-3">
+                                                <span className="input-group-text">Ownership</span>
+                                                <input type="number" className="form-control" aria-label="Ownership" />
+                                                <span className="input-group-text">%</span>
+                                            </div>
+
+                                            <div className="input-group mb-3">
+                                                <span className="input-group-text">Investement</span>
+                                                <input type="number" className="form-control" aria-label="Valuation Cap" />
+                                                <span className="input-group-text">ꜩ</span>
+                                            </div>
+
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" className="btn background-primary text-white">Dhinkachika</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -132,7 +170,7 @@ export const StartupsListInvestor = () => {
         }
         setstartupCards(allCards)
     }
-    if(storage && startupCards.length===0)
+    if (storage && startupCards.length === 0)
         makeCards();
 
     const handleChange = (event) => {
@@ -174,21 +212,21 @@ export const StartupsListInvestor = () => {
                                         <SearchIcon style={{ color: 'white' }} />
                                     </button>
                                 </div>
-                                <FormControl className='col-2 cardColorPinkish shadow-sm' variant='filled' style={{fontFamily:'kanit'}}>
-                                    <InputLabel id="demo-simple-select-label" style={{fontFamily:'kanit'}}>Sort</InputLabel>
+                                <FormControl className='col-2 cardColorPinkish shadow-sm' variant='filled' style={{ fontFamily: 'kanit' }}>
+                                    <InputLabel id="demo-simple-select-label" style={{ fontFamily: 'kanit' }}>Sort</InputLabel>
                                     <Select
                                         className='cardColorPinkish'
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         value={age}
                                         onChange={handleChange}
-                                        style={{fontFamily:'kanit'}}
+                                        style={{ fontFamily: 'kanit' }}
                                     >
                                         <MenuItem value="">
-                                            <em style={{fontFamily:'kanit'}}>None</em>
+                                            <em style={{ fontFamily: 'kanit' }}>None</em>
                                         </MenuItem>
-                                        <MenuItem value={10} style={{fontFamily:'kanit'}}>Ascending</MenuItem>
-                                        <MenuItem value={20} style={{fontFamily:'kanit'}}>Dscending</MenuItem>
+                                        <MenuItem value={10} style={{ fontFamily: 'kanit' }}>Ascending</MenuItem>
+                                        <MenuItem value={20} style={{ fontFamily: 'kanit' }}>Dscending</MenuItem>
                                     </Select>
                                 </FormControl>
                             </div>

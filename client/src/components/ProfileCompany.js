@@ -156,7 +156,82 @@ export const ProfileCompany = () => {
                     <NavFloating />
 
                     <div className={classes.padded}>
-                        
+                        <div className='container'>
+                            <Avatar style={{width:'90px', height:'90px'}} className='mb-3 mx-auto'/>
+                            <h4 className='fw-bold text-center'>Company Details</h4>
+                            <Divider variant='fullWidth' />
+                            <form className='row mt-3 font13'>
+                                <div className="mb-3 col-6">
+                                    <label for="exampleInputEmail1" className="form-label font13 fw-bold">Company Legal Name</label>
+                                    <input type="text" className="form-control font13" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp"
+                                        required disabled />
+                                </div>
+                                <div className='mb-3 col-6'>
+                                    <label for="basic-url" className="form-label font13 fw-bold">Industry</label>
+                                    <select className="form-select font13" aria-label="Default select example"
+                                        required disabled>
+                                        <option disabled selected>Select Industry</option>
+                                        <option value="1">Technology</option>
+                                        <option value="2">Agro</option>
+                                        <option value="3">Health Care</option>
+                                    </select>
+                                </div>
+                                <div className='col-6'>
+                                    <label for="basic-url" className="form-label font13 fw-bold">Website<span style={{ fontSize: '10px' }}> (optional)</span></label>
+                                    <div className="input-group mb-3">
+                                        <span className="input-group-text font13" id="basic-addon3">https://</span>
+                                        <input type="text" className="form-control font13" id="basic-url" aria-describedby="basic-addon3" disabled />
+                                    </div>
+                                </div>
+
+                                <div className='col-6'>
+                                    <label for="basic-url" className="form-label font13 fw-bold">LinkedIn<span style={{ fontSize: '10px' }}> (optional)</span></label>
+                                    <div className="input-group mb-3">
+                                        <span className="input-group-text font13" id="basic-addon3" style={{ height: 'fit-content' }}>https://linkedin.com/in/</span>
+                                        <input type="text" className="form-control font13" id="basic-url" aria-describedby="basic-addon3" required disabled />
+                                    </div>
+                                </div>
+                                <label for="exampleInputEmail1" className="form-label font13 fw-bold">Company Valuation</label>
+                                <div className="mb-3 col-6">
+                                    <input type="number" className="form-control font13" id="exampleInputEmail1"
+                                        aria-describedby="emailHelp"
+                                        required disabled />
+                                </div>
+                                <div className="form-group">
+                                    <label for="exampleFormControlTextarea1" className='fw-bold'>What will your company do?
+                                        <span className='fw-normal text-secondary' style={{ fontSize: '10px' }}></span>
+                                    </label>
+                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" required disabled></textarea>
+                                </div>
+                                <div className='mb-3'>
+                                    <p className='fw-bold mb-0'>Business Address</p>
+                                    <span className='text-secondary' style={{ fontSize: '11px' }}>This can be your personal address. Please list a valid US address where you will receive company notices and information from your registered agent. Do not list a P.O
+                                        Box, virtual mailbox, or mail forwarding address.</span>
+                                </div>
+                                <div className="col-12 mb-3">
+                                    <label for="inputAddress" className="form-label fw-bold">Address</label>
+                                    <input type="text" className="form-control font13" id="inputAddress" placeholder="1234 Main St" required disabled />
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputCity" className="form-label fw-bold">City</label>
+                                    <input type="text" className="form-control font13" id="inputCity" required disabled />
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputZip" className="form-label fw-bold">Zip Code</label>
+                                    <input type="text" className="form-control font13" id="inputZip" required disabled />
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputState" className="form-label fw-bold">State</label>
+                                    <input type="text" className="form-control font13" id="inputState" required disabled />
+                                </div>
+                                <div className="col-md-6 mb-3">
+                                    <label for="inputState" className="form-label fw-bold">Country</label>
+                                    <input type="text" className="form-control font13" id="inputZip" required disabled />
+                                </div>
+
+                            </form>
+                        </div>
                     </div>
 
                 </main>
