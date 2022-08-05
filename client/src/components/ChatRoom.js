@@ -21,6 +21,12 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { Grid } from '@material-ui/core';
 import Tooltip from '@material-ui/core/Tooltip';
 
+import ViewListIcon from '@material-ui/icons/ViewList';
+import ViewModuleIcon from '@material-ui/icons/ViewModule';
+import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+
 import Navbar from './CompanyNavbar';
 import NavFloating from './NavFloating';
 
@@ -99,6 +105,11 @@ const useStyles = makeStyles((theme) => ({
 export const ChatRoom = () => {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [view, setView] = React.useState('list');
+
+    const handleChange = (event, nextView) => {
+        setView(nextView);
+    };
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -131,94 +142,68 @@ export const ChatRoom = () => {
                                         <SearchIcon style={{ color: 'white' }} />
                                     </button>
                                 </div>
-                                <div className='container shadow mt-4 rounded15' style={{ overflow: 'auto', height: '380px' }}>
-                                    <div className='row p-3'>
-                                        <div className='col-3'>
-                                            <Avatar />
-                                        </div>
-                                        <div className='col-7'>
-                                            <h6 className='m-0'>Harry Poters</h6>
-                                            <span className='text-secondary font13'>Sent a photo</span>
-                                        </div>
-                                        <div className='col-2'>
-                                            <span className='text-secondary font13'>2d</span>
-                                        </div>
-                                    </div>
+                                <div className='container p-0 shadow mt-4 rounded15' style={{ overflowY: 'auto', overflowX: 'hidden', height: '380px' }}>
+                                    <ToggleButtonGroup className='w-100' orientation="vertical" value={view} exclusive onChange={handleChange} style={{ textTransform: 'capitalize', border: '0px' }}>
+                                        <ToggleButton value="chat1" aria-label="chat1" style={{ textTransform: 'capitalize', border: '0px' }}>
+                                            <div className='' style={{ width: '25%' }}>
+                                                <Avatar />
+                                            </div>
+                                            <div className='text-start' style={{ width: '58%' }}>
+                                                <h6 className='m-0 text-black'>Harry Poters</h6>
+                                                <span className='text-secondary font13'>Type a message</span>
+                                            </div>
+                                            <div className='text-end' style={{ width: '17%' }}>
+                                                {/* <span className='text-secondary font13'>2d</span> */}
+                                            </div>
+                                        </ToggleButton>
 
-                                    <Divider />
+                                        <Divider/>
 
-                                    <div className='row p-3'>
-                                        <div className='col-3'>
-                                            <Avatar />
-                                        </div>
-                                        <div className='col-7'>
-                                            <h6 className='m-0'>Harry Poters</h6>
-                                            <span className='text-secondary font13'>Sent a photo</span>
-                                        </div>
-                                        <div className='col-2'>
-                                            <span className='text-secondary font13'>2d</span>
-                                        </div>
-                                    </div>
+                                        <ToggleButton value="chat2" aria-label="chat2" style={{ textTransform: 'capitalize', border: '0px' }}>
+                                            <div className='' style={{ width: '25%' }}>
+                                                <Avatar />
+                                            </div>
+                                            <div className='text-start' style={{ width: '58%' }}>
+                                                <h6 className='m-0 text-black'>Harry Poters</h6>
+                                                <span className='text-secondary font13'>Type a message</span>
+                                            </div>
+                                            <div className='text-end' style={{ width: '17%' }}>
+                                                {/* <span className='text-secondary font13'>2d</span> */}
+                                            </div>
+                                        </ToggleButton>
 
-                                    <Divider />
+                                        <Divider/>
 
-                                    <div className='row p-3'>
-                                        <div className='col-3'>
-                                            <Avatar />
-                                        </div>
-                                        <div className='col-7'>
-                                            <h6 className='m-0'>Harry Poters</h6>
-                                            <span className='text-secondary font13'>Sent a photo</span>
-                                        </div>
-                                        <div className='col-2'>
-                                            <span className='text-secondary font13'>2d</span>
-                                        </div>
-                                    </div>
+                                        <ToggleButton value="chat3" aria-label="chat3" style={{ textTransform: 'capitalize', border: '0px' }}>
+                                            <div className='' style={{ width: '25%' }}>
+                                                <Avatar />
+                                            </div>
+                                            <div className='text-start' style={{ width: '58%' }}>
+                                                <h6 className='m-0 text-black'>Harry Poters</h6>
+                                                <span className='text-secondary font13'>Type a message</span>
+                                            </div>
+                                            <div className='text-end' style={{ width: '17%' }}>
+                                                {/* <span className='text-secondary font13'>2d</span> */}
+                                            </div>
+                                        </ToggleButton>
 
-                                    <Divider />
+                                        <Divider/>
 
-                                    <div className='row p-3'>
-                                        <div className='col-3'>
-                                            <Avatar />
-                                        </div>
-                                        <div className='col-7'>
-                                            <h6 className='m-0'>Harry Poters</h6>
-                                            <span className='text-secondary font13'>Sent a photo</span>
-                                        </div>
-                                        <div className='col-2'>
-                                            <span className='text-secondary font13'>2d</span>
-                                        </div>
-                                    </div>
+                                        <ToggleButton value="chat4" aria-label="chat4" style={{ textTransform: 'capitalize', border: '0px' }}>
+                                            <div className='' style={{ width: '25%' }}>
+                                                <Avatar />
+                                            </div>
+                                            <div className='text-start' style={{ width: '58%' }}>
+                                                <h6 className='m-0 text-black'>Harry Poters</h6>
+                                                <span className='text-secondary font13'>Type a message</span>
+                                            </div>
+                                            <div className='text-end' style={{ width: '17%' }}>
+                                                {/* <span className='text-secondary font13'>2d</span> */}
+                                            </div>
+                                        </ToggleButton>
 
-                                    <Divider />
-
-                                    <div className='row p-3'>
-                                        <div className='col-3'>
-                                            <Avatar />
-                                        </div>
-                                        <div className='col-7'>
-                                            <h6 className='m-0'>Harry Poters</h6>
-                                            <span className='text-secondary font13'>Sent a photo</span>
-                                        </div>
-                                        <div className='col-2'>
-                                            <span className='text-secondary font13'>2d</span>
-                                        </div>
-                                    </div>
-
-                                    <Divider />
-
-                                    <div className='row p-3'>
-                                        <div className='col-3'>
-                                            <Avatar />
-                                        </div>
-                                        <div className='col-7'>
-                                            <h6 className='m-0'>Harry Poters</h6>
-                                            <span className='text-secondary font13'>Sent a photo</span>
-                                        </div>
-                                        <div className='col-2'>
-                                            <span className='text-secondary font13'>2d</span>
-                                        </div>
-                                    </div>
+                                        <Divider/>
+                                    </ToggleButtonGroup>
                                 </div>
                             </div>
 
