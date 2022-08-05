@@ -24,6 +24,11 @@ class AngelList(sp.Contract):
                         tkey = sp.TAddress, 
                         tvalue = sp.TRecord(
                             investor_profile_Id = sp.TString,
+                            # MessageHistory
+                            message_history = sp.TMap(
+                                sp.TAddress,
+                                sp.TString
+                            ),
                             investments = sp.TList(t = sp.TRecord(
                                                 company = sp.TAddress, 
                                                 investment_amount = sp.TMutez,
@@ -31,7 +36,7 @@ class AngelList(sp.Contract):
                                                 approx_ownership = sp.TNat,
                                                 investment_recieved = sp.TBool, 
                                                 investment_type = sp.TString,
-                                                safe_converted = sp.TBool
+                                                safe_converted = sp.TBool,
                                                 )
                                             ),
                         )
@@ -67,6 +72,13 @@ class AngelList(sp.Contract):
                             round_num = sp.TNat,
                             total_shares = sp.TNat,
                             company_ownership = sp.TNat, 
+
+                            # MessageHistory
+                            message_history = sp.TMap(
+                                sp.TAddress,
+                                sp.TString
+                            ),
+
                             fundraise_details = sp.TMap(
                                 sp.TNat,
                                 sp.TRecord(
@@ -145,6 +157,10 @@ class AngelList(sp.Contract):
         sp.verify(sp.amount == self.data.fees_to_register_investor, "Invalid Amount!" )
         
         self.data.investors[sp.sender] = sp.record(investor_profile_Id = params.investor_profile_Id,
+                                                    message_history=sp.map(
+                                                        tkey = sp.TAddress,
+                                                        tvalue = sp.TString,
+                                                    ),
                                                     investments = [],
                                         )
         self.data.all_investors.push(sp.sender)
@@ -186,6 +202,10 @@ class AngelList(sp.Contract):
                             round_num = sp.nat(0),
                             total_shares = sp.nat(0),
                             company_ownership = sp.nat(100), 
+                            message_history = sp.map(
+                                tkey = sp.TAddress,
+                                tvalue = sp.TString,
+                            ),
 
                             fundraise_details = sp.map(
                                 tkey = sp.TNat,
@@ -379,6 +399,15 @@ class AngelList(sp.Contract):
             new_record = sp.record(investor = sp.sender, investment = params.investment, valuation_cap = params.valuation_cap, ownership = ownership.value, type = params.type)
             self.data.companies[params.company_wallet].request_from_investor.push(new_record)
 
+        self.data.investors[sp.sender].message_history[params.company_wallet] = ""
+        self.data.companies[params.company_wallet].message_history[sp.sender] = ""
+
+    @sp.entry_point
+    def change_message_hash(self,params):
+        sp.set_type(params,sp.TRecord(company = sp.TAddress, investor = sp.TAddress, message_hash = sp.TString) )
+        self.data.investors[params.investor].message_history[params.company] = params.message_hash
+        self.data.companies[params.company].message_history[params.investor] = params.message_hash
+
     @sp.entry_point
     def invest_through_SAFE(self, params):
         sp.set_type(params, sp.TRecord(investor_name = sp.TString, company_wallet = sp.TAddress))
@@ -537,6 +566,7 @@ class AngelList(sp.Contract):
         scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(1000), ownership = sp.nat(5),type = sp.string("SAFE"))).run(sender =company_a)
 
         scenario += contract.request_from_investor(sp.record(company_wallet = company_a.address, investment = sp.tez(1000), valuation_cap = sp.tez(10000), direct_equity = sp.nat(10), type = sp.string("SAFE"))).run(sender = investor_a )
+        scenario += contract.change_message_hash(sp.record(company = company_a.address,investor = investor_a.address,message_hash = sp.string("WattheFk") ) ).run(sender = investor_a)
         scenario += contract.accept_investor_request(sp.record(investor_wallet = investor_a.address)).run(sender = company_a)
 
         # scenario += contract.invest_through_DirectEquity(sp.record(investor_name = sp.string("Investor_a"),company_wallet = company_a.address)).run(
