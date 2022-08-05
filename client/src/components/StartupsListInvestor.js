@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Link } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,7 +15,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import SearchIcon from '@material-ui/icons/Search';
-import { getRootStorage } from '../utils/Api';
+import { getKeyBigMapByID, getRootStorage } from '../utils/Api';
+import { requestFromInvestor } from '../utils/operation';
 
 const drawerWidth = 240;
 
@@ -66,6 +68,9 @@ export const StartupsListInvestor = () => {
     const classes = useStyles();
     const [age, setAge] = React.useState('');
     const [storage, setstorage] = useState();
+    const [startupCards, setstartupCards] = useState([]);
+
+    const companyBigMapID = 64865;
 
     useEffect(() => {
       const retrieveStorage = async () => {
@@ -76,11 +81,62 @@ export const StartupsListInvestor = () => {
       if(!storage)
         retrieveStorage();
     }, [])
-    
+
+    async function fetchJSON(url) {
+        const response = await fetch(url);
+        const movies = await response.json();
+        return movies;
+    }
+
+    async function makeCards(){
+        const allCards = [];
+        for( let companyAddress of storage["companies_for_funding"]){
+            console.log(companyAddress);
+
+            const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
+            console.log(companyDetails);
+            const companyProfileHash = companyDetails.value["company_profile_Id"];
+            const fundraiseDetails = companyDetails.value["fundraise_details"][`${companyDetails.value["round_num"]}`];
+
+            const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
+            console.log(companyJSON);
+
+            allCards.push(
+                <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
+                    <div className="card-body">
+                        <div className='d-flex justify-content-between align-items-center mb-3'>
+                            <Avatar alt="Remy Sharp" src={appleLogo} />
+                            <div className='p-2 d-flex'>
+                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>{fundraiseDetails.ownership}%</span>
+                            </div>
+                        </div>
+                        <h5 className="card-title fw-bold">{companyJSON.name}</h5>
+                        <p className="card-subtitle mb-2 fw-bold">{companyJSON.startupCity}, {companyJSON.startupState}</p>
+                        <p className="card-text font13 text-secondary">{companyJSON.whatWillCompanyDo}</p>
+                        <div className='d-flex align-items-center justify-content-between'>
+                            <h6 className='fw-bold mb-0'>{fundraiseDetails.investment} ꜩ</h6>
+                            <Button onClick={handleRequestFromInvestor} style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Request</Button>
+                            <Link to={"/view-startup-profile?profile=" + companyProfileHash}>
+                                <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+        setstartupCards(allCards)
+    }
+    if(storage && startupCards.length===0)
+        makeCards();
 
     const handleChange = (event) => {
         setAge(event.target.value);
     };
+
+    async function handleRequestFromInvestor(){
+
+    }
+
     return (
         <>
             <div className={classes.root}>
@@ -114,108 +170,13 @@ export const StartupsListInvestor = () => {
                                         <MenuItem value="">
                                             <em style={{fontFamily:'kanit'}}>None</em>
                                         </MenuItem>
-                                        <MenuItem value={10} style={{fontFamily:'kanit'}}>Ten</MenuItem>
-                                        <MenuItem value={20} style={{fontFamily:'kanit'}}>Twenty</MenuItem>
-                                        <MenuItem value={30} style={{fontFamily:'kanit'}}>Thirty</MenuItem>
+                                        <MenuItem value={10} style={{fontFamily:'kanit'}}>Ascending</MenuItem>
+                                        <MenuItem value={20} style={{fontFamily:'kanit'}}>Dscending</MenuItem>
                                     </Select>
                                 </FormControl>
                             </div>
                             <div className='d-flex flex-wrap'>
-
-                                <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
-                                    <div className="card-body">
-                                        <div className='d-flex justify-content-between align-items-center mb-3'>
-                                            <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            <div className='p-2 d-flex'>
-                                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>13%</span>
-                                            </div>
-                                        </div>
-                                        <h5 className="card-title fw-bold">Company Name</h5>
-                                        <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
-                                        <div className='d-flex align-items-center justify-content-between'>
-                                            <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
-                                            <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
-                                            <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
-                                    <div className="card-body">
-                                        <div className='d-flex justify-content-between align-items-center mb-3'>
-                                            <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            <div className='p-2 d-flex'>
-                                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>13%</span>
-                                            </div>
-                                        </div>
-                                        <h5 className="card-title fw-bold">Company Name</h5>
-                                        <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
-                                        <div className='d-flex align-items-center justify-content-between'>
-                                            <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
-                                            <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
-                                            <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
-                                    <div className="card-body">
-                                        <div className='d-flex justify-content-between align-items-center mb-3'>
-                                            <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            <div className='p-2 d-flex'>
-                                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>13%</span>
-                                            </div>
-                                        </div>
-                                        <h5 className="card-title fw-bold">Company Name</h5>
-                                        <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
-                                        <div className='d-flex align-items-center justify-content-between'>
-                                            <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
-                                            <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
-                                            <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
-                                    <div className="card-body">
-                                        <div className='d-flex justify-content-between align-items-center mb-3'>
-                                            <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            <div className='p-2 d-flex'>
-                                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>13%</span>
-                                            </div>
-                                        </div>
-                                        <h5 className="card-title fw-bold">Company Name</h5>
-                                        <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
-                                        <div className='d-flex align-items-center justify-content-between'>
-                                            <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
-                                            <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
-                                            <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
-                                    <div className="card-body">
-                                        <div className='d-flex justify-content-between align-items-center mb-3'>
-                                            <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            <div className='p-2 d-flex'>
-                                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>13%</span>
-                                            </div>
-                                        </div>
-                                        <h5 className="card-title fw-bold">Company Name</h5>
-                                        <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
-                                        <div className='d-flex align-items-center justify-content-between'>
-                                            <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
-                                            <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
-                                            <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
-                                        </div>
-                                    </div>
-                                </div>
+                                {startupCards}
                             </div>
                         </div>
                     </div>
