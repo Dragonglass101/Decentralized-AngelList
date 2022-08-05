@@ -12,6 +12,8 @@ import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import ShoppingCartRoundedIcon from '@material-ui/icons/ShoppingCartRounded';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 
 import AssessmentRoundedIcon from '@material-ui/icons/AssessmentRounded';
 
@@ -264,7 +266,7 @@ const CompanyNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/employees-appointed" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Startups List'>
-                                <AssessmentRoundedIcon className={(currentLocation === "/employees-appointed" ? "green-karo" : "") + " menu-icon-color"} />
+                                <PeopleAltIcon className={(currentLocation === "/employees-appointed" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/employees-appointed" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Employee Details</span>
                             </ListItem>
@@ -274,7 +276,7 @@ const CompanyNavbar = () => {
                             <ListItem
                                 className={(currentLocation === "/hire-employees" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Startups List'>
-                                <AssessmentRoundedIcon className={(currentLocation === "/hire-employees" ? "green-karo" : "") + " menu-icon-color"} />
+                                <PersonAddIcon className={(currentLocation === "/hire-employees" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/hire-employees" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Hire Employees</span>
                             </ListItem>

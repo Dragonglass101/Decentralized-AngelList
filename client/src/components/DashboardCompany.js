@@ -365,9 +365,6 @@ export const DashboardCompany = () => {
                 <ReactFC className='doughnut' {...doughnutConfigs} />
               </div>
             </div>
-            {/* <div className='mt-5'>
-              <ReactFC className='doughnut' {...lineGraphConfigs} />
-            </div> */}
 
 
             <div className='d-flex justify-content-around align-items-center'>
