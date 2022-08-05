@@ -118,7 +118,7 @@ export const requestFromInvestor = async(companyWallet, directEquity, investment
         );
 
         const op = await contract.methods
-            .raise_fund_for_company(
+            .request_from_investor(
                 companyWallet, directEquity, investment, type, valuationCap
             )
             .send({

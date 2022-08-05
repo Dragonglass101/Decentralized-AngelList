@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from 'react'
-import { TezosToolkit, MichelsonMap } from '@taquito/taquito';
-import { BigNumber } from 'bignumber.js';
-import { getStorage } from '../utils/operation';
-import { uploadDataIpfs } from '../utils/ipfsDataUpload';
+import ipfs_mini from '../ipfs_mini';
 
 export const Test = () => {
-    const contractAddress = 'KT1DuHfMszQvvYaBVcmVxqZFZ1uVJpzC72u4';
+    const [messageHash, setmessageHash] = useState();
 
-    const Tezos = new TezosToolkit('https://jakartanet.smartpy.io');
+    function addTextIpfs(){
+        console.log("uploading")
+        ipfs_mini.add('hello world!').then((result, err)=>{
+            console.log(err, result)
+            setmessageHash(result)}).catch(console.log);
+    }
 
-    // uploadDataIpfs();
+    async function fetchText(url) {
+        const response = await fetch(url);
+        return response.text();
+    }
 
+    useEffect(() => {
+        console.log(messageHash)
+        async function getmessage(){
+            const messageJSON = await fetchText(`https://ipfs.io/ipfs/${messageHash}`);
+            console.log(messageJSON);
+        }
+        if(messageHash){
+            getmessage();
+        }
+    }, [messageHash])
+    
+    if(!messageHash)
+        addTextIpfs();
     return (
         <div className="pure-g">
             <div className="pure-u-1-1">
