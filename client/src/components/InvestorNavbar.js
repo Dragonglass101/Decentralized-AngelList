@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SearchIcon from '@material-ui/icons/Search';
 import ReceiptRoundedIcon from '@material-ui/icons/ReceiptRounded';
+import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -138,6 +139,16 @@ const InvestorNavbar = () => {
                                 <ReceiptRoundedIcon className={(currentLocation === "/investment-request" ? "green-karo" : "") + " menu-icon-color"} />
                                 {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/investment-request" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Track Investments</span>
+                            </ListItem>
+                        </Link>
+
+                        <Link to="/chatroom-investor" style={{ color: "inherit", textDecoration: 'unset' }}>
+                            <ListItem
+                                className={(currentLocation === "/chatroom-investor" ? "highlight-karo" : "")}
+                                style={{ marginBottom: '10px' }} button key='Chat Room'>
+                                <ForumRoundedIcon className={(currentLocation === "/chatroom-investor" ? "green-karo" : "") + " menu-icon-color"} />
+                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
+                                <span className={(currentLocation === "/chatroom-investor" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Chat Room</span>
                             </ListItem>
                         </Link>
 

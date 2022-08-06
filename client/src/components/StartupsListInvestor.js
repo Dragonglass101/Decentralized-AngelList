@@ -76,7 +76,7 @@ export const StartupsListInvestor = () => {
     const [investementType, setinvestementType] = useState("SAFE");
     const [companyWalletAddress, setcompanyWalletAddress] = useState();
 
-    const companyBigMapID = 68558;;
+    const companyBigMapID = 69724;
 
     useEffect(() => {
       const retrieveStorage = async () => {

@@ -12,6 +12,7 @@ import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Navbar from './CompanyNavbar';
 import NavFloating from './NavFloating';
@@ -79,14 +80,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoom = () => {
     const classes = useStyles();
-    const companyBigMapID = 68558;
-    const investorBigMapID = 68560;
+    const companyBigMapID = 69724;
+    const investorBigMapID = 69726;
 
+    const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
     const [sendersList, setsendersList] = useState(null);
     const [conversationElements, setconversationElements] = useState(null);
     const [messageHash, setmessageHash] = useState();
-    const [oldMessageHash, setoldMessageHash] = useState();
     const [currentInvestor, setcurrentInvestor] = useState();
 
     const typedMessage = useRef();
@@ -100,8 +101,17 @@ export const ChatRoom = () => {
       }, []);
 
     useEffect(() => {
+        async function handleChangeMessageHash(){
+            try{
+                await changeMessageHash(wallet.address, currentInvestor, messageHash);
+                window.location.reload();
+              }catch(error){
+                alert("Transaction Failed:", error.message);
+              }
+              setloading(false);
+        }
         if(wallet && messageHash)
-            changeMessageHash(wallet.address, currentInvestor, messageHash);
+            handleChangeMessageHash();
     }, [messageHash])
     
 
@@ -149,6 +159,7 @@ export const ChatRoom = () => {
     }
 
     async function fetchSenderChats(investorAddress, messageHistory, initialRequestfromInvestors){
+        console.log("fetching sender chats")
         const tempElements = [];
         for(let request of initialRequestfromInvestors){
             if(request.investor === investorAddress)
@@ -192,8 +203,9 @@ export const ChatRoom = () => {
                     </div>
                 );
         }
-        
+        console.log(tempElements)
         if(messageHistory[`${investorAddress}`] === "") {
+            setconversationElements(tempElements);
             return;
         }
 
@@ -220,6 +232,22 @@ export const ChatRoom = () => {
                     </div>
                 )
             }
+            if(message[0] === 'i'){
+                console.log(message);
+                tempElements.push(
+                    <div key={message} className='w-75' id='left-side-chat'>
+                        <div className='d-flex my-3'>
+                            <div className='text-center'>
+                                <Avatar />
+                                <span className='font13 text-dark'>09:00</span>
+                            </div>
+                            <div className='ms-3 background-light d-flex align-items-center p-3 text-dark left-chat'>
+                                <span>{message.split("=")[1]}</span>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
         }
         setconversationElements(tempElements);
     }
@@ -230,6 +258,7 @@ export const ChatRoom = () => {
     }
 
     async function handleMessageSend(){
+        setloading(true);
         console.log(typedMessage.current.value);
         const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
         const messageHistory = companyDetails.value["message_history"];
@@ -393,7 +422,7 @@ export const ChatRoom = () => {
                                         <div className='col-3 text-white mx-auto d-flex justify-content-around'>
                                             <Tooltip title='Send Message' aria-label='send-message'>
                                                 <button onClick={handleMessageSend} className='btn d-flex justify-content-center align-items-center rounded-circle text-white' style={{ width: '40px', height: '40px', backgroundColor: 'rgb(58,165,138)' }}>
-                                                    <TelegramIcon />
+                                                    {loading? <CircularProgress/> : <TelegramIcon />}
                                                 </button>
                                             </Tooltip>
 
