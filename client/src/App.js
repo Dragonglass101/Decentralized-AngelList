@@ -20,6 +20,7 @@ import { ProfileCompany } from "./components/ProfileCompany"
 import { CapTable } from "./components/CapTable"
 import { TrackTransactionsCompany } from "./components/TrackTransactionsCompany"
 import { ViewCompanyPortfolio } from "./components/ViewCompanyPortfolio"
+import { ProfileInvestor } from "./components/ProfileInvestor"
 
 import { HireEmployees } from "./components/HireEmployees"
 import { EmployeesAppointed } from "./components/EmployeesAppointed";
@@ -50,6 +51,7 @@ import { Test } from "./components/Test";
           <Route path="*" element={<Home/>} />
           <Route path='/make-payment' element={<MakePayment/>} />
           <Route path='/profile-company' element={<ProfileCompany/>} />
+          <Route path='/profile-investor' element={<ProfileInvestor/>} />
           <Route path='/trash' element={<Trash/>} />
           <Route path='/cap-table' element={<CapTable/>} />
           <Route path='/track-transactions-company' element={<TrackTransactionsCompany/>} />
