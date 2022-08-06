@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const contractAddress = "KT1PaS3SRVkyC6JhfwPEEmi31AbXFYiBDT5T";
+const contractAddress = "KT1WkirUinvGYAmfqSdv9QVepPRt6p8DAq8e";
 
 export const getBalance = async(address) => {
     try {

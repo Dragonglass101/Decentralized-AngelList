@@ -27,6 +27,7 @@ import { EmployeesAppointed } from "./components/EmployeesAppointed";
 import { Trash } from "./components/Trash"
 // import { SideNav } from "./components/SideNav"
 import { Test } from "./components/Test";
+import { ChatRoomInvestor } from "./components/ChatRoomInvestor";
 // import Navbar from "./components/Navbar";
   
   function App() {
@@ -46,6 +47,7 @@ import { Test } from "./components/Test";
           <Route path='/startups-list-investor' element={<StartupsListInvestor/>} />
           <Route path='/investment-request' element={<InvestmentRequest/>} />
           <Route path='/chatroom' element={<ChatRoom/>} />
+          <Route path='/chatroom-investor' element={<ChatRoomInvestor/>} />
           <Route path='/add-founders' element={<AddFounders/>} />
           <Route path="*" element={<Home/>} />
           <Route path='/make-payment' element={<MakePayment/>} />

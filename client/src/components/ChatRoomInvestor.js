@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const ChatRoom = () => {
+export const ChatRoomInvestor = () => {
     const classes = useStyles();
     const companyBigMapID = 68558;
     const investorBigMapID = 68560;
