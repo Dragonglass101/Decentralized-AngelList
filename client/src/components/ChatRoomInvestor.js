@@ -14,7 +14,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Navbar from './CompanyNavbar';
+import InvestorNavbar from './InvestorNavbar';
 import NavFloating from './NavFloating';
 
 import PaymentIcon from '@material-ui/icons/Payment';
@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const ChatRoom = () => {
+export const ChatRoomInvestor = () => {
     const classes = useStyles();
     const companyBigMapID = 69724;
     const investorBigMapID = 69726;
@@ -88,7 +88,7 @@ export const ChatRoom = () => {
     const [sendersList, setsendersList] = useState(null);
     const [conversationElements, setconversationElements] = useState(null);
     const [messageHash, setmessageHash] = useState();
-    const [currentInvestor, setcurrentInvestor] = useState();
+    const [currentCompany, setcurrentCompany] = useState();
 
     const typedMessage = useRef();
 
@@ -103,15 +103,15 @@ export const ChatRoom = () => {
     useEffect(() => {
         async function handleChangeMessageHash(){
             try{
-                await changeMessageHash(wallet.address, currentInvestor, messageHash);
+                await changeMessageHash(currentCompany, wallet.address, messageHash);
                 window.location.reload();
               }catch(error){
                 alert("Transaction Failed:", error.message);
               }
-              setloading(false);
+            setloading(false);
         }
         if(wallet && messageHash)
-            handleChangeMessageHash();
+        handleChangeMessageHash();
     }, [messageHash])
     
 
@@ -122,23 +122,23 @@ export const ChatRoom = () => {
     }
     
     async function makeSendersList(){
-        const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
-        const sendersList = companyDetails.value["request_from_investor"]
-        console.log(companyDetails);
+        const investorDetails = await getKeyBigMapByID(investorBigMapID, wallet.address);
+        const sendersList = investorDetails.value["requested_companies"]
+        console.log(investorDetails);
         const tempSenderlist = [];
         for(let sender of sendersList){
-            const investorDetails = await getKeyBigMapByID(investorBigMapID, sender.investor);
-            const investorProfileHash = investorDetails.value["investor_profile_Id"];
-            const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorProfileHash}`);
-
+            const companyDetails = await getKeyBigMapByID(companyBigMapID, sender);
+            const companyProfileHash = companyDetails.value["company_profile_Id"];
+            const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
+            console.log(companyJSON);
             tempSenderlist.push(
-                <div key={sender.investor}>
-                    <div onClick={()=>{ setcurrentInvestor(sender.investor);fetchSenderChats(sender.investor, companyDetails.value["message_history"], companyDetails.value["request_from_investor"])}} className='row p-3'>
+                <div key={sender}>
+                    <div onClick={()=>{ setcurrentCompany(sender);fetchSenderChats(sender, investorDetails.value["message_history"])}} className='row p-3'>
                         <div className='col-3'>
                             <Avatar />
                         </div>
                         <div className='col-7'>
-                            <h6 className='m-0'>{investorJSON.name}</h6>
+                            <h6 className='m-0'>{companyJSON.name}</h6>
                             <span className='text-secondary font13'>Type a message</span>
                         </div>
                         <div className='col-2'>
@@ -158,68 +158,67 @@ export const ChatRoom = () => {
         return response.text();
     }
 
-    async function fetchSenderChats(investorAddress, messageHistory, initialRequestfromInvestors){
-        console.log("fetching sender chats")
+    async function fetchSenderChats(companyAddress, messageHistory){
         const tempElements = [];
-        for(let request of initialRequestfromInvestors){
-            if(request.investor === investorAddress)
-                tempElements.push(
-                    <div key={investorAddress} className='w-75' id='left-side-request'>
-                        <div className='d-flex my-3'>
-                            <div className='text-center'>
-                                <Avatar />
-                                <span className='font13 text-dark'>09:00</span>
-                            </div>
-                            <div className='ms-3 p-4 text-dark left-chat background-chat-request'>
-                                <div className='mb-3'>
-                                    <div className='d-flex justify-content-between align-items-center text-light'>
-                                        <h6>Ownership</h6>
-                                        <span>{request.ownership}%</span>
-                                    </div>
+        // for(let request of initialRequestfromInvestors){
+        //     if(request.investor === investorAddress)
+        //         tempElements.push(
+        //             <div key={investorAddress} className='w-75' id='left-side-request'>
+        //                 <div className='d-flex my-3'>
+        //                     <div className='text-center'>
+        //                         <Avatar />
+        //                         <span className='font13 text-dark'>09:00</span>
+        //                     </div>
+        //                     <div className='ms-3 p-4 text-dark left-chat background-chat-request'>
+        //                         <div className='mb-3'>
+        //                             <div className='d-flex justify-content-between align-items-center text-light'>
+        //                                 <h6>Ownership</h6>
+        //                                 <span>{request.ownership}%</span>
+        //                             </div>
 
-                                    <div className='d-flex justify-content-between align-items-center text-light'>
-                                        <h6>Valuation Cap</h6>
-                                        <span>{request.valuation_cap} ꜩ</span>
-                                    </div>
+        //                             <div className='d-flex justify-content-between align-items-center text-light'>
+        //                                 <h6>Valuation Cap</h6>
+        //                                 <span>{request.valuation_cap} ꜩ</span>
+        //                             </div>
 
-                                    <div className='d-flex justify-content-between align-items-center text-light'>
-                                        <h6>Investment</h6>
-                                        <span>{request.investment} ꜩ</span>
-                                    </div>
-                                </div>
+        //                             <div className='d-flex justify-content-between align-items-center text-light'>
+        //                                 <h6>Investment</h6>
+        //                                 <span>{request.investment} ꜩ</span>
+        //                             </div>
+        //                         </div>
 
-                                <div className='d-flex justify-content-between align-items-center'>
-                                    <Button className='me-3 text-black background-accept' variant='contained'>
-                                        <ThumbUpRoundedIcon className='text-black me-2' />
-                                        Accept
-                                    </Button>
-                                    <Button variant='contained' className='background-deny'>
-                                        <ThumbDownRoundedIcon className='me-2' />
-                                        Deny
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
-        }
-        console.log(tempElements)
-        if(messageHistory[`${investorAddress}`] === "") {
+        //                         <div className='d-flex justify-content-between align-items-center'>
+        //                             <Button className='me-3 text-black background-accept' variant='contained'>
+        //                                 <ThumbUpRoundedIcon className='text-black me-2' />
+        //                                 Accept
+        //                             </Button>
+        //                             <Button variant='contained' className='background-deny'>
+        //                                 <ThumbDownRoundedIcon className='me-2' />
+        //                                 Deny
+        //                             </Button>
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         );
+        // }
+        
+        if(messageHistory[`${companyAddress}`] === "") {
             setconversationElements(tempElements);
             return;
         }
-
-        const messageHashInStorage = messageHistory[`${investorAddress}`];
+        
+        const messageHashInStorage = messageHistory[`${companyAddress}`];
+        console.log(messageHistory, companyAddress);
         const messagesString = await fetchText(`https://ipfs.io/ipfs/${messageHashInStorage}`);
 
         const messagesArr = messagesString.split("|");
 
         for(let message of messagesArr){
-            if(message[0] === 's'){
+            if(message[0] === 'i'){
                 console.log(message);
-                console.log(message[0]);
                 tempElements.push(
-                    <div className='w-75 ms-auto' id='right-side-chat'>
+                    <div key={message}className='w-75 ms-auto' id='right-side-chat'>
                         <div className='d-flex my-3 justify-content-end'>
                             <div className='me-3 background-light d-flex align-items-center p-3 text-dark right-chat'>
                                 <span>{message.split("=")[1]}</span>
@@ -232,7 +231,7 @@ export const ChatRoom = () => {
                     </div>
                 )
             }
-            if(message[0] === 'i'){
+            if(message[0] === 's'){
                 console.log(message);
                 tempElements.push(
                     <div key={message} className='w-75' id='left-side-chat'>
@@ -260,17 +259,17 @@ export const ChatRoom = () => {
     async function handleMessageSend(){
         setloading(true);
         console.log(typedMessage.current.value);
-        const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
-        const messageHistory = companyDetails.value["message_history"];
-        const oldMessageHash = messageHistory[`${currentInvestor}`];
+        const investorDetails = await getKeyBigMapByID(investorBigMapID, wallet.address);
+        const messageHistory = investorDetails.value["message_history"];
+        const oldMessageHash = messageHistory[`${currentCompany}`];
         let newMessage;
 
         if(oldMessageHash === ""){
-            newMessage = "s:" + "7:00" + "=" + typedMessage.current.value + "|";
+            newMessage = "i:" + "7:00" + "=" + typedMessage.current.value + "|";
         }
         else{
             const messageString = await fetchText(`https://ipfs.io/ipfs/${oldMessageHash}`);
-            newMessage = messageString + "s:" + "7:00" + "=" + typedMessage.current.value + "|";
+            newMessage = messageString + "i:" + "7:00" + "=" + typedMessage.current.value + "|";
         }
         const dateNow = Date.now();
         newMessage = newMessage;
@@ -287,7 +286,7 @@ export const ChatRoom = () => {
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
                 </AppBar>
-                <Navbar />
+                <InvestorNavbar />
                 <main className={classes.content}>
 
                     <NavFloating />

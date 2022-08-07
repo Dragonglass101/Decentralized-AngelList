@@ -20,6 +20,7 @@
     "chokidar": "^3.5.3",
     "coinbase": "^2.0.8",
     "conseiljs": "0.4.3",
+    "firebase-tools": "^11.4.2",
     "fusioncharts": "^3.19.0",
     "install": "^0.13.0",
     "ipfs-api": "^26.1.2",
