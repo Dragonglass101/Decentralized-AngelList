@@ -67,7 +67,9 @@ export const FormInvestor = () => {
         linkedIn: details["linkedIn"],
         name: details["name"],
         number: details["number"],
-        percentageNetworth: details["percentageNetworth"]
+        percentageNetworth: details["percentageNetworth"],
+        photoCID: photoCID,
+        resumeCID: resumeCID
       }
       ipfs_mini.addJSON(investorData, (err, hash) => {
         if (err)

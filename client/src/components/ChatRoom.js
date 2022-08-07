@@ -80,8 +80,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoom = () => {
     const classes = useStyles();
-    const companyBigMapID = 69724;
-    const investorBigMapID = 69726;
+    const companyBigMapID = 69823;
+    const investorBigMapID = 69825;
 
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
@@ -89,6 +89,7 @@ export const ChatRoom = () => {
     const [conversationElements, setconversationElements] = useState(null);
     const [messageHash, setmessageHash] = useState();
     const [currentInvestor, setcurrentInvestor] = useState();
+    const [loadingChats, setloadingChats] = useState(false);
 
     const typedMessage = useRef();
 
@@ -125,15 +126,16 @@ export const ChatRoom = () => {
         const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
         const sendersList = companyDetails.value["request_from_investor"]
         console.log(companyDetails);
+        console.log(sendersList);
         const tempSenderlist = [];
-        for(let sender of sendersList){
-            const investorDetails = await getKeyBigMapByID(investorBigMapID, sender.investor);
+        for(let sender of Object.keys(sendersList)){
+            const investorDetails = await getKeyBigMapByID(investorBigMapID, sender);
             const investorProfileHash = investorDetails.value["investor_profile_Id"];
             const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorProfileHash}`);
 
             tempSenderlist.push(
-                <div key={sender.investor}>
-                    <div onClick={()=>{ setcurrentInvestor(sender.investor);fetchSenderChats(sender.investor, companyDetails.value["message_history"], companyDetails.value["request_from_investor"])}} className='row p-3'>
+                <div key={sender}>
+                    <div onClick={()=>{ setcurrentInvestor(sender);fetchSenderChats(sender, companyDetails.value["message_history"], companyDetails.value["request_from_investor"])}} className='row p-3'>
                         <div className='col-3'>
                             <Avatar />
                         </div>
@@ -159,10 +161,11 @@ export const ChatRoom = () => {
     }
 
     async function fetchSenderChats(investorAddress, messageHistory, initialRequestfromInvestors){
-        console.log("fetching sender chats")
+        setloadingChats(true);
         const tempElements = [];
-        for(let request of initialRequestfromInvestors){
-            if(request.investor === investorAddress)
+        for(let request of Object.keys(initialRequestfromInvestors)){
+            const investorRequests = initialRequestfromInvestors[request];
+            if(request === investorAddress)
                 tempElements.push(
                     <div key={investorAddress} className='w-75' id='left-side-request'>
                         <div className='d-flex my-3'>
@@ -172,19 +175,23 @@ export const ChatRoom = () => {
                             </div>
                             <div className='ms-3 p-4 text-dark left-chat background-chat-request'>
                                 <div className='mb-3'>
+                                <div className='d-flex justify-content-between align-items-center text-light'>
+                                        <h6>Type</h6>
+                                        <span>{investorRequests.type}</span>
+                                    </div>
                                     <div className='d-flex justify-content-between align-items-center text-light'>
                                         <h6>Ownership</h6>
-                                        <span>{request.ownership}%</span>
+                                        <span>{investorRequests.ownership}%</span>
                                     </div>
-
+                                    {investorRequests.type === "SAFE" ?
                                     <div className='d-flex justify-content-between align-items-center text-light'>
                                         <h6>Valuation Cap</h6>
-                                        <span>{request.valuation_cap} ꜩ</span>
-                                    </div>
+                                        <span>{investorRequests.valuation_cap} ꜩ</span>
+                                    </div> : null }
 
                                     <div className='d-flex justify-content-between align-items-center text-light'>
                                         <h6>Investment</h6>
-                                        <span>{request.investment} ꜩ</span>
+                                        <span>{investorRequests.investment} ꜩ</span>
                                     </div>
                                 </div>
 
@@ -202,6 +209,7 @@ export const ChatRoom = () => {
                         </div>
                     </div>
                 );
+            setloadingChats(false);
         }
         console.log(tempElements)
         if(messageHistory[`${investorAddress}`] === "") {
@@ -426,12 +434,6 @@ export const ChatRoom = () => {
                                                 </button>
                                             </Tooltip>
 
-                                            <Tooltip title='Propose a Deal' aria-label='propose-a-deal'>
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" className='btn d-flex justify-content-center align-items-center rounded-circle sidebar-background text-white' style={{ width: '40px', height: '40px' }}>
-                                                    <PaymentIcon />
-                                                </button>
-                                            </Tooltip>
-
                                             <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div className="modal-dialog my-auto">
                                                     <div className="modal-content">
@@ -475,7 +477,7 @@ export const ChatRoom = () => {
                             :
                             <div className='shadow-sm m-3 p-3 d-flex align-items-center justify-content-center flex-column' style={{ width: '60%' }}>
                                 <div className='background-purplepink p-3 m-3 rounded-circle'>
-                                    
+                                    {loadingChats ? <CircularProgress/> : null}
                                 </div>
                                 <span className='text-center m-0 text-secondary'>Start a Meaningful Converstation !</span>
                             </div>}
