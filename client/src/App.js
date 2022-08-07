@@ -9,6 +9,7 @@ import { FormInvestor } from "./components/FormInvestor";
 import { FormCompany } from "./components/FormCompany";
 import { FormEmployee } from "./components/FormEmployee";
 import { DashboardInvestor} from "./components/DashboardInvestor";
+import { DashboardEmployee} from "./components/DashboardEmployee";
 import { DashboardCompany} from "./components/DashboardCompany";
 import { StartupsListInvestor } from "./components/StartupsListInvestor"
 import { InvestmentRequest } from "./components/InvestmentRequest"
@@ -21,6 +22,7 @@ import { CapTable } from "./components/CapTable"
 import { TrackTransactionsCompany } from "./components/TrackTransactionsCompany"
 import { ViewCompanyPortfolio } from "./components/ViewCompanyPortfolio"
 import { ProfileInvestor } from "./components/ProfileInvestor"
+import { EmployeeRequestsCompany } from "./components/EmployeeRequestsCompany";
 
 import { HireEmployees } from "./components/HireEmployees"
 import { EmployeesAppointed } from "./components/EmployeesAppointed";
@@ -60,6 +62,8 @@ import { ChatRoomInvestor } from "./components/ChatRoomInvestor";
           <Route path='/employees-appointed' element={<EmployeesAppointed/>} />
           <Route path='/hire-employees' element={<HireEmployees/>} />
           <Route path='/view-company-portfolio' element={<ViewCompanyPortfolio/>} />
+          <Route path='/dashboard-employee' element={<DashboardEmployee/>} />
+          <Route path='employee-requests-company' element={<EmployeeRequestsCompany/>} />
         </Routes>
     </Router>
     );
