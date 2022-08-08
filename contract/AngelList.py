@@ -111,14 +111,14 @@ class AngelList(sp.Contract):
                             request_accepted = sp.TBool,
                             investor_accepted = sp.TAddress,
                             time_of_acceptance = sp.TTimestamp,
-                            request_from_investor = sp.TList(t = sp.TRecord(
-                                                investor = sp.TAddress, 
-                                                investment = sp.TMutez, 
-                                                valuation_cap = sp.TMutez, 
-                                                ownership = sp.TNat, 
-                                                type = sp.TString
-                                                )
-                                            ),
+                            request_from_investor = sp.TMap(
+                                sp.TAddress,
+                                sp.TRecord(
+                                    investment = sp.TMutez,
+                                    valuation_cap = sp.TMutez,
+                                    ownership =  sp.TNat,
+                                    type = sp.TString)
+                            ),
 
                             safe_table = sp.TList(t = sp.TRecord(
                                                 investor_name = sp.TString,
@@ -219,13 +219,24 @@ class AngelList(sp.Contract):
                                     investment_confirmed = sp.TBool,
                                 )
                             ), 
+
+                            request_from_investor = sp.map(
+                                tkey = sp.TAddress,
+                                tvalue = sp.TRecord(
+                                investment = sp.TMutez,
+                                    valuation_cap = sp.TMutez,
+                                    ownership =  sp.TNat,
+                                    type = sp.TString
+                                    
+                                )
+                            ), 
                             members_list = [],
                             hired_employees = [],
                             request_from_employee = [],
                             request_accepted = False,
                             investor_accepted = self.data.temp_address,
                             time_of_acceptance = sp.now,
-                            request_from_investor = [],
+                            # request_from_investor = [],
                             safe_table = [],
                             cap_table = [],
                         )
@@ -347,17 +358,18 @@ class AngelList(sp.Contract):
         sp.set_type(params.investor_wallet, sp.TAddress)
         
         round_num = sp.local('round_num', self.data.companies[sp.sender].round_num )
-        sp.for request in self.data.companies[sp.sender].request_from_investor:
-            sp.if request.investor == params.investor_wallet:
-                self.data.companies[sp.sender].request_accepted = True
-                self.data.companies[sp.sender].investor_accepted = params.investor_wallet
-                self.data.companies[sp.sender].time_of_acceptance = sp.now
-                self.data.companies[sp.sender].fundraise_details[round_num.value].time = sp.now
-                self.data.companies[sp.sender].fundraise_details[round_num.value].investment_type = request.type
-                self.data.companies[sp.sender].fundraise_details[round_num.value].valuation_cap = request.valuation_cap
-                self.data.companies[sp.sender].fundraise_details[round_num.value].ownership = request.ownership
-                self.data.companies[sp.sender].fundraise_details[round_num.value].investor = request.investor
-                self.data.companies[sp.sender].fundraise_details[round_num.value].investment_confirmed = False
+        request = sp.local("request", self.data.companies[sp.sender].request_from_investor[params.investor_wallet])
+        # sp.for request in self.data.companies[sp.sender].request_from_investor:
+            # sp.if request.investor == params.investor_wallet:
+        self.data.companies[sp.sender].request_accepted = True
+        self.data.companies[sp.sender].investor_accepted = params.investor_wallet
+        self.data.companies[sp.sender].time_of_acceptance = sp.now
+        self.data.companies[sp.sender].fundraise_details[round_num.value].time = sp.now
+        self.data.companies[sp.sender].fundraise_details[round_num.value].investment_type = request.value.type
+        self.data.companies[sp.sender].fundraise_details[round_num.value].valuation_cap = request.value.valuation_cap
+        self.data.companies[sp.sender].fundraise_details[round_num.value].ownership = request.value.ownership
+        self.data.companies[sp.sender].fundraise_details[round_num.value].investor = params.investor_wallet
+        self.data.companies[sp.sender].fundraise_details[round_num.value].investment_confirmed = False
 
 
     @sp.entry_point
@@ -390,14 +402,14 @@ class AngelList(sp.Contract):
         
         sp.if params.type == sp.string("DirectEquity"):
             ownership = sp.local("ownership", params.direct_equity)
-            new_record = sp.record(investor = sp.sender, investment = params.investment, valuation_cap = params.valuation_cap, ownership = ownership.value, type = params.type)
-            self.data.companies[params.company_wallet].request_from_investor.push(new_record)
+            new_record = sp.record(investment = params.investment, valuation_cap = params.valuation_cap, ownership = ownership.value, type = params.type)
+            self.data.companies[params.company_wallet].request_from_investor[sp.sender] = new_record
 
         
         sp.if params.type == sp.string("SAFE"):
             ownership = sp.local("ownership", sp.nat(100) * sp.utils.mutez_to_nat(params.investment) / sp.utils.mutez_to_nat(params.valuation_cap))
-            new_record = sp.record(investor = sp.sender, investment = params.investment, valuation_cap = params.valuation_cap, ownership = ownership.value, type = params.type)
-            self.data.companies[params.company_wallet].request_from_investor.push(new_record)
+            new_record = sp.record(investment = params.investment, valuation_cap = params.valuation_cap, ownership = ownership.value, type = params.type)
+            self.data.companies[params.company_wallet].request_from_investor[sp.sender] = new_record
 
         self.data.investors[sp.sender].message_history[params.company_wallet] = ""
         self.data.companies[params.company_wallet].message_history[sp.sender] = ""
@@ -566,6 +578,8 @@ class AngelList(sp.Contract):
         scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(1000), ownership = sp.nat(5),type = sp.string("SAFE"))).run(sender =company_a)
 
         scenario += contract.request_from_investor(sp.record(company_wallet = company_a.address, investment = sp.tez(1000), valuation_cap = sp.tez(10000), direct_equity = sp.nat(10), type = sp.string("SAFE"))).run(sender = investor_a )
+        scenario += contract.request_from_investor(sp.record(company_wallet = company_a.address, investment = sp.tez(2000), valuation_cap = sp.tez(10000), direct_equity = sp.nat(10), type = sp.string("SAFE"))).run(sender = investor_a )
+        
         scenario += contract.change_message_hash(sp.record(company = company_a.address,investor = investor_a.address,message_hash = sp.string("WattheFk") ) ).run(sender = investor_a)
         scenario += contract.accept_investor_request(sp.record(investor_wallet = investor_a.address)).run(sender = company_a)
 
@@ -590,60 +604,3 @@ class AngelList(sp.Contract):
         
         # scenario += contract.pay_from_company_wallet(sp.record(company_wallet = company_a.address, receiver_wallet = vendor.address, amount = sp.tez(100), tag = sp.string("PayedtoVendor"))).run(
                     #    amount = sp.tez(100), sender = company_a )
-        
-
-    
-
-
-
-
-
-
-
-    
-
-
-
-
-
-    
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-        
-
-
-
-
-        
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

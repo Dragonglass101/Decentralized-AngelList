@@ -76,7 +76,7 @@ export const StartupsListInvestor = () => {
     const [investementType, setinvestementType] = useState("SAFE");
     const [companyWalletAddress, setcompanyWalletAddress] = useState();
 
-    const companyBigMapID = 69724;
+    const companyBigMapID = 69823;
 
     useEffect(() => {
       const retrieveStorage = async () => {
@@ -141,13 +141,6 @@ export const StartupsListInvestor = () => {
 
     const handleRequestFromInvestor = async (e) => {
         e.preventDefault();
-        // console.log(companyWalletAddress)
-        // if(investementType === "DirectEquity")
-        //     console.log(typeof Number(directEquity.current.value))
-        // if(investementType === "SAFE")
-        //     console.log(typeof Number(valuationCap.current.value))
-        // console.log(typeof Number(investement.current.value))
-        // console.log(typeof investementType)
         if(investementType === "DirectEquity")
             requestFromInvestor(companyWalletAddress, Number(directEquity.current.value), Number(investement.current.value), investementType, 0);
         if(investementType === "SAFE")
@@ -236,7 +229,7 @@ export const StartupsListInvestor = () => {
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                            </form>
                         </div>
                     </div>
                 </main>
