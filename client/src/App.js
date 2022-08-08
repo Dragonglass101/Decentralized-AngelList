@@ -26,8 +26,6 @@ import { EmployeeRequestsCompany } from "./components/EmployeeRequestsCompany";
 
 import { HireEmployees } from "./components/HireEmployees"
 import { EmployeesAppointed } from "./components/EmployeesAppointed";
-
-import { Trash } from "./components/Trash"
 // import { SideNav } from "./components/SideNav"
 import { Test } from "./components/Test";
 import { ChatRoomInvestor } from "./components/ChatRoomInvestor";
@@ -56,7 +54,6 @@ import { ChatRoomInvestor } from "./components/ChatRoomInvestor";
           <Route path='/make-payment' element={<MakePayment/>} />
           <Route path='/profile-company' element={<ProfileCompany/>} />
           <Route path='/profile-investor' element={<ProfileInvestor/>} />
-          <Route path='/trash' element={<Trash/>} />
           <Route path='/cap-table' element={<CapTable/>} />
           <Route path='/track-transactions-company' element={<TrackTransactionsCompany/>} />
           <Route path='/employees-appointed' element={<EmployeesAppointed/>} />

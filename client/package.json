@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "type":"module",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@fontsource/roboto": "^4.5.7",
@@ -14,6 +14,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@zalando/oauth2-client-js": "^0.0.18",
+    "apexcharts": "^3.35.4",
     "axios": "^0.27.2",
     "bootstrap": "^4.4.1",
     "bulma": "^0.9.4",
@@ -28,6 +29,7 @@
     "npm": "^8.15.0",
     "openid-client": "^5.1.8",
     "react": "^16.13.1",
+    "react-apexcharts": "^1.4.0",
     "react-dom": "^16.13.1",
     "react-fusioncharts": "^4.0.0",
     "react-router-dom": "^6.3.0",
@@ -58,5 +60,3 @@
     ]
   }
 }
-
-
