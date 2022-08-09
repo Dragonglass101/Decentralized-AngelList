@@ -81,8 +81,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoomInvestor = () => {
     const classes = useStyles();
-    const companyBigMapID = 69823;
-    const investorBigMapID = 69825;
+    const companyBigMapID = 71727;
+    const investorBigMapID = 71729;
 
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);

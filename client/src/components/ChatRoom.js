@@ -28,7 +28,7 @@ import { getActiveAccount } from '../utils/wallet';
 import SearchIcon from '@material-ui/icons/Search';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import { getKeyBigMapByID } from '../utils/Api';
-import { changeMessageHash } from '../utils/operation';
+import { changeMessageHash, acceptOffer } from '../utils/operation';
 
 import ipfs_mini from '../ipfs_mini';
 
@@ -80,8 +80,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoom = () => {
     const classes = useStyles();
-    const companyBigMapID = 69823;
-    const investorBigMapID = 69825;
+    const companyBigMapID = 71727;
+    const investorBigMapID = 71729;
 
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
@@ -90,6 +90,7 @@ export const ChatRoom = () => {
     const [messageHash, setmessageHash] = useState();
     const [currentInvestor, setcurrentInvestor] = useState();
     const [loadingChats, setloadingChats] = useState(false);
+    const [requestAccepted, setrequestAccepted] = useState(null);
 
     const typedMessage = useRef();
 
@@ -124,6 +125,10 @@ export const ChatRoom = () => {
     
     async function makeSendersList(){
         const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
+        if(requestAccepted === null){
+            setrequestAccepted(companyDetails.value["request_accepted"]);
+            console.log(companyDetails.value["request_accepted"]);
+        }
         const sendersList = companyDetails.value["request_from_investor"]
         console.log(companyDetails);
         console.log(sendersList);
@@ -133,9 +138,21 @@ export const ChatRoom = () => {
             const investorProfileHash = investorDetails.value["investor_profile_Id"];
             const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorProfileHash}`);
 
+            function listClickAction(){
+                if(!requestAccepted){
+                    fetchSenderChats(sender, companyDetails.value["message_history"], companyDetails.value["request_from_investor"]);
+                }
+                else{
+                    console.log(companyDetails.value["investor_accepted"], sender)
+                    if(companyDetails.value["investor_accepted"] === sender){
+                        fetchSenderChats(sender, companyDetails.value["message_history"], companyDetails.value["request_from_investor"])
+                    }
+                }
+            }
+
             tempSenderlist.push(
-                <div key={sender}>
-                    <div onClick={()=>{ setcurrentInvestor(sender);fetchSenderChats(sender, companyDetails.value["message_history"], companyDetails.value["request_from_investor"])}} className='row p-3'>
+                <div key={sender} style={{cursor: "pointer"}}>
+                    <div onClick={listClickAction} className='row p-3'>
                         <div className='col-3'>
                             <Avatar />
                         </div>
@@ -161,6 +178,7 @@ export const ChatRoom = () => {
     }
 
     async function fetchSenderChats(investorAddress, messageHistory, initialRequestfromInvestors){
+        setcurrentInvestor(investorAddress);
         setloadingChats(true);
         const tempElements = [];
         for(let request of Object.keys(initialRequestfromInvestors)){
@@ -196,11 +214,11 @@ export const ChatRoom = () => {
                                 </div>
 
                                 <div className='d-flex justify-content-between align-items-center'>
-                                    <Button className='me-3 text-black background-accept' variant='contained'>
+                                    <Button disabled={requestAccepted} onClick={() => {handleAcceptOffer(investorAddress)}} className='me-3 text-black background-accept' variant='contained'>
                                         <ThumbUpRoundedIcon className='text-black me-2' />
                                         Accept
                                     </Button>
-                                    <Button variant='contained' className='background-deny'>
+                                    <Button disabled={requestAccepted} variant='contained' className='background-deny'>
                                         <ThumbDownRoundedIcon className='me-2' />
                                         Deny
                                     </Button>
@@ -287,6 +305,15 @@ export const ChatRoom = () => {
 
     if(wallet && !sendersList){
         makeSendersList();
+    }
+
+    async function handleAcceptOffer(investorAddress){
+        try{
+            await acceptOffer(investorAddress);
+            window.location.reload();
+        }catch(error){
+            alert("Transaction Failed:", error.message);
+        }
     }
 
     return (

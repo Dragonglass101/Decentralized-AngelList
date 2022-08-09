@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,7 +14,11 @@ import whatsappImg from '../images/whtsp.png'
 import Navbar from './InvestorNavbar';
 import NavFloating from './NavFloating';
 
+import { getActiveAccount } from '../utils/wallet';
+
 import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
+import { getKeyBigMapByID, getRootStorage } from '../utils/Api';
+import { investThroughDirectEquity, investThroughSAFE } from '../utils/operation';
 
 const drawerWidth = 240;
 
@@ -64,15 +68,96 @@ const useStyles = makeStyles((theme) => ({
 
 export const InvestmentRequest = () => {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const companyBigMapID = 71727;
+    const investorBigMapID = 71729;
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const [wallet, setWallet] = useState(null);
+    const [loading, setloading] = useState(false);
+    const [pendingList, setpendingList] = useState(null);
+    
+    const [currCompany, setcurrCompany] = useState(null);
+    const [companyName, setcompanyName] = useState(); 
+    const [contractType, setcontractType] = useState(); 
+    const [ownership, setownership] = useState(); 
+    const [companyValuation, setcompanyValuation] = useState(); 
+    const [investement, setinvestement] = useState();
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    useEffect(() => {
+        if(!wallet){
+            (async () => {
+            const activeAccount = await getActiveAccount();
+            setWallet(activeAccount);
+        })();}
+      }, []);
+
+    async function fetchJSON(url) {
+        const response = await fetch(url);
+        const jsonfile = await response.json();
+        return jsonfile;
+    }
+
+    async function makePendingPaymentList(){
+        const storage = await getRootStorage();
+
+        const tempElements = [];
+        for( let companyAddress of storage["all_companies"]){
+            const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
+            console.log(companyDetails);
+            if(companyDetails.value["request_accepted"] && companyDetails.value["investor_accepted"] === wallet.address){
+                const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyDetails.value["company_profile_Id"]}`);
+                const investmentDetails = (companyDetails.value["request_from_investor"])[wallet.address];
+                tempElements.push(
+                    <>
+                        <button 
+                          onClick={()=>{setcurrCompany(companyAddress);handleShowAgreement(companyJSON.name,investmentDetails.type, investmentDetails.ownership, investmentDetails.valuation_cap, investmentDetails.investment)}} 
+                          type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
+                            <div className='col-2 p-0'>
+                                <Avatar alt="Remy Sharp" src={appleLogo} />
+                            </div>
+                            <div className='d-flex flex-column col-7 align-self-center'>
+                                <span className='fw-bold font13'>{companyJSON.name}</span>
+                                <span className='font10 text-secondary'>{investmentDetails.investment} ꜩ</span>
+                            </div>
+                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
+                        </button>
+                        <Divider variant='middle' />
+                    </>
+                )
+            }
+        }
+        setpendingList(tempElements);
+    }
+
+    if(wallet && !pendingList){
+        makePendingPaymentList();
+    }
+
+    function handleShowAgreement(name, type, ownership, valuation, investement){
+        setcompanyName(name);
+        setcontractType(type);
+        setownership(ownership);
+        setcompanyValuation(valuation);
+        setinvestement(investement);
+    }
+
+    async function handleSignContract(e){
+        e.preventDefault();
+        setloading(true);
+        try{
+            const investorDetails = await getKeyBigMapByID(investorBigMapID, wallet.address);
+            const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorDetails.value["investor_profile_Id"]}`);
+            if(contractType === "SAFE"){
+                await investThroughSAFE(currCompany, investorJSON.name, investement);
+            }
+            if(contractType === "DirectEquity"){
+                await investThroughDirectEquity(currCompany, investorJSON.name, investement);
+            }
+          }catch(error){
+            alert("Transaction Failed:", error.message);
+          }
+          setloading(false);
+    }
+
     return (
         <>
             <div className={classes.root}>
@@ -91,8 +176,9 @@ export const InvestmentRequest = () => {
                                         </button>
                                     </div>
                                 </div>
+                                {currCompany ?
                                 <div className='col-8 sidebar-background rounded text-white d-flex align-items-center'>
-                                    <h4 className='col-5 m-0'>Company Name</h4>
+                                    <h4 className='col-5 m-0'>{companyName}</h4>
                                     <div className='col-7 d-flex justify-content-around align-items-center'>
                                         <div className='col-2'>
                                             <TimerRoundedIcon />
@@ -114,144 +200,37 @@ export const InvestmentRequest = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> : null}
                             </div>
                             <div className='row'>
                                 <div className='col-4'>
                                     <div className="list-group" style={{ overflow: 'auto', height: '493px' }}>
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-                                        <button type="button" className="list-group-item list-group-item-action d-flex" style={{ borderWidth: '0px' }}>
-                                            <div className='col-2 p-0'>
-                                                <Avatar alt="Remy Sharp" src={appleLogo} />
-                                            </div>
-                                            <div className='d-flex flex-column col-7 align-self-center'>
-                                                <span className='fw-bold font13'>Apple Inc.</span>
-                                                <span className='font10 text-secondary'>1300 ꜩ</span>
-                                            </div>
-                                            <span className='font13 text-secondary col-3 pe-0' style={{ textAlign: 'right' }}>25 Jul</span>
-                                        </button>
-                                        <Divider variant='middle' />
-
-
+                                        {pendingList}
                                     </div>
                                 </div>
+                                {currCompany ?
                                 <div className='col-8 px-0' style={{ height: 'fit-content', height: '493px' }}>
                                     <div id='contract-content' style={{ height: '433px', overflow: 'auto' }}>
                                         <table className="table mt-4 w-75 mx-auto shadow-sm">
                                             <thead style={{ fontSize: '20px' }}>
                                                 <td>
-                                                    SAFE Contract
+                                                    {contractType} Contract
                                                 </td>
                                             </thead>
                                             <tbody>
+                                                {contractType==="DirectEquity"? 
                                                 <tr>
                                                     <th>Ownership<p className='font10 text-secondary m-0'>on valuation cap</p></th>
-                                                    <td>13%</td>
-                                                </tr>
+                                                    <td>{ownership}%</td>
+                                                </tr> : null}
+                                                {contractType==="SAFE" ?
                                                 <tr>
                                                     <th>Valuation Cap</th>
-                                                    <td>1300 ꜩ</td>
-
-                                                </tr>
+                                                    <td>{companyValuation} ꜩ</td>
+                                                </tr> : null}
                                                 <tr>
                                                     <th>Investment Amount</th>
-                                                    <td>3400 ꜩ</td>
-
+                                                    <td>{investement} ꜩ</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -337,11 +316,11 @@ export const InvestmentRequest = () => {
 
                                     <div className='sidebar-background rounded' style={{ height: '60px' }}>
                                         <div className='d-flex justify-content-around align-items-center h-100'>
-                                            <h4 className='text-white'>1300 ꜩ</h4>
+                                            <h4 className='text-white'>{investement} ꜩ</h4>
                                             <div className='d-flex justify-content-around'>
                                                 <Tooltip title='Deposit Fund' aria-label='deposit-fund'>
-                                                    <Button className='me-3 text-black background-accept' variant='contained'>
-                                                        Sign Contract
+                                                    <Button onClick={handleSignContract} className='me-3 text-black background-accept' variant='contained'>
+                                                        {loading ? "loading..." : "Sign Contract"}
                                                     </Button>
                                                 </Tooltip>
                                                 <Tooltip title='Reject Contract' aria-label='reject-contract'>
@@ -352,7 +331,7 @@ export const InvestmentRequest = () => {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> : null}
                             </div>
 
                         </div>
