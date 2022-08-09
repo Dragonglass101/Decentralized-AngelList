@@ -258,7 +258,7 @@ export const DashboardInvestor = () => {
 
             <div className='d-flex justify-content-between align-center'>
 
-              <div className='bg-white p-3 rounded' style={{ width: '22%' }}>
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
                   <p className='text-secondary fw-bold'>TOTAL EARNINGS</p>
                   <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>
@@ -273,7 +273,7 @@ export const DashboardInvestor = () => {
                 </div>
               </div>
 
-              <div className='bg-white p-3 rounded' style={{ width: '22%' }}>
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
                   <p className='text-secondary fw-bold'>ORDERS</p>
                   <p className='fw-bold font13' style={{ color: 'rgb(200, 51, 51)' }}>
@@ -289,7 +289,7 @@ export const DashboardInvestor = () => {
                 </div>
               </div>
 
-              <div className='bg-white p-3 rounded' style={{ width: '22%' }}>
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
                   <p className='text-secondary fw-bold'>CUSTOMERS</p>
                   <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p>
@@ -303,7 +303,7 @@ export const DashboardInvestor = () => {
                 </div>
               </div>
 
-              <div className='bg-white p-3 rounded' style={{ width: '22%' }}>
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
                   <p className='text-secondary fw-bold'>MY BALANCE</p>
                   <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p>
@@ -320,7 +320,7 @@ export const DashboardInvestor = () => {
             </div>
 
             <div className='d-flex my-5 justify-content-between'>
-              <div className='p-3 bg-white' style={{ width: '60%' }}>
+              <div className='p-3 bg-white shadow' style={{ width: '60%' }}>
                 <h5>Revenue</h5>
                 <div className='d-flex align-items-center my-3 bg-light'>
                   <div className='w-25 text-center border p-2'>
@@ -348,14 +348,14 @@ export const DashboardInvestor = () => {
                 />
               </div>
 
-              <div className='bg-white p-3'>
+              <div className='bg-white p-3 shadow'>
                 <h5 className='mb-5'>Store visited by source</h5>
                 <ReactFC className='doughnut' style={{ backgroundColor: 'white' }} {...doughnutConfigs} />
               </div>
             </div>
 
             <div className='d-flex justify-content-between'>
-              <div className='bg-white p-3' style={{ width: '56%' }}>
+              <div className='bg-white p-3 shadow' style={{ width: '56%' }}>
                 <div className='d-flex justify-content-between align-items-center mb-3'>
                   <h5 className='ms-2 mb-0'>Recent Investments</h5>
                   <p className='me-3 mb-0'>Report</p>
@@ -442,7 +442,7 @@ export const DashboardInvestor = () => {
                 </table>
               </div>
 
-              <div className='bg-white p-3' style={{ width: '43%' }}>
+              <div className='bg-white p-3 shadow' style={{ width: '43%' }}>
                 <div className='d-flex justify-content-between align-items-center mb-3'>
                   <h5 className='ms-2 mb-0'>Top Companies</h5>
                   <p className='me-3 mb-0'>Report</p>

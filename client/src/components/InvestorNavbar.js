@@ -172,14 +172,6 @@ const InvestorNavbar = () => {
                             </ListItem>
                         </Link>
 
-                        <Link to="#" style={{ color: "inherit", textDecoration: 'unset' }}>
-                            <ListItem className="background-selected" style={{ marginBottom: '10px' }} button key='Cart'>
-                                <ShoppingCartRoundedIcon className="menu-icon-color" />
-                                {/* <ListItemText className="ms-2" primary='Dashboard' /> */}
-                                <span className="font13 fw-bold ms-2 menu-item-color">Cart</span>
-                            </ListItem>
-                        </Link>
-
                     </List>
 
 

@@ -8,10 +8,13 @@ import appleLogo from '../images/apple-logo.png';
 import Navbar from './CompanyNavbar';
 import NavFloating from './NavFloating';
 import InputLabel from '@material-ui/core/InputLabel';
+import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+
+import SortIcon from '@material-ui/icons/Sort';
 
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -97,24 +100,40 @@ export const EmployeesAppointed = () => {
                                         <SearchIcon style={{ color: 'white' }} />
                                     </button>
                                 </div>
-                                <FormControl className='col-2 cardColorPinkish shadow-sm' variant='filled' style={{fontFamily:'kanit'}}>
-                                    <InputLabel id="demo-simple-select-label" style={{fontFamily:'kanit'}}>Sort</InputLabel>
+                                {/* <FormControl className='col-2 cardColorPinkish shadow-sm' variant='filled' style={{ fontFamily: 'kanit' }}>
+                                    <InputLabel id="demo-simple-select-label" style={{ fontFamily: 'kanit' }}>Sort</InputLabel>
                                     <Select
                                         className='cardColorPinkish'
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         value={age}
                                         onChange={handleChange}
-                                        style={{fontFamily:'kanit'}}
+                                        style={{ fontFamily: 'kanit' }}
                                     >
                                         <MenuItem value="">
-                                            <em style={{fontFamily:'kanit'}}>None</em>
+                                            <em style={{ fontFamily: 'kanit' }}>None</em>
                                         </MenuItem>
-                                        <MenuItem value={10} style={{fontFamily:'kanit'}}>Ten</MenuItem>
-                                        <MenuItem value={20} style={{fontFamily:'kanit'}}>Twenty</MenuItem>
-                                        <MenuItem value={30} style={{fontFamily:'kanit'}}>Thirty</MenuItem>
+                                        <MenuItem value={10} style={{ fontFamily: 'kanit' }}>Ten</MenuItem>
+                                        <MenuItem value={20} style={{ fontFamily: 'kanit' }}>Twenty</MenuItem>
+                                        <MenuItem value={30} style={{ fontFamily: 'kanit' }}>Thirty</MenuItem>
                                     </Select>
-                                </FormControl>
+                                </FormControl> */}
+                                <div className='col-2'>
+                                    <Button style={{textTransform:'capitalize'}} className='fw-bold shadow-sm' variant='outlined' color='primary' aria-controls="simple-menu" aria-haspopup="true" startIcon={<SortIcon />} onClick={handleClick}>
+                                        SORT
+                                    </Button>
+                                </div>
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                </Menu>
                             </div>
                             <div className='d-flex flex-wrap'>
 
@@ -128,7 +147,9 @@ export const EmployeesAppointed = () => {
                                         </div>
                                         <h5 className="card-title fw-bold">Company Name</h5>
                                         <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        <div className='mb-3' style={{ height: '60px', overflow: 'hidden', textOverflow: 'elipsis' }}>
+                                            <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content. Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        </div>
                                         <div className='d-flex align-items-center justify-content-between'>
                                             <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
                                             <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
@@ -147,7 +168,9 @@ export const EmployeesAppointed = () => {
                                         </div>
                                         <h5 className="card-title fw-bold">Company Name</h5>
                                         <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        <div className='mb-3' style={{ height: '60px', overflow: 'hidden', textOverflow: 'elipsis' }}>
+                                            <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content. Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        </div>
                                         <div className='d-flex align-items-center justify-content-between'>
                                             <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
                                             <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
@@ -166,7 +189,9 @@ export const EmployeesAppointed = () => {
                                         </div>
                                         <h5 className="card-title fw-bold">Company Name</h5>
                                         <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        <div className='mb-3' style={{ height: '60px', overflow: 'hidden', textOverflow: 'elipsis' }}>
+                                            <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content. Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        </div>
                                         <div className='d-flex align-items-center justify-content-between'>
                                             <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
                                             <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
@@ -185,7 +210,9 @@ export const EmployeesAppointed = () => {
                                         </div>
                                         <h5 className="card-title fw-bold">Company Name</h5>
                                         <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        <div className='mb-3' style={{ height: '60px', overflow: 'hidden', textOverflow: 'elipsis' }}>
+                                            <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content. Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        </div>
                                         <div className='d-flex align-items-center justify-content-between'>
                                             <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
                                             <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>
@@ -204,7 +231,9 @@ export const EmployeesAppointed = () => {
                                         </div>
                                         <h5 className="card-title fw-bold">Company Name</h5>
                                         <p className="card-subtitle mb-2 fw-bold">City, State</p>
-                                        <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        <div className='mb-3' style={{ height: '60px', overflow: 'hidden', textOverflow: 'elipsis' }}>
+                                            <p className="card-text font13 text-secondary">Some quick example text to build on the Company Name and make up the bulk of the card's content. Some quick example text to build on the Company Name and make up the bulk of the card's content.</p>
+                                        </div>
                                         <div className='d-flex align-items-center justify-content-between'>
                                             <h6 className='fw-bold mb-0'>1300 ꜩ</h6>
                                             <Button style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary">Invest</Button>

@@ -262,15 +262,14 @@ const CompanyNavbar = () => {
                         <Divider className="mt-3" style={{ color: 'grey', backgroundColor: 'grey', marginBottom: 'auto' }} />
                         <h6 className="font10 ps-2 mt-4">EMPLOYEE</h6>
 
-                        <Link to="/employees-appointed" style={{ color: "inherit", textDecoration: 'unset' }}>
+                        {/* <Link to="/employees-appointed" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem
                                 className={(currentLocation === "/employees-appointed" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Startups List'>
                                 <PeopleAltIcon className={(currentLocation === "/employees-appointed" ? "green-karo" : "") + " menu-icon-color"} />
-                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/employees-appointed" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Employee Details</span>
                             </ListItem>
-                        </Link>
+                        </Link> */}
 
                         <Link to="/hire-employees" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem

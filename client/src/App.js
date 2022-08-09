@@ -29,6 +29,7 @@ import { EmployeesAppointed } from "./components/EmployeesAppointed";
 // import { SideNav } from "./components/SideNav"
 import { Test } from "./components/Test";
 import { ChatRoomInvestor } from "./components/ChatRoomInvestor";
+import { Trash } from "./components/Trash"
 // import Navbar from "./components/Navbar";
   
   function App() {
@@ -61,6 +62,7 @@ import { ChatRoomInvestor } from "./components/ChatRoomInvestor";
           <Route path='/view-company-portfolio' element={<ViewCompanyPortfolio/>} />
           <Route path='/dashboard-employee' element={<DashboardEmployee/>} />
           <Route path='employee-requests-company' element={<EmployeeRequestsCompany/>} />
+          <Route path='trash' element={<Trash/>} />
         </Routes>
     </Router>
     );
