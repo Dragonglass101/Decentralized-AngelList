@@ -96,7 +96,7 @@ export const EmployeeRequestsCompany = () => {
 
     async function makeCards() {
         const allCards = [];
-        for (let companyAddress of storage["companies_for_funding"]) {
+        for (let companyAddress of storage["fundraised_companies"]) {
             console.log(companyAddress);
 
             const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);

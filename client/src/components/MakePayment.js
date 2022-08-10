@@ -48,6 +48,10 @@ import TrendingUpRoundedIcon from '@material-ui/icons/TrendingUpRounded';
 import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
+import employeeImg from '../images/employee.png'
+import vendorImg from '../images/vendor.png'
+import onlineBankingImg from '../images/onlineBanking.png'
+
 
 const drawerWidth = 240;
 
@@ -166,7 +170,7 @@ export const MakePayment = () => {
                     <NavFloating />
 
                     <div className={classes.padded}>
-                        <div className={classes.tabs} style={{width:'75%', marginLeft:'auto', marginRight:'auto',boxShadow: '0 .5rem 1rem rgba(0,0,0,.15)'}}>
+                        <div className={classes.tabs} style={{ width: '96%', marginLeft: 'auto', marginRight: 'auto', boxShadow: '0 .5rem 1rem rgba(0,0,0,.15)' }}>
                             <AppBar position="static" color="default">
                                 <Tabs
                                     value={value}
@@ -176,8 +180,8 @@ export const MakePayment = () => {
                                     variant="fullWidth"
                                     aria-label="full width tabs example"
                                 >
-                                    <Tab label="Pay To Employee" {...a11yProps(0)} />
-                                    <Tab label="Pay To Vendor" {...a11yProps(1)} />
+                                    <Tab style={{ textTransform: 'capitalize' }} label="Pay To Employee" {...a11yProps(0)} />
+                                    <Tab style={{ textTransform: 'capitalize' }} label="Pay To Vendor" {...a11yProps(1)} />
                                 </Tabs>
                             </AppBar>
                             <SwipeableViews
@@ -186,92 +190,63 @@ export const MakePayment = () => {
                                 onChangeIndex={handleChangeIndex}
                             >
                                 <TabPanel value={value} index={0} dir={theme.direction}>
-                                    <div className='container text-center px-5 py-3 rounded' style={{width:'80%'}}>
-                                        <h4 className='mb-4'>Pay to Employee</h4>
-                                        <Autocomplete
-                                            id="combo-box-demo"
-                                            className='mx-auto my-5 w-100'
-                                            options={top100Films}
-                                            getOptionLabel={(option) => option.title}
-                                            style={{ width: 300, fontFamily: 'kanit' }}
-                                            renderInput={(params) => <TextField {...params} placeholder='Select Employee' variant="outlined" />}
-                                        />
-                                        <div className="input-group input-group-lg mb-5 w-100 mx-auto">
-                                            <span className="input-group-text px-4 sidebar-background text-white fw-bold" id="basic-addon1">Amount</span>
-                                            <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
-                                            <span className="input-group-text sidebar-background text-white" id="basic-addon1">ꜩ</span>
+                                    <div className='d-flex align-items-center justify-content-between'>
+                                        <div style={{width:'60%'}}>
+                                            <img className='w-100' src={employeeImg} />
                                         </div>
-                                        <Button style={{ textTransform: 'capitalize' }} variant="contained" color="primary" size='large'>
-                                            Make Payment
-                                        </Button>
+                                        <div className='container text-center rounded' style={{width:'50%'}}>
+                                            <h4 className='mb-4'>Pay to Employee</h4>
+                                            <Autocomplete
+                                                id="combo-box-demo"
+                                                className='mx-auto mb-3 w-100'
+                                                options={top100Films}
+                                                getOptionLabel={(option) => option.title}
+                                                style={{ width: 300, fontFamily: 'kanit' }}
+                                                renderInput={(params) => <TextField {...params} placeholder='Select Employee' variant="outlined" />}
+                                            />
+                                            <div className="input-group mb-3 w-100 mx-auto">
+                                                <span className="input-group-text px-4" id="basic-addon1">Account ID</span>
+                                                <input type="text" className="form-control bg-white" aria-label="Username" aria-describedby="basic-addon1" disabled />
+                                            </div>
+                                            <div className="input-group input-group-lg mb-5 w-100 mx-auto">
+                                                <span className="input-group-text px-4 sidebar-background text-white fw-bold" id="basic-addon1">Amount</span>
+                                                <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+                                                <span className="input-group-text sidebar-background text-white" id="basic-addon1">ꜩ</span>
+                                            </div>
+                                            <Button className='d-block w-100' style={{ textTransform: 'capitalize' }} variant="contained" color="primary" size='large'>
+                                                Make Payment
+                                            </Button>
+                                        </div>
                                     </div>
                                 </TabPanel>
                                 <TabPanel value={value} index={1} dir={theme.direction}>
-                                    <div className='container text-center px-5 py-3 rounded' style={{width:'80%'}}>
-                                        <h4 className='mb-5'>Pay to Vendor</h4>
-                                        <div className="input-group mb-3 w-100 mx-auto">
-                                            <span className="input-group-text" id="basic-addon1">Vendor Name</span>
-                                            <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+                                    <div className='d-flex align-items-center justify-content-between'>
+                                        <div style={{width:'60%'}}>
+                                            <img className='w-100' src={onlineBankingImg} />
                                         </div>
-                                        <div className="input-group mb-3 w-100 mx-auto">
-                                            <span className="input-group-text px-4" id="basic-addon1">Account ID</span>
-                                            <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+                                        <div className='container text-center rounded' style={{width:'50%'}}>
+                                            <h4 className='mb-4'>Pay to Vendor</h4>
+                                            <div className="input-group mb-3 w-100 mx-auto">
+                                                <span className="input-group-text" id="basic-addon1">Vendor Name</span>
+                                                <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+                                            </div>
+                                            <div className="input-group mb-3 w-100 mx-auto">
+                                                <span className="input-group-text px-4" id="basic-addon1">Account ID</span>
+                                                <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+                                            </div>
+                                            <div className="input-group input-group-lg mb-5 w-100 mx-auto">
+                                                <span className="input-group-text px-4 sidebar-background text-white fw-bold" id="basic-addon1">Amount</span>
+                                                <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
+                                                <span className="input-group-text sidebar-background text-white" id="basic-addon1">ꜩ</span>
+                                            </div>
+                                            <Button className='d-block w-100' style={{ textTransform: 'capitalize' }} variant="contained" color="primary" size='large'>
+                                                Make Payment
+                                            </Button>
                                         </div>
-                                        <div className="input-group input-group-lg mb-5 w-100 mx-auto">
-                                            <span className="input-group-text px-4 sidebar-background text-white fw-bold" id="basic-addon1">Amount</span>
-                                            <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
-                                            <span className="input-group-text sidebar-background text-white" id="basic-addon1">ꜩ</span>
-                                        </div>
-                                        <Button style={{ textTransform: 'capitalize' }} variant="contained" color="primary" size='large'>
-                                            Make Payment
-                                        </Button>
                                     </div>
                                 </TabPanel>
                             </SwipeableViews>
                         </div>
-                        {/* <div className='container d-flex h-100'>
-                            <div className='container text-center shadow p-5 rounded25'>
-                                <h4 className='mb-4'>Pay to Employee</h4>
-                                <Autocomplete
-                                    id="combo-box-demo"
-                                    className='mx-auto my-5 w-100'
-                                    options={top100Films}
-                                    getOptionLabel={(option) => option.title}
-                                    style={{ width: 300, fontFamily: 'kanit' }}
-                                    renderInput={(params) => <TextField {...params} placeholder='Select Employee' variant="outlined" />}
-                                />
-                                <div className="input-group input-group-lg mb-5 w-100 mx-auto">
-                                    <span className="input-group-text px-4 sidebar-background text-white fw-bold" id="basic-addon1">Amount</span>
-                                    <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
-                                    <span className="input-group-text sidebar-background text-white" id="basic-addon1">ꜩ</span>
-                                </div>
-                                <Button style={{ textTransform: 'capitalize' }} variant="contained" color="primary" size='large'>
-                                    Make Payment
-                                </Button>
-                            </div>
-
-                            <h3 className='text-center my-3 fw-bold sidebar-color my-auto mx-3'>OR</h3>
-
-                            <div className='container text-center shadow p-5 rounded25'>
-                                <h4 className='mb-5'>Pay to Vendor</h4>
-                                <div className="input-group mb-3 w-100 mx-auto">
-                                    <span className="input-group-text" id="basic-addon1">Vendor Name</span>
-                                    <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
-                                </div>
-                                <div className="input-group mb-3 w-100 mx-auto">
-                                    <span className="input-group-text px-4" id="basic-addon1">Account ID</span>
-                                    <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
-                                </div>
-                                <div className="input-group input-group-lg mb-5 w-100 mx-auto">
-                                    <span className="input-group-text px-4 sidebar-background text-white fw-bold" id="basic-addon1">Amount</span>
-                                    <input type="text" className="form-control" aria-label="Username" aria-describedby="basic-addon1" />
-                                    <span className="input-group-text sidebar-background text-white" id="basic-addon1">ꜩ</span>
-                                </div>
-                                <Button style={{ textTransform: 'capitalize' }} variant="contained" color="primary" size='large'>
-                                    Make Payment
-                                </Button>
-                            </div>
-                        </div> */}
                     </div>
 
                 </main>

@@ -68,13 +68,14 @@ export const AddFounders = () => {
           try{
             await addFounders(details["commonOptions"], 
                                 details["commonShares"], 
-                                details["investement"], 
+                                details["investement"],
+                                details["founderWalletAddress"],
                                 details["prefferedShares"], 
                                 (details["founderFirstName"] + " " + details["founderLastName"]),
                                 founderDetailsCID,
                                 details["stakeHolderType"]
                                 );
-            alert("Transaction Confirmed! You are now an Accredited Investor");
+            alert("Member has been added");
           }catch(error){
             alert("Transaction Failed:", error.message);
           }
@@ -96,6 +97,7 @@ export const AddFounders = () => {
         founderFirstName: "",
         founderLastName: "",
         founderEmail: "",
+        founderWalletAddress: "",
         founderNationality: "",
         founderLinkedin: "",
         founderDOB: "",
@@ -137,7 +139,7 @@ export const AddFounders = () => {
             founderCity: details["founderCity"],
             founderState: details["founderState"],
             founderZipCode: details["founderZipCode"],
-            founderCountry: details["founderCountry"],
+            founderCountry: details["founderCountry"]
         }
         await uploadDataIpfs(founderDetails)
 
@@ -179,6 +181,13 @@ export const AddFounders = () => {
                                     <input type="email" className="form-control font13" aria-label="Last name" 
                                     onChange={(e) =>
                                         setDetails({ ...details, founderEmail: e.target.value })
+                                    } required/>
+                                </div>
+                                <div className="col-6 mb-3">
+                                    <label for="inputState" className="form-label font13 fw-bold">Wallet Address</label>
+                                    <input type="text" className="form-control font13" aria-label="wallet-address" 
+                                    onChange={(e) =>
+                                        setDetails({ ...details, founderWalletAddress: e.target.value })
                                     } required/>
                                 </div>
                                 <div className="col-6 mb-3">

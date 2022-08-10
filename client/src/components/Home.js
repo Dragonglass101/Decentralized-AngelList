@@ -105,13 +105,13 @@ export const Home = () => {
                 </div>
             </nav>
 
-            <div class="p-5 mb-4 mx-5 background-light-purple rounded-3 d-flex">
-                <div class="container-fluid py-4" style={{ width: '55%' }}>
-                    <h1 class="display-5 fw-bold mb-3">Invest in world-changing startups</h1>
-                    <p class="col-md-8 fs-4 p-0 mb-5">Join leading investors funding the next wave of world-changing startups.</p>
-                    <button class="btn button-purple text-white btn-lg" type="button">Invest Now</button>
+            <div className="p-5 mb-4 mx-5 background-light-purple rounded-3 d-flex">
+                <div className="container-fluid py-4" style={{ width: '55%' }}>
+                    <h1 className="display-5 fw-bold mb-3">Invest in world-changing startups</h1>
+                    <p className="col-md-8 fs-4 p-0 mb-5">Join leading investors funding the next wave of world-changing startups.</p>
+                    <button className="btn button-purple text-white btn-lg" type="button">Invest Now</button>
                 </div>
-                <div class="container-fluid py-4" style={{ width: '45%' }}>
+                <div className="container-fluid py-4" style={{ width: '45%' }}>
                     <img className='w-100' src={devils_logo_img} />
                     {/* <img className='w-100' src={devils_logo_svg} /> */}
                 </div>

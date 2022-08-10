@@ -80,8 +80,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoom = () => {
     const classes = useStyles();
-    const companyBigMapID = 71727;
-    const investorBigMapID = 71729;
+    const companyBigMapID = 74523;
+    const investorBigMapID = 74527;
 
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
@@ -91,6 +91,8 @@ export const ChatRoom = () => {
     const [currentInvestor, setcurrentInvestor] = useState();
     const [loadingChats, setloadingChats] = useState(false);
     const [requestAccepted, setrequestAccepted] = useState(null);
+    const [investorPhotoCID, setinvestorPhotoCID] = useState();
+    const [companyPhotoCID, setcompanyPhotoCID] = useState();
 
     const typedMessage = useRef();
 
@@ -125,36 +127,41 @@ export const ChatRoom = () => {
     
     async function makeSendersList(){
         const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
+        const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyDetails.value["company_profile_Id"]}`);
+        setcompanyPhotoCID(companyJSON.photoCID);
         if(requestAccepted === null){
             setrequestAccepted(companyDetails.value["request_accepted"]);
             console.log(companyDetails.value["request_accepted"]);
         }
-        const sendersList = companyDetails.value["request_from_investor"]
+        const sendersList = companyDetails.value["investor_requests"]
         console.log(companyDetails);
         console.log(sendersList);
         const tempSenderlist = [];
-        for(let sender of Object.keys(sendersList)){
-            const investorDetails = await getKeyBigMapByID(investorBigMapID, sender);
+        for(let sender of sendersList){
+            const investorDetails = await getKeyBigMapByID(investorBigMapID, sender.investor);
+            console.log(investorDetails, sender.investor);
             const investorProfileHash = investorDetails.value["investor_profile_Id"];
+            console.log(investorProfileHash);
             const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorProfileHash}`);
+            setinvestorPhotoCID(investorJSON.photoCID);
 
             function listClickAction(){
                 if(!requestAccepted){
-                    fetchSenderChats(sender, companyDetails.value["message_history"], companyDetails.value["request_from_investor"]);
+                    fetchSenderChats(sender.investor, companyDetails.value["message_history"], companyDetails.value["investor_requests"]);
                 }
                 else{
-                    console.log(companyDetails.value["investor_accepted"], sender)
-                    if(companyDetails.value["investor_accepted"] === sender){
-                        fetchSenderChats(sender, companyDetails.value["message_history"], companyDetails.value["request_from_investor"])
+                    console.log(companyDetails.value["investor_accepted"], sender.investor)
+                    if(companyDetails.value["investor_accepted"] === sender.investor){
+                        fetchSenderChats(sender.investor, companyDetails.value["message_history"], companyDetails.value["investor_requests"])
                     }
                 }
             }
 
             tempSenderlist.push(
-                <div key={sender} style={{cursor: "pointer"}}>
+                <div key={sender.investor} style={{cursor: "pointer"}}>
                     <div onClick={listClickAction} className='row p-3'>
                         <div className='col-3'>
-                            <Avatar />
+                            <Avatar src={`https://ipfs.io/ipfs/${investorPhotoCID}`}/>
                         </div>
                         <div className='col-7'>
                             <h6 className='m-0'>{investorJSON.name}</h6>
@@ -181,35 +188,34 @@ export const ChatRoom = () => {
         setcurrentInvestor(investorAddress);
         setloadingChats(true);
         const tempElements = [];
-        for(let request of Object.keys(initialRequestfromInvestors)){
-            const investorRequests = initialRequestfromInvestors[request];
-            if(request === investorAddress)
+        for(let request of initialRequestfromInvestors){
+            if(request.investor === investorAddress)
                 tempElements.push(
                     <div key={investorAddress} className='w-75' id='left-side-request'>
                         <div className='d-flex my-3'>
                             <div className='text-center'>
-                                <Avatar />
+                                <Avatar src={`https://ipfs.io/ipfs/${investorPhotoCID}`}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                             <div className='ms-3 p-4 text-dark left-chat background-chat-request'>
                                 <div className='mb-3'>
                                 <div className='d-flex justify-content-between align-items-center text-light'>
                                         <h6>Type</h6>
-                                        <span>{investorRequests.type}</span>
+                                        <span>{request.type}</span>
                                     </div>
                                     <div className='d-flex justify-content-between align-items-center text-light'>
                                         <h6>Ownership</h6>
-                                        <span>{investorRequests.ownership}%</span>
+                                        <span>{request.ownership}%</span>
                                     </div>
-                                    {investorRequests.type === "SAFE" ?
+                                    {request.type === "SAFE" ?
                                     <div className='d-flex justify-content-between align-items-center text-light'>
                                         <h6>Valuation Cap</h6>
-                                        <span>{investorRequests.valuation_cap} ꜩ</span>
+                                        <span>{request.valuation_cap} ꜩ</span>
                                     </div> : null }
 
                                     <div className='d-flex justify-content-between align-items-center text-light'>
                                         <h6>Investment</h6>
-                                        <span>{investorRequests.investment} ꜩ</span>
+                                        <span>{request.investment} ꜩ</span>
                                     </div>
                                 </div>
 
@@ -229,8 +235,8 @@ export const ChatRoom = () => {
                 );
             setloadingChats(false);
         }
-        console.log(tempElements)
-        if(messageHistory[`${investorAddress}`] === "") {
+        console.log(messageHistory[`${investorAddress}`])
+        if(messageHistory[`${investorAddress}`] === undefined) {
             setconversationElements(tempElements);
             return;
         }
@@ -251,7 +257,7 @@ export const ChatRoom = () => {
                                 <span>{message.split("=")[1]}</span>
                             </div>
                             <div className='text-center me-1'>
-                                <Avatar />
+                                <Avatar src={`https://ipfs.io/ipfs/${companyPhotoCID}`}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                         </div>
@@ -264,7 +270,7 @@ export const ChatRoom = () => {
                     <div key={message} className='w-75' id='left-side-chat'>
                         <div className='d-flex my-3'>
                             <div className='text-center'>
-                                <Avatar />
+                                <Avatar src={`https://ipfs.io/ipfs/${investorPhotoCID}`}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                             <div className='ms-3 background-light d-flex align-items-center p-3 text-dark left-chat'>
@@ -291,7 +297,7 @@ export const ChatRoom = () => {
         const oldMessageHash = messageHistory[`${currentInvestor}`];
         let newMessage;
 
-        if(oldMessageHash === ""){
+        if(oldMessageHash === undefined){
             newMessage = "s:" + "7:00" + "=" + typedMessage.current.value + "|";
         }
         else{

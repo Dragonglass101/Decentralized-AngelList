@@ -18,6 +18,11 @@ import Chip from '@material-ui/core/Chip';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
+import LinkedinCover from '../images/linkedin_cover.png'
+import profilePic from '../images/ProfilePic.jpeg'
+import LinkedinBack from '../images/LinkedinBack.png'
+import LinkedinBackBlue from '../images/LinkedinBackBlue.png'
+
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
@@ -88,6 +93,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
+    tabView: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.paper,
+    },
     tabs: {
         backgroundColor: theme.palette.background.paper,
         // width: 500,
@@ -134,6 +143,11 @@ const useStyles = makeStyles((theme) => ({
 
 export const ProfileCompany = () => {
     const classes = useStyles();
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = (event) => {
@@ -154,83 +168,104 @@ export const ProfileCompany = () => {
                 <main className={classes.content}>
 
                     <NavFloating />
-
-                    <div className={classes.padded}>
-                        <div className='container'>
-                            <Avatar style={{width:'90px', height:'90px'}} className='mb-3 mx-auto'/>
-                            <h4 className='fw-bold text-center'>Company Details</h4>
-                            <Divider variant='fullWidth' />
-                            <form className='row mt-3 font13'>
-                                <div className="mb-3 col-6">
-                                    <label for="exampleInputEmail1" className="form-label font13 fw-bold">Company Legal Name</label>
-                                    <input type="text" className="form-control font13" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp"
-                                        required disabled />
-                                </div>
-                                <div className='mb-3 col-6'>
-                                    <label for="basic-url" className="form-label font13 fw-bold">Industry</label>
-                                    <select className="form-select font13" aria-label="Default select example"
-                                        required disabled>
-                                        <option disabled selected>Select Industry</option>
-                                        <option value="1">Technology</option>
-                                        <option value="2">Agro</option>
-                                        <option value="3">Health Care</option>
-                                    </select>
-                                </div>
-                                <div className='col-6'>
-                                    <label for="basic-url" className="form-label font13 fw-bold">Website<span style={{ fontSize: '10px' }}> (optional)</span></label>
-                                    <div className="input-group mb-3">
-                                        <span className="input-group-text font13" id="basic-addon3">https://</span>
-                                        <input type="text" className="form-control font13" id="basic-url" aria-describedby="basic-addon3" disabled />
-                                    </div>
+                    <img className='w-100' src={LinkedinBackBlue}/>
+                    <div style={{marginTop:'-150px'}} className={classes.padded}>
+                        <div className='d-flex justify-content-around'>
+                            <div className='p-3 shadow bg-white text-center' style={{ width: '25%' }}>
+                                <Avatar src={profilePic} style={{ width: '90px', height: '90px' }} className='mb-3 mx-auto' />
+                                <h5 className='fw-bold mb-0'>Nathaniel Poole</h5>
+                                <p className='text-secondary'>Microsoft Inc.</p>
+                                <Divider />
+                                <div className='d-flex justify-content-between align-items-center p-2'>
+                                    <span>Opportunities applied</span>
+                                    <span className='fw-bold' style={{ color: 'orange' }}>32</span>
                                 </div>
 
-                                <div className='col-6'>
-                                    <label for="basic-url" className="form-label font13 fw-bold">LinkedIn<span style={{ fontSize: '10px' }}> (optional)</span></label>
-                                    <div className="input-group mb-3">
-                                        <span className="input-group-text font13" id="basic-addon3" style={{ height: 'fit-content' }}>https://linkedin.com/in/</span>
-                                        <input type="text" className="form-control font13" id="basic-url" aria-describedby="basic-addon3" required disabled />
-                                    </div>
-                                </div>
-                                <label for="exampleInputEmail1" className="form-label font13 fw-bold">Company Valuation</label>
-                                <div className="mb-3 col-6">
-                                    <input type="number" className="form-control font13" id="exampleInputEmail1"
-                                        aria-describedby="emailHelp"
-                                        required disabled />
-                                </div>
-                                <div className="form-group">
-                                    <label for="exampleFormControlTextarea1" className='fw-bold'>What will your company do?
-                                        <span className='fw-normal text-secondary' style={{ fontSize: '10px' }}></span>
-                                    </label>
-                                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="2" required disabled></textarea>
-                                </div>
-                                <div className='mb-3'>
-                                    <p className='fw-bold mb-0'>Business Address</p>
-                                    <span className='text-secondary' style={{ fontSize: '11px' }}>This can be your personal address. Please list a valid US address where you will receive company notices and information from your registered agent. Do not list a P.O
-                                        Box, virtual mailbox, or mail forwarding address.</span>
-                                </div>
-                                <div className="col-12 mb-3">
-                                    <label for="inputAddress" className="form-label fw-bold">Address</label>
-                                    <input type="text" className="form-control font13" id="inputAddress" placeholder="1234 Main St" required disabled />
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputCity" className="form-label fw-bold">City</label>
-                                    <input type="text" className="form-control font13" id="inputCity" required disabled />
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputZip" className="form-label fw-bold">Zip Code</label>
-                                    <input type="text" className="form-control font13" id="inputZip" required disabled />
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputState" className="form-label fw-bold">State</label>
-                                    <input type="text" className="form-control font13" id="inputState" required disabled />
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <label for="inputState" className="form-label fw-bold">Country</label>
-                                    <input type="text" className="form-control font13" id="inputZip" required disabled />
+                                <Divider />
+                                <div className='d-flex justify-content-between align-items-center p-2'>
+                                    <span>Opportunities won</span>
+                                    <span className='fw-bold' style={{ color: 'green' }}>32</span>
                                 </div>
 
-                            </form>
+                                <Divider />
+                                <div className='d-flex justify-content-between align-items-center p-2'>
+                                    <span>Current Opportunities</span>
+                                    <span className='fw-bold' style={{ color: 'grey' }}>32</span>
+                                </div>
+
+                                <Divider />
+
+                                <Button className='my-3' style={{ textTransform: 'capitalize' }} variant='outlined'>View Public Profile</Button>
+                            </div>
+
+                            <div className='shadow bg-white' style={{ width: '70%' }}>
+                                <div className={classes.tabView}>
+                                    <AppBar position="static">
+                                        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+                                            <Tab style={{ textTransform: 'capitalize' }} label="Account Settings" {...a11yProps(0)} />
+                                            <Tab style={{ textTransform: 'capitalize' }} label="Company Settings" {...a11yProps(1)} />
+                                            <Tab style={{ textTransform: 'capitalize' }} label="Documents" {...a11yProps(2)} />
+                                            <Tab style={{ textTransform: 'capitalize' }} label="Billing" {...a11yProps(3)} />
+                                            <Tab style={{ textTransform: 'capitalize' }} label="Notifications" {...a11yProps(4)} />
+                                        </Tabs>
+                                    </AppBar>
+                                    <TabPanel value={value} index={0}>
+                                        <div className='container'>
+                                            <div className='row'>
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">First Name</label>
+                                                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">Last Name</label>
+                                                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">Phone Number</label>
+                                                    <input type="number" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">Email Address</label>
+                                                    <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">City</label>
+                                                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">State/Country</label>
+                                                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">Postcode</label>
+                                                    <input type="number" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+
+                                                <div className='col-6 mb-3'>
+                                                    <label for="exampleFormControlInput1" className="form-label">Country</label>
+                                                    <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="" disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </TabPanel>
+                                    <TabPanel value={value} index={1}>
+                                        Item Two
+                                    </TabPanel>
+                                    <TabPanel value={value} index={2}>
+                                        Item Three
+                                    </TabPanel>
+                                </div>
+                                <Divider />
+                                <div className='mt-3 mb-4 text-center'>
+                                    <Button variant='contained' color='primary'>Update</Button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

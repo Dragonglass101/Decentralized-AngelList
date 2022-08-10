@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import '../styles/form.css'
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
@@ -13,6 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import { connectWallet } from "../utils/wallet";
 import ipfs_mini from "../ipfs_mini";
 import { signupCompany } from '../utils/operation';
+import ipfs_api from '../ipfs_api';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,6 +43,8 @@ export const FormCompany = () => {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
+    const navigate = useNavigate();
+
     const [details, setDetails] = useState({
         industry: "",
         linkedIn: "",
@@ -53,14 +57,17 @@ export const FormCompany = () => {
         startupState: "",
         startupCountry: "",
         startupWebsiteUrl: "",
+
+        bufferPhoto: null,
+        bufferResume: null
       });
+      const [photoCID, setphotoCID] = useState(null);
 
       useEffect(() => {
           const onVerifyCompany = async () =>{
             try{
-              // await verifyInvestor(50, "alex@gmail.com", 1,"linkedinurl","alice",1234567890,2,"photoCID", "resumeCID",wallet);
               await signupCompany(companyDetailsCID, companyValuation);
-              alert("Transaction Confirmed! You are now a verified company");
+              navigate("/dashboard-company");
             }catch(error){
               alert("Transaction Failed:", error.message);
             }
@@ -71,6 +78,32 @@ export const FormCompany = () => {
           if(companyDetailsCID != null)
             onVerifyCompany();
       }, [companyDetailsCID]);
+
+      useEffect(() => {
+        console.log(photoCID);
+    
+        const uploadCompanyDetailsIpfs = async ()=>{
+            const startupDetails = {
+                industry: details["industry"],
+                linkedIn: details["linkedIn"],
+                name: details["name"],
+                walletID: details["walletID"],
+                whatWillCompanyDo: details["whatWillCompanyDo"],
+                address: details["address"],
+                startupCity: details["startupCity"],
+                startupZipCode: details["startupZipCode"],
+                startupState: details["startupState"],
+                startupCountry: details["startupCountry"],
+                startupWebsiteUrl: details["startupWebsiteUrl"],
+                companyValuation: companyValuation,
+                photoCID: photoCID
+            }
+            await uploadDataIpfs(startupDetails);
+        }
+        if(photoCID != null)
+          uploadCompanyDetailsIpfs();
+        
+      }, [photoCID])
 
     const [wallet, setWallet] = useState(null);
     const handleConnectWallet = async () => {
@@ -89,22 +122,7 @@ export const FormCompany = () => {
     async function handleSubmit(e){
         e.preventDefault()
         await handleConnectWallet();
-        const startupDetails = {
-            industry: details["industry"],
-            linkedIn: details["linkedIn"],
-            name: details["name"],
-            walletID: details["walletID"],
-            whatWillCompanyDo: details["whatWillCompanyDo"],
-            address: details["address"],
-            startupCity: details["startupCity"],
-            startupZipCode: details["startupZipCode"],
-            startupState: details["startupState"],
-            startupCountry: details["startupCountry"],
-            startupWebsiteUrl: details["startupWebsiteUrl"],
-            companyValuation: companyValuation
-        }
-        await uploadDataIpfs(startupDetails);
-        console.log("hello")        
+        uploadPhoto();
     }
 
     const uploadDataIpfs = async(data) => {
@@ -117,9 +135,29 @@ export const FormCompany = () => {
         });
     }
 
+    function uploadPhoto() {
+        ipfs_api.files.add(details["bufferPhoto"], (error, result) => {
+          if(error) {
+            console.error(error)
+            return
+          }
+          setphotoCID(result[0].hash)
+        })
+    }
+
+    function capturePhoto(event) {
+        event.preventDefault()
+        const file = event.target.files[0]
+        const reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
+        reader.onloadend = () => {
+          setDetails({ ...details, bufferPhoto: Buffer(reader.result) })
+        }
+    }
+
     return (
         <div className={classes.root}>
-            {error ? <div class="alert alert-danger" role="alert">
+            {error ? <div className="alert alert-danger" role="alert">
             {error}
             </div> : null}
             <div className='d-flex mt-5'>
@@ -191,6 +229,10 @@ export const FormCompany = () => {
                                         onChange={(e) =>
                                             setDetails({ ...details, startupWebsiteUrl: ("https://"+e.target.value) })
                                         } required/>
+                                    </div>
+                                    <div>
+                                        <p className="q"> Profile Picture </p>
+                                        <input type="file" onChange={capturePhoto} required/>
                                     </div>
                                     <label for="basic-url" className="form-label font13 fw-bold">LinkedIn<span style={{ fontSize: '10px' }}> (optional)</span></label>
                                     <div className="input-group mb-3 col-6">

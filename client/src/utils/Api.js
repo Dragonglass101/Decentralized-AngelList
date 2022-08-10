@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const contractAddress = "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee";
+const contractAddress = "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN";
 
 export const getBalance = async(address) => {
     try {
@@ -44,6 +44,17 @@ export const getKeyBigMapByID = async(bigMapId, key) => {
     try {
         const body = await axios.get(
             `https://api.jakartanet.tzkt.io/v1/bigmaps/${bigMapId}/keys/${key}`
+        )
+        return body.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const getBigMapKeys = async(bigMapId) => {
+    try {
+        const body = await axios.get(
+            `https://api.jakartanet.tzkt.io/v1/bigmaps/${bigMapId}/keys`
         )
         return body.data;
     } catch (error) {

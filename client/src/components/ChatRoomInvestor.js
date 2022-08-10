@@ -81,8 +81,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoomInvestor = () => {
     const classes = useStyles();
-    const companyBigMapID = 71727;
-    const investorBigMapID = 71729;
+    const companyBigMapID = 74523;
+    const investorBigMapID = 74527;
 
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
@@ -92,6 +92,8 @@ export const ChatRoomInvestor = () => {
     const [currentCompany, setcurrentCompany] = useState();
     const [investementType, setinvestementType] = useState("SAFE");
     const [loadingChats, setloadingChats] = useState(false);
+    const [investorPhotoCID, setinvestorPhotoCID] = useState();
+    const [companyPhotoCID, setcompanyPhotoCID] = useState();
 
     const valuationCap = useRef();
     const directEquity = useRef();
@@ -130,19 +132,23 @@ export const ChatRoomInvestor = () => {
     
     async function makeSendersList(){
         const investorDetails = await getKeyBigMapByID(investorBigMapID, wallet.address);
+        const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorDetails.value["investor_profile_Id"]}`);
+        setinvestorPhotoCID(investorJSON.photoCID);
         const sendersList = investorDetails.value["message_history"]
+
         console.log(investorDetails, sendersList);
         const tempSenderlist = [];
         for(let sender of Object.keys(sendersList)){
             const companyDetails = await getKeyBigMapByID(companyBigMapID, sender);
             const companyProfileHash = companyDetails.value["company_profile_Id"];
             const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
+            setcompanyPhotoCID(companyJSON.photoCID);
             console.log(companyJSON);
             tempSenderlist.push(
                 <div key={sender}>
-                    <div onClick={()=>{ setcurrentCompany(sender);fetchSenderChats(sender, investorDetails.value["message_history"])}} className='row p-3'>
+                    <div onClick={()=>{ setcurrentCompany(sender);fetchSenderChats(sender, investorDetails.value["message_history"])}} className='row p-3' style={{cursor: "pointer"}}>
                         <div className='col-3'>
-                            <Avatar />
+                            <Avatar src={`https://ipfs.io/ipfs/${companyPhotoCID}`}/>
                         </div>
                         <div className='col-7'>
                             <h6 className='m-0'>{companyJSON.name}</h6>
@@ -232,7 +238,7 @@ export const ChatRoomInvestor = () => {
                                 <span>{message.split("=")[1]}</span>
                             </div>
                             <div className='text-center me-1'>
-                                <Avatar />
+                                <Avatar src={`https://ipfs.io/ipfs/${investorPhotoCID}`}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                         </div>
@@ -245,7 +251,7 @@ export const ChatRoomInvestor = () => {
                     <div key={message} className='w-75' id='left-side-chat'>
                         <div className='d-flex my-3'>
                             <div className='text-center'>
-                                <Avatar />
+                                <Avatar src={`https://ipfs.io/ipfs/${companyPhotoCID}`}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                             <div className='ms-3 background-light d-flex align-items-center p-3 text-dark left-chat'>
@@ -449,7 +455,7 @@ export const ChatRoomInvestor = () => {
                                                 </button>
                                             </Tooltip>
 
-                                            <form onSubmit={(e)=>{handleRequestFromInvestor(e)}} className="modal fade" id="requestingBtn" tabindex="-1" aria-labelledby="requestingBtnLabel" aria-hidden="true">
+                                            <form onSubmit={(e)=>{handleRequestFromInvestor(e)}} className="modal fade" id="requestingBtn" tabIndex="-1" aria-labelledby="requestingBtnLabel" aria-hidden="true">
                                                 <div className="modal-dialog my-auto">
                                                     <div className="modal-content">
                                                         <div className="modal-header bg-dark">
@@ -458,9 +464,9 @@ export const ChatRoomInvestor = () => {
                                                         </div>
                                                         <div className="modal-body">
 
-                                                            <select onChange={(e)=>{setinvestementType(e.target.value)}} className="form-select mb-3" aria-label="Default select example">
+                                                            <select defaultValue="SAFE" onChange={(e)=>{setinvestementType(e.target.value)}} className="form-select mb-3" aria-label="Default select example">
                                                                 <option disabled>Select Investment Type</option>
-                                                                <option selected value="SAFE">SAFE</option>
+                                                                <option value="SAFE">SAFE</option>
                                                                 <option value="DirectEquity">Direct Equity</option>
                                                             </select>
 

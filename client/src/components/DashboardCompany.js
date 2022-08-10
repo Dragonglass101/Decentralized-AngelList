@@ -1,5 +1,5 @@
 import React from 'react';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles, rgbToHex } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
@@ -39,11 +40,19 @@ import TrendingUpRoundedIcon from '@material-ui/icons/TrendingUpRounded';
 import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-import AccountBalanceWalletRoundedIcon from '@material-ui/icons/AccountBalanceWalletRounded';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import AccountBalanceWalletRoundedIcon from '@material-ui/icons/AccountBalanceWalletRounded';
+import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import BarChartOutlinedIcon from '@material-ui/icons/BarChartOutlined';
 
 import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
 import SearchIcon from '@material-ui/icons/Search';
+
+import Chart from "react-apexcharts";
 
 // Step 2 - Include the react-fusioncharts component
 import ReactFC from "react-fusioncharts";
@@ -84,8 +93,8 @@ const chartData = [
 // Create a JSON object to store the chart configurations
 const doughnutConfigs = {
   type: "doughnut2d", // The chart type
-  width: "400", // Width of the chart
-  height: "400", // Height of the chart
+  width: "360", // Width of the chart
+  height: "360", // Height of the chart
   dataFormat: "json", // Data type
   dataSource: {
     // Chart Configuration
@@ -100,7 +109,7 @@ const doughnutConfigs = {
       centerLabel: "$label: $value",
       centerLabelBold: "1",
       enableSmartLabels: "0",
-      showLegend: '0',
+      showLegend: '1',
       // doughnutRadius:'85',
       // showTooltip: "0",
       // showPercentValues: "1",
@@ -115,22 +124,6 @@ const doughnutConfigs = {
     data: chartData
   }
 };
-
-const lineChart = {
-  "caption": "Company Valuation Graph",
-  // "subcaption": "Last year",
-  "yaxisname": "Valuation",
-  "xaxisname": "Date",
-  "yaxisminValue": "800",
-  "yaxismaxValue": "1400",
-  "pixelsPerPoint": "0",
-  "pixelsPerLabel": "30",
-  "lineThickness": "1",
-  "compactdatamode": "1",
-  "dataseparator": "|",
-  "labelHeight": "30",
-  "theme": "fusion"
-}
 
 const valuationData = [
   {
@@ -214,8 +207,8 @@ const currencyChart = {
 
 const nrChartConfig = {
   type: "mscombi2d",
-  width: "500",
-  height: "200",
+  width: "100%",
+  // height: "200",
   dataFormat: "json",
   dataSource: {
     chart: currencyChart,
@@ -237,6 +230,7 @@ const nrChartConfig = {
     ]
   }
 };
+
 
 const drawerWidth = 240;
 
@@ -261,7 +255,7 @@ const useStyles = makeStyles((theme) => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'rgb(243,243,248)',
     padding: theme.spacing(0),
   },
   padded: {
@@ -295,6 +289,58 @@ export const DashboardCompany = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const series = [ //data on the y-axis
+    {
+      name: "Temperature in Celsius",
+      data: [4132, 4124, 3153, 5323, 5123, 4444, 6532, 7555, 6488, 7690, 3000, 2345]
+    }
+  ];
+  const options = { //data on the x-axis
+    series: [{
+      name: 'Website Blog',
+      type: 'column',
+      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+    },
+    {
+      name: 'Social Media',
+      type: 'line',
+      data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+    }],
+    chart: {
+      height: 350,
+      type: 'line',
+    },
+    stroke: {
+      width: [0, 4]
+    },
+    // title: {
+    //   text: 'Traffic Sources'
+    // },
+    dataLabels: {
+      enabled: true,
+      enabledOnSeries: [1]
+    },
+    labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+    xaxis: {
+      type: 'datetime'
+    },
+    yaxis: [{
+      title: {
+        text: 'Website Blog',
+      },
+
+    },
+      // {
+      //   opposite: true,
+      //   title: {
+      //     text: 'Social Media'
+      //   }
+      // }
+    ]
+  };
+
+  
   return (
     <>
       <div className={classes.root}>
@@ -307,354 +353,260 @@ export const DashboardCompany = () => {
           <NavFloating />
 
           <div className='px-3'>
+            <div className='d-flex justify-content-between align-items-center'>
+              <div>
+                <h5 className='mb-0 ps-2'>Good Morning, Anna!</h5>
+                <p className='text-secondary ps-2'>Here's what's happening with your store today.</p>
+              </div>
+              {/* <div className="input-group w-25">
+                <input style={{backgroundColor:'white'}} type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" disabled />
+                <span style={{height:'fit-content'}} className="input-group-text" id="basic-addon2"><DateRangeIcon/></span>
+              </div> */}
+            </div>
 
-            <div className='d-flex justify-content-around mb-3'>
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '17rem' }}>
-                <PeopleAltRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Employees Appointed</p>
-                  <h5 className='mb-0 font15 fw-bold'>8.02K</h5>
+            <div className='d-flex justify-content-between align-center'>
+
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
+                <div className='d-flex justify-content-between'>
+                  <p className='text-secondary fw-bold'>TOTAL EARNINGS</p>
+                  <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>
+                    13.45%</p>
                 </div>
-
+                <h5>559.2k ꜩ</h5>
+                <div className='d-flex justify-content-between align-items-end'>
+                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>View Net Earnings</a>
+                  <div className='p-2 rounded' style={{ backgroundColor: 'rgb(220,242,237)', color: 'rgb(28 163 132)' }}>
+                    <MonetizationOnOutlinedIcon />
+                  </div>
+                </div>
               </div>
 
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '15rem' }}>
-                <AccountBalanceWalletRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Company Valuation</p>
-                  <h5 className='mb-0 font15 fw-bold'>1300 ꜩ</h5>
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
+                <div className='d-flex justify-content-between'>
+                  <p className='text-secondary fw-bold'>ORDERS</p>
+                  <p className='fw-bold font13' style={{ color: 'rgb(200, 51, 51)' }}>
+                    13.45%
+                  </p>
                 </div>
-
+                <h5>36,894</h5>
+                <div className='d-flex justify-content-between align-items-end'>
+                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>View All Orders</a>
+                  <div className='p-2 rounded' style={{ backgroundColor: 'rgba(41,156,219,.18)', color: 'rgba(41,156,219,1)' }}>
+                    <LocalMallOutlinedIcon />
+                  </div>
+                </div>
               </div>
 
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '12rem' }}>
-                <TrendingUpRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Shares Issued</p>
-                  <h5 className='mb-0 font15 fw-bold'>1300 ꜩ</h5>
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
+                <div className='d-flex justify-content-between'>
+                  <p className='text-secondary fw-bold'>CUSTOMERS</p>
+                  <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p>
                 </div>
-
+                <h5>183.35M</h5>
+                <div className='d-flex justify-content-between align-items-end'>
+                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>See Details</a>
+                  <div className='p-2 rounded' style={{ backgroundColor: 'rgba(247,184,75,.18)', color: 'rgba(247,184,75,1)' }}>
+                    <AccountCircleOutlinedIcon />
+                  </div>
+                </div>
               </div>
 
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '11rem' }}>
-                <MonetizationOnIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Stock Price</p>
-                  <h5 className='mb-0 font15 fw-bold'>9 ꜩ</h5>
+              <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
+                <div className='d-flex justify-content-between'>
+                  <p className='text-secondary fw-bold'>MY BALANCE</p>
+                  <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p>
                 </div>
-
+                <h5>165.89k ꜩ</h5>
+                <div className='d-flex justify-content-between align-items-end'>
+                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>Withdraw Money</a>
+                  <div className='p-2 rounded' style={{ backgroundColor: 'rgba(64,81,137,.18)', color: 'rgba(64,81,137,1)' }}>
+                    <AccountBalanceWalletOutlinedIcon />
+                  </div>
+                </div>
               </div>
 
             </div>
 
-            <div className='d-flex align-items-center justify-content-around mb-1'>
-              <div className='bg-white shadow rounded15 pt-3' style={{ width: 'fit-content' }}>
-                <div className="px-3 d-flex justify-content-between">
-                  <div>
-                    <p className="text-secondary mb-1">Company Valuation</p>
-                    <h4>$149.7K</h4>
+            <div className='d-flex my-5 justify-content-between'>
+              <div className='p-3 bg-white shadow' style={{ width: '60%' }}>
+                <h5>Revenue</h5>
+                <div className='d-flex align-items-center my-3 bg-light'>
+                  <div className='w-25 text-center border p-2'>
+                    <h5 className='m-0 font15 fw-bold'>7,585</h5>
+                    <p className='m-0 text-secondary'>Orders</p>
                   </div>
-                  <div>
-                    <h4 className='text-danger'><ArrowDownwardRoundedIcon />2%</h4>
+                  <div className='w-25 text-center border p-2'>
+                    <h5 className='m-0 font15 fw-bold'>$22.89k</h5>
+                    <p className='m-0 text-secondary'>Earnings</p>
+                  </div>
+                  <div className='w-25 text-center border p-2'>
+                    <h5 className='m-0 font15 fw-bold'>367</h5>
+                    <p className='m-0 text-secondary'>Funds</p>
+                  </div>
+                  <div className='w-25 text-center border p-2'>
+                    <h5 className='m-0 font15 fw-bold'>18.92%</h5>
+                    <p className='m-0 text-secondary'>Conversation Ratio</p>
                   </div>
                 </div>
-                <ReactFC {...nrChartConfig} />
+                <ReactFC style={{ backgroundColor: 'white' }} {...nrChartConfig} />
               </div>
 
-              <div className='ms-2' style={{ height: '340px',width:'fit-content', overflow: 'hidden' }}>
-                <ReactFC className='doughnut' {...doughnutConfigs} />
+              <div className='bg-white p-3 shadow'>
+                <h5 className='mb-5'>Store visited by source</h5>
+                <ReactFC className='doughnut' style={{ backgroundColor: 'white' }} {...doughnutConfigs} />
               </div>
             </div>
 
+            <div className='d-flex justify-content-between'>
+              <div className='bg-white p-3 shadow' style={{ width: '56%' }}>
+                <div className='d-flex justify-content-between align-items-center mb-3'>
+                  <h5 className='ms-2 mb-0'>Recent Transactions</h5>
+                  <p className='me-3 mb-0'>Report</p>
+                </div>
 
-            <div className='d-flex justify-content-around align-items-center'>
+                <table className="table table-hover">
+                  <tbody>
+                    <tr>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>
+                        <p className='m-0 fw-bold'>8547</p>
+                        <span className='text-secondary'>Stock</span>
+                      </td>
+                      <td>$541200</td>
+                      <td className='fw-bold text-end'>
+                        <span>32%</span>
+                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
+                      </td>
+                    </tr>
 
-              <div className='bg-white rounded15' style={{ width: '500px', cursor: 'pointer' }}>
-                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Recent Transactions</h6>
-                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
-                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                  <thead className='table-light'>
-                    <tr>
-                      <th scope="col"></th>
-                      <th scope="col">Account Holder</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody className='font13 text-secondary'>
                     <tr>
                       <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                        <svg width="32px" height="32px" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4" /><path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853" /><path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05" /><path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335" /></svg>
                       </th>
-                      <td className='align-middle'>Account Name</td>
-                      <td className='align-middle'>Mar 20, 2022</td>
-                      <td className='align-middle fw-bold text-black'><ArrowUpwardRoundedIcon className='color-credit me-2' />36,000 ꜩ</td>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>
+                        <p className='m-0 fw-bold'>8547</p>
+                        <span className='text-secondary'>Stock</span>
+                      </td>
+                      <td>$541200</td>
+                      <td className='fw-bold text-end'>
+                        <span>32%</span>
+                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
+                      </td>
                     </tr>
+
                     <tr>
                       <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                        <svg width="32px" height="32px" viewBox="126.444 2.281 589 589" xmlns="http://www.w3.org/2000/svg"><circle cx="420.944" cy="296.781" r="294.5" fill="#2daae1" /><path d="M609.773 179.634c-13.891 6.164-28.811 10.331-44.498 12.204 16.01-9.587 28.275-24.779 34.066-42.86a154.78 154.78 0 0 1-49.209 18.801c-14.125-15.056-34.267-24.456-56.551-24.456-42.773 0-77.462 34.675-77.462 77.473 0 6.064.683 11.98 1.996 17.66-64.389-3.236-121.474-34.079-159.684-80.945-6.672 11.446-10.491 24.754-10.491 38.953 0 26.875 13.679 50.587 34.464 64.477a77.122 77.122 0 0 1-35.097-9.686v.979c0 37.54 26.701 68.842 62.145 75.961-6.511 1.784-13.344 2.716-20.413 2.716-4.998 0-9.847-.473-14.584-1.364 9.859 30.769 38.471 53.166 72.363 53.799-26.515 20.785-59.925 33.175-96.212 33.175-6.25 0-12.427-.373-18.491-1.104 34.291 21.988 75.006 34.824 118.759 34.824 142.496 0 220.428-118.052 220.428-220.428 0-3.361-.074-6.697-.236-10.021a157.855 157.855 0 0 0 38.707-40.158z" fill="#fff" /></svg>
                       </th>
-                      <td className='align-middle'>Account Name</td>
-                      <td className='align-middle'>Mar 20, 2022</td>
-                      <td className='align-middle fw-bold text-black'><ArrowDownwardRoundedIcon className='color-debit me-2' />36,000 ꜩ</td>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>
+                        <p className='m-0 fw-bold'>8547</p>
+                        <span className='text-secondary'>Stock</span>
+                      </td>
+                      <td>$541200</td>
+                      <td className='fw-bold text-end'>
+                        <span>32%</span>
+                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
+                      </td>
                     </tr>
+
                     <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Account Name</td>
-                      <td className='align-middle'>Mar 20, 2022</td>
-                      <td className='align-middle fw-bold text-black'><ArrowDownwardRoundedIcon className='color-debit me-2' />36,000 ꜩ</td>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>
+                        <p className='m-0 fw-bold'>8547</p>
+                        <span className='text-secondary'>Stock</span>
+                      </td>
+                      <td>$541200</td>
+                      <td className='fw-bold text-end'>
+                        <span>32%</span>
+                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
+                      </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-              <div className='rounded15' style={{ width: '400px', cursor: 'pointer' }}>
-                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Stocks Owned</h6>
-                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                  <thead className='table-light'>
+              <div className='bg-white p-3 shadow' style={{ width: '43%' }}>
+                <div className='d-flex justify-content-between align-items-center mb-3'>
+                  <h5 className='ms-2 mb-0'>Stocks Owned</h5>
+                  <p className='me-3 mb-0'>Report</p>
+                </div>
+
+                <table className="table table-hover">
+                  <tbody>
                     <tr>
-                      <th scope="col"></th>
-                      <th scope="col">Stakeholder</th>
-                      <th scope="col">Shares Owned</th>
-                      <th scope="col">Ownership</th>
-                    </tr>
-                  </thead>
-                  <tbody className='font13 text-secondary'>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>$541200</td>
                     </tr>
 
                     <tr>
                       <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                        <svg width="32px" height="32px" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4" /><path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853" /><path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05" /><path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335" /></svg>
                       </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>$541200</td>
                     </tr>
+
                     <tr>
                       <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
+                        <svg width="32px" height="32px" viewBox="126.444 2.281 589 589" xmlns="http://www.w3.org/2000/svg"><circle cx="420.944" cy="296.781" r="294.5" fill="#2daae1" /><path d="M609.773 179.634c-13.891 6.164-28.811 10.331-44.498 12.204 16.01-9.587 28.275-24.779 34.066-42.86a154.78 154.78 0 0 1-49.209 18.801c-14.125-15.056-34.267-24.456-56.551-24.456-42.773 0-77.462 34.675-77.462 77.473 0 6.064.683 11.98 1.996 17.66-64.389-3.236-121.474-34.079-159.684-80.945-6.672 11.446-10.491 24.754-10.491 38.953 0 26.875 13.679 50.587 34.464 64.477a77.122 77.122 0 0 1-35.097-9.686v.979c0 37.54 26.701 68.842 62.145 75.961-6.511 1.784-13.344 2.716-20.413 2.716-4.998 0-9.847-.473-14.584-1.364 9.859 30.769 38.471 53.166 72.363 53.799-26.515 20.785-59.925 33.175-96.212 33.175-6.25 0-12.427-.373-18.491-1.104 34.291 21.988 75.006 34.824 118.759 34.824 142.496 0 220.428-118.052 220.428-220.428 0-3.361-.074-6.697-.236-10.021a157.855 157.855 0 0 0 38.707-40.158z" fill="#fff" /></svg>
                       </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>$541200</td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>iTest Factory</p>
+                        <span className='text-secondary'>Oliver Tyler</span>
+                      </td>
+                      <td className='text-secondary'>Tech Company</td>
+                      <td>$541200</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-
             </div>
           </div>
 
-
-
-          {/* <div className='d-flex align-items-start'>
-
-            <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{ width: '20%' }}>
-              <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
-              <h5 className='font13 fw-bold text-secondary'>Balance</h5>
-              <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
-            </div>
-
-
-
-            <div id='stock-enteries' className='container rounded25 shadow-sm cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
-              <h4 className='fw-bold'>Stocks</h4>
-              <div className='container'>
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div id='cap-table' className='container rounded25 shadow-sm background-cream p-4 ms-0' style={{ width: '40%' }}>
-              <h4 className='fw-bold'>Cap table</h4>
-              <div className='container p-0 bg-white my-3 d-flex rounded' style={{ height: '35px', overflow: 'hidden' }}>
-                <div id='founder-percent' className='h-100 background-darkBlue' style={{ width: '64.20%' }}></div>
-                <div id='employee-percent' className='h-100 background-chocolate' style={{ width: '23.76%' }}></div>
-                <div id='seriesA-percent' className='h-100 bg-black' style={{ width: '6.02%' }}></div>
-                <div id='seriesB-percent' className='h-100 bg-white' style={{ width: '6.02%' }}></div>
-              </div>
-              <div id='cap-table-enteries'>
-                <div className='container'>
-                  <div className='mb-3 px-4 d-flex justify-content-between text-secondary'>
-                    <span className='font10'>Authorized</span>
-                    <span className='font10'>Issued</span>
-                    <span className='font10'>Ownership</span>
-                  </div>
-                  <div className='mb-4'>
-                    <div className='d-flex align-items-center'>
-                      <div className='rounded background-darkBlue me-2' style={{ height: '15px', width: '15px' }}></div>
-                      <span className='fw-bold font15'>Founders</span>
-                    </div>
-                    <div className='d-flex justify-content-between my-1 px-4'>
-                      <span className='font13'>50,000,000</span>
-                      <span className='font13'>50,000,000</span>
-                      <span className='font13'>70.22%</span>
-                    </div>
-                  </div>
-
-                  <div className='mb-4'>
-                    <div className='d-flex align-items-center'>
-                      <div className='rounded background-chocolate me-2' style={{ height: '15px', width: '15px' }}></div>
-                      <span className='fw-bold font15'>Employees</span>
-                    </div>
-                    <div className='d-flex justify-content-between my-1 px-4'>
-                      <span className='font13'>30,000,000</span>
-                      <span className='font13'>10,000,000</span>
-                      <span className='font13'>23.76%</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
+          <div className='mt-4 bg-white d-flex justify-content-between align-items-center p-4 text-secondary font15' style={{ height: '50px' }}>
+            <span>2022 © DevilsList.</span>
+            <span>Design & Develop by Dev4Bros</span>
           </div>
-
-          <div id='recent-transaction' className='shadow-sm container mt-3 ms-0 rounded25 px-5 py-2' style={{ width: '80%', backgroundColor: 'rgb(177 248 232 / 25%)', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
-            <h6 className='fw-bold pt-3 mb-4 pb-2'>Recent Investments</h6>
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-
-
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-
-
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-
-            <div className='row'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-          </div> */}
-
         </main>
       </div>
     </>

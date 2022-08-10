@@ -1,5 +1,5 @@
 import React from 'react';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles, rgbToHex } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +11,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
+import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Button from '@material-ui/core/Button';
 import InputBase from '@material-ui/core/InputBase';
 import Menu from '@material-ui/core/Menu';
@@ -39,11 +40,19 @@ import TrendingUpRoundedIcon from '@material-ui/icons/TrendingUpRounded';
 import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
 import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
 import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-import AccountBalanceWalletRoundedIcon from '@material-ui/icons/AccountBalanceWalletRounded';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+import AccountBalanceWalletRoundedIcon from '@material-ui/icons/AccountBalanceWalletRounded';
+import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
+import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
+import DateRangeIcon from '@material-ui/icons/DateRange';
+import BarChartOutlinedIcon from '@material-ui/icons/BarChartOutlined';
 
 import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
 import SearchIcon from '@material-ui/icons/Search';
+
+import Chart from "react-apexcharts";
 
 // Step 2 - Include the react-fusioncharts component
 import ReactFC from "react-fusioncharts";
@@ -61,48 +70,8 @@ import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 // Step 6 - Adding the chart and theme as dependency to the core fusioncharts
 ReactFC.fcRoot(FusionCharts, ZoomLine, Column2D, FusionTheme);
 
-const zoomlineConfig = {
-    type: "zoomline", // The chart type
-    width: "800", // Width of the chart
-    height: "400", // Height of the chart
-    dataFormat: "json", // Data type
-    dataSource: {
-        chart: {
-            "caption": "Companies Stock Pricing",
-            "subcaption": "Last year",
-            "yaxisname": "Unique Visitors",
-            "xaxisname": "Date",
-            "yaxisminValue": "800",
-            "yaxismaxValue": "1400",
-            "pixelsPerPoint": "0",
-            "pixelsPerLabel": "30",
-            "lineThickness": "1",
-            "compactdatamode": "1",
-            "dataseparator": "|",
-            "labelHeight": "30",
-            "theme": "fusion"
-        },
-        categories: [
-            {
-                "category": "Jan 01|Jan 02|Jan 03|Jan 04|Jan 05|Jan 06|Jan 07|Jan 08|Jan 09|Jan 10|Jan 11|Jan 12|Jan 13|Jan 14|Jan 15|Jan 16|Jan 17|Jan 18|Jan 19|Jan 20|Jan 21|Jan 22|Jan 23|Jan 24|Jan 25|Jan 26|Jan 27|Jan 28|Jan 29|Jan 30|Jan 31|Feb 01|Feb 02|Feb 03|Feb 04|Feb 05|Feb 06|Feb 07|Feb 08|Feb 09|Feb 10|Feb 11|Feb 12|Feb 13|Feb 14|Feb 15|Feb 16|Feb 17|Feb 18|Feb 19|Feb 20|Feb 21|Feb 22|Feb 23|Feb 24|Feb 25|Feb 26|Feb 27|Feb 28|Mar 01|Mar 02|Mar 03|Mar 04|Mar 05|Mar 06|Mar 07|Mar 08|Mar 09|Mar 10|Mar 11|Mar 12|Mar 13|Mar 14|Mar 15|Mar 16|Mar 17|Mar 18|Mar 19|Mar 20|Mar 21|Mar 22|Mar 23|Mar 24|Mar 25|Mar 26|Mar 27|Mar 28|Mar 29|Mar 30|Mar 31|Apr 01|Apr 02|Apr 03|Apr 04|Apr 05|Apr 06|Apr 07|Apr 08|Apr 09|Apr 10|Apr 11|Apr 12|Apr 13|Apr 14|Apr 15|Apr 16|Apr 17|Apr 18|Apr 19|Apr 20|Apr 21|Apr 22|Apr 23|Apr 24|Apr 25|Apr 26|Apr 27|Apr 28|Apr 29|Apr 30|May 01|May 02|May 03|May 04|May 05|May 06|May 07|May 08|May 09|May 10|May 11|May 12|May 13|May 14|May 15|May 16|May 17|May 18|May 19|May 20|May 21|May 22|May 23|May 24|May 25|May 26|May 27|May 28|May 29|May 30|May 31|Jun 01|Jun 02|Jun 03|Jun 04|Jun 05|Jun 06|Jun 07|Jun 08|Jun 09|Jun 10|Jun 11|Jun 12|Jun 13|Jun 14|Jun 15|Jun 16|Jun 17|Jun 18|Jun 19|Jun 20|Jun 21|Jun 22|Jun 23|Jun 24|Jun 25|Jun 26|Jun 27|Jun 28|Jun 29|Jun 30|Jul 01|Jul 02|Jul 03|Jul 04|Jul 05|Jul 06|Jul 07|Jul 08|Jul 09|Jul 10|Jul 11|Jul 12|Jul 13|Jul 14|Jul 15|Jul 16|Jul 17|Jul 18|Jul 19|Jul 20|Jul 21|Jul 22|Jul 23|Jul 24|Jul 25|Jul 26|Jul 27|Jul 28|Jul 29|Jul 30|Jul 31|Aug 01|Aug 02|Aug 03|Aug 04|Aug 05|Aug 06|Aug 07|Aug 08|Aug 09|Aug 10|Aug 11|Aug 12|Aug 13|Aug 14|Aug 15|Aug 16|Aug 17|Aug 18|Aug 19|Aug 20|Aug 21|Aug 22|Aug 23|Aug 24|Aug 25|Aug 26|Aug 27|Aug 28|Aug 29|Aug 30|Aug 31|Sep 01|Sep 02|Sep 03|Sep 04|Sep 05|Sep 06|Sep 07|Sep 08|Sep 09|Sep 10|Sep 11|Sep 12|Sep 13|Sep 14|Sep 15|Sep 16|Sep 17|Sep 18|Sep 19|Sep 20|Sep 21|Sep 22|Sep 23|Sep 24|Sep 25|Sep 26|Sep 27|Sep 28|Sep 29|Sep 30|Oct 01|Oct 02|Oct 03|Oct 04|Oct 05|Oct 06|Oct 07|Oct 08|Oct 09|Oct 10|Oct 11|Oct 12|Oct 13|Oct 14|Oct 15|Oct 16|Oct 17|Oct 18|Oct 19|Oct 20|Oct 21|Oct 22|Oct 23|Oct 24|Oct 25|Oct 26|Oct 27|Oct 28|Oct 29|Oct 30|Oct 31|Nov 01|Nov 02|Nov 03|Nov 04|Nov 05|Nov 06|Nov 07|Nov 08|Nov 09|Nov 10|Nov 11|Nov 12|Nov 13|Nov 14|Nov 15|Nov 16|Nov 17|Nov 18|Nov 19|Nov 20|Nov 21|Nov 22|Nov 23|Nov 24|Nov 25|Nov 26|Nov 27|Nov 28|Nov 29|Nov 30|Dec 01|Dec 02|Dec 03|Dec 04|Dec 05|Dec 06|Dec 07|Dec 08|Dec 09|Dec 10|Dec 11|Dec 12|Dec 13|Dec 14|Dec 15|Dec 16|Dec 17|Dec 18|Dec 19|Dec 20|Dec 21|Dec 22|Dec 23|Dec 24|Dec 25|Dec 26|Dec 27|Dec 28|Dec 29|Dec 30|Dec 31",
-            }
-        ],
-        dataset: [
-            {
-                "seriesname": "Apple.inc",
-                "data": "978|976|955|981|992|964|973|949|985|962|977|955|988|959|985|965|991|985|966|989|960|944|976|980|940|941|945|952|973|946|951|983|942|964|937|942|963|971|969|967|934|935|956|974|930|936|935|973|979|990|994|992|994|984|991|986|963|985|1006|965|958|976|993|974|995|989|966|965|1011|995|1007|978|985|1012|997|985|1004|987|986|981|991|982|992|983|1018|994|976|989|1022|989|1002|983|1015|1006|1005|1003|1017|1014|995|1007|1001|1019|1012|1005|1027|1011|1013|1035|1010|1011|1011|1036|1041|1005|1005|997|1012|1032|1025|1020|998|1018|1000|1009|1005|1004|1042|1047|1021|1032|1019|1038|1050|1037|1019|1018|1035|1055|1028|1049|1013|1028|1023|1054|1041|1051|1069|1051|1072|1049|1054|1035|1072|1042|1048|1083|1054|1048|1065|1046|1055|1056|1085|1046|1048|1048|1068|1089|1074|1078|1046|1052|1082|1052|1067|1058|1051|1052|1082|1060|1076|1077|1059|1070|1082|1093|1100|1089|1079|1075|1087|1089|1088|1106|1107|1067|1076|1101|1094|1078|1097|1094|1083|1066|1079|1111|1100|1085|1091|1095|1081|1091|1077|1095|1107|1083|1116|1118|1101|1111|1096|1077|1086|1117|1087|1105|1107|1094|1112|1101|1084|1094|1125|1099|1108|1084|1099|1120|1122|1092|1120|1121|1094|1114|1099|1129|1095|1125|1127|1121|1129|1110|1097|1136|1110|1098|1131|1125|1144|1104|1117|1105|1105|1145|1102|1143|1115|1147|1149|1129|1108|1109|1130|1153|1121|1127|1133|1120|1155|1120|1147|1118|1117|1145|1152|1145|1130|1157|1135|1115|1156|1163|1131|1123|1137|1151|1160|1152|1166|1144|1137|1124|1151|1129|1133|1143|1139|1171|1135|1132|1174|1170|1163|1175|1152|1142|1160|1148|1173|1158|1160|1151|1142|1168|1153|1143|1157|1142|1172|1186|1176|1185|1175|1178|1184|1166|1148|1166|1186|1187|1180|1179|1161|1174|1155|1172|1173|1179|1149|1170|1175|1162|1151|1152|1163|1155|1197|1174|1199|1180|1160|1174|1159|1168|1160"
-            },
-            {
-                "seriesname": "Facebook.com",
-                "data": "1053|1057|1084|1082|1098|1055|1068|1067|1074|1056|1067|1078|1079|1084|1041|1052|1066|1080|1049|1051|1049|1044|1083|1053|1038|1077|1046|1067|1053|1033|1047|1055|1031|1074|1031|1041|1071|1057|1035|1070|1050|1069|1054|1049|1022|1044|1049|1058|1064|1088|1093|1103|1085|1072|1104|1106|1078|1061|1078|1105|1105|1062|1076|1074|1114|1069|1091|1086|1094|1072|1079|1088|1082|1075|1110|1120|1108|1102|1090|1088|1092|1102|1110|1111|1085|1113|1110|1116|1095|1105|1105|1122|1133|1132|1093|1097|1120|1105|1135|1106|1108|1135|1098|1136|1122|1113|1113|1145|1103|1127|1104|1126|1147|1120|1119|1120|1132|1107|1149|1147|1149|1141|1145|1152|1117|1144|1157|1134|1157|1120|1125|1153|1141|1132|1158|1134|1166|1167|1170|1163|1139|1171|1145|1156|1158|1154|1196|1196|1169|1174|1174|1195|1161|1201|1208|1188|1182|1188|1162|1174|1174|1211|1189|1211|1172|1211|1179|1199|1216|1184|1209|1181|1186|1174|1185|1220|1206|1190|1206|1201|1190|1209|1208|1189|1195|1188|1193|1206|1214|1205|1215|1200|1194|1210|1205|1236|1226|1208|1228|1235|1197|1197|1198|1224|1220|1210|1226|1244|1228|1241|1237|1201|1208|1238|1213|1222|1213|1249|1222|1221|1230|1223|1214|1251|1234|1220|1240|1213|1252|1224|1222|1234|1262|1255|1225|1226|1242|1240|1250|1265|1235|1228|1261|1221|1230|1235|1260|1273|1253|1268|1258|1233|1258|1248|1230|1270|1246|1242|1246|1253|1253|1257|1253|1266|1248|1247|1257|1245|1281|1271|1272|1248|1292|1251|1253|1257|1259|1288|1252|1297|1290|1268|1291|1258|1263|1254|1302|1279|1272|1271|1281|1261|1263|1289|1294|1272|1296|1264|1282|1268|1296|1280|1281|1277|1277|1292|1266|1310|1288|1312|1308|1300|1289|1273|1282|1300|1322|1301|1314|1296|1305|1305|1327|1323|1295|1314|1298|1312|1330|1293|1309|1286|1309|1332|1300|1295|1325|1322|1305|1323|1300|1308|1299|1324|1338|1313|1329|1331|1299|1329|1344|1335|1342|1307|1314|1326|1331|1328|1328|1311|1352|1328|1309|1311|1312"
-            }
-        ]
-    }
-}
 
-
-const chartData = [
-    {
+const chartData = [{
         label: "Founders",
         value: "285040"
     },
@@ -123,8 +92,8 @@ const chartData = [
 // Create a JSON object to store the chart configurations
 const doughnutConfigs = {
     type: "doughnut2d", // The chart type
-    width: "400", // Width of the chart
-    height: "400", // Height of the chart
+    width: "360", // Width of the chart
+    height: "360", // Height of the chart
     dataFormat: "json", // Data type
     dataSource: {
         // Chart Configuration
@@ -139,7 +108,7 @@ const doughnutConfigs = {
             centerLabel: "$label: $value",
             centerLabelBold: "1",
             enableSmartLabels: "0",
-            showLegend: '0',
+            showLegend: '1',
             // doughnutRadius:'85',
             // showTooltip: "0",
             // showPercentValues: "1",
@@ -155,112 +124,6 @@ const doughnutConfigs = {
     }
 };
 
-
-const valuationData = [
-    {
-        label: "03:34, 25Jun",
-        value: "35000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "34000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "37000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "32000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "40000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "50000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "47000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "53000$"
-    },
-    {
-        label: "03:34, 25Jun",
-        value: "30000$"
-    }
-];
-
-const currencyChart = {
-    bgcolor: "#FFFFFF",
-    canvasBgColor: "#FFFFFF",
-    showBorder: "0",
-    showCanvasBorder: "0",
-    showLabels: "0",
-    drawCrossLine: "1",
-    divLineAlpha: "0",
-    showYAxisValues: "0",
-    chartLeftMargin: "0",
-    chartRightMargin: "0",
-    canvasRightMargin: "0",
-    canvasLeftMargin: "0",
-    chartBottomMargin: "0",
-    canvasBottomMargin: "0",
-    chartTopMargin: "0",
-    canvasTopMargin: "0",
-    showValues: "0",
-    shadow: "0",
-    legendPadding: "0",
-    showShadow: "0",
-    paletteColors: "#3273DC",
-    drawAnchors: "0",
-    showAlternateHGridColor: "0",
-    crossLineColor: "#363636",
-    crossLineAlpha: "15",
-    drawCrossLineOnTop: "0",
-    usePlotGradientColor: "1",
-    plotFillAlpha: "15",
-    plotColorinTooltip: "0",
-    tooltipBorderAlpha: "0",
-    toolTipPadding: "0",
-    baseFontColor: "#205BBB",
-    baseFontSize: "15",
-    baseFont: "Nunito",
-    tooltipbgalpha: "0",
-    plotFillAngle: "90",
-    numberPrefix: "$",
-    plotToolText: "<b>$label: $dataValue</b>"
-}
-
-const nrChartConfig = {
-    type: "mscombi2d",
-    width: "500",
-    height: "200",
-    dataFormat: "json",
-    dataSource: {
-        chart: currencyChart,
-        categories: [{
-            category: valuationData
-        }],
-        dataset: [
-            {
-                renderAs: "spline",
-                lineThickness: "3",
-                alpha: "50",
-                data: valuationData
-            }, {
-                renderAs: "splinearea",
-                showPlotBorder: "0",
-                plotToolText: " ",
-                data: valuationData
-            }
-        ]
-    }
-};
 
 const drawerWidth = 240;
 
@@ -285,7 +148,7 @@ const useStyles = makeStyles((theme) => ({
     toolbar: theme.mixins.toolbar,
     content: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: 'rgb(243,243,248)',
         padding: theme.spacing(0),
     },
     padded: {
@@ -319,367 +182,535 @@ export const DashboardInvestor = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-    return (
-        <>
-            <div className={classes.root}>
-                <CssBaseline />
-                <AppBar position="fixed" className={classes.appBar}>
-                </AppBar>
-                <Navbar />
-                <main className={classes.content}>
 
-                    <NavFloating />
+    const series = [ //data on the y-axis
+        {
+            name: "Temperature in Celsius",
+            data: [4132, 4124, 3153, 5323, 5123, 4444, 6532, 7555, 6488, 7690, 3000, 2345]
+        }
+    ];
+    const options = { //data on the x-axis
+        series: [{
+                name: 'Website Blog',
+                type: 'column',
+                data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+            },
+            {
+                name: 'Social Media',
+                type: 'line',
+                data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+            }
+        ],
+        chart: {
+            height: 350,
+            type: 'line',
+        },
+        stroke: {
+            width: [0, 4]
+        },
+        // title: {
+        //   text: 'Traffic Sources'
+        // },
+        dataLabels: {
+            enabled: true,
+            enabledOnSeries: [1]
+        },
+        labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+        xaxis: {
+            type: 'datetime'
+        },
+        yaxis: [{
+                title: {
+                    text: 'Website Blog',
+                },
 
-                    <div className='px-3'>
+            },
+            // {
+            //   opposite: true,
+            //   title: {
+            //     text: 'Social Media'
+            //   }
+            // }
+        ]
+    };
+    return ( <
+        >
+        <
+        div className = { classes.root } >
+        <
+        CssBaseline / >
+        <
+        AppBar position = "fixed"
+        className = { classes.appBar } >
+        <
+        /AppBar> <
+        Navbar / >
+        <
+        main className = { classes.content } >
 
-                        <div className='d-flex justify-content-around mb-3'>
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '17rem' }}>
-                                <PeopleAltRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Companies Invested In</p>
-                                    <h5 className='mb-0 font15 fw-bold'>8.02K</h5>
-                                </div>
+        <
+        NavFloating / >
 
-                            </div>
+        <
+        div className = 'px-3' >
+        <
+        div className = 'd-flex justify-content-between align-items-center' >
+        <
+        div >
+        <
+        h5 className = 'mb-0 ps-2' > Good Morning, Anna! < /h5> <
+        p className = 'text-secondary ps-2' > Here 's what'
+        s happening with your store today. < /p> <
+        /div> {
+            /* <div className="input-group w-25">
+                            <input style={{backgroundColor:'white'}} type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" disabled />
+                            <span style={{height:'fit-content'}} className="input-group-text" id="basic-addon2"><DateRangeIcon/></span>
+                          </div> */
+        } <
+        /div>
 
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '15rem' }}>
-                                <AccountBalanceWalletRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Investments Worth</p>
-                                    <h5 className='mb-0 font15 fw-bold'>1300 ꜩ</h5>
-                                </div>
+        <
+        div className = 'd-flex justify-content-between align-center' >
 
-                            </div>
+        <
+        div className = 'bg-white p-3 rounded shadow'
+        style = {
+            { width: '22%' } } >
+        <
+        div className = 'd-flex justify-content-between' >
+        <
+        p className = 'text-secondary fw-bold' > TOTAL EARNINGS < /p> <
+        p className = 'fw-bold font13'
+        style = {
+            { color: 'rgb(37, 186, 168)' } } >
+        13.45 % < /p> <
+        /div> <
+        h5 > 559.2 k ꜩ < /h5> <
+        div className = 'd-flex justify-content-between align-items-end' >
+        <
+        a href = '#'
+        style = {
+            { color: '#405189', textDecoration: 'underline' } } > View Net Earnings < /a> <
+        div className = 'p-2 rounded'
+        style = {
+            { backgroundColor: 'rgb(220,242,237)', color: 'rgb(28 163 132)' } } >
+        <
+        MonetizationOnOutlinedIcon / >
+        <
+        /div> <
+        /div> <
+        /div>
 
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '12rem' }}>
-                                <TrendingUpRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Shares Owned</p>
-                                    <h5 className='mb-0 font15 fw-bold'>13.7M</h5>
-                                </div>
+        <
+        div className = 'bg-white p-3 rounded shadow'
+        style = {
+            { width: '22%' } } >
+        <
+        div className = 'd-flex justify-content-between' >
+        <
+        p className = 'text-secondary fw-bold' > ORDERS < /p> <
+        p className = 'fw-bold font13'
+        style = {
+            { color: 'rgb(200, 51, 51)' } } >
+        13.45 %
+        <
+        /p> <
+        /div> <
+        h5 > 36, 894 < /h5> <
+        div className = 'd-flex justify-content-between align-items-end' >
+        <
+        a href = '#'
+        style = {
+            { color: '#405189', textDecoration: 'underline' } } > View All Orders < /a> <
+        div className = 'p-2 rounded'
+        style = {
+            { backgroundColor: 'rgba(41,156,219,.18)', color: 'rgba(41,156,219,1)' } } >
+        <
+        LocalMallOutlinedIcon / >
+        <
+        /div> <
+        /div> <
+        /div>
 
-                            </div>
+        <
+        div className = 'bg-white p-3 rounded shadow'
+        style = {
+            { width: '22%' } } >
+        <
+        div className = 'd-flex justify-content-between' >
+        <
+        p className = 'text-secondary fw-bold' > CUSTOMERS < /p> <
+        p className = 'fw-bold font13'
+        style = {
+            { color: 'rgb(37, 186, 168)' } } > 13.45 % < /p> <
+        /div> <
+        h5 > 183.35 M < /h5> <
+        div className = 'd-flex justify-content-between align-items-end' >
+        <
+        a href = '#'
+        style = {
+            { color: '#405189', textDecoration: 'underline' } } > See Details < /a> <
+        div className = 'p-2 rounded'
+        style = {
+            { backgroundColor: 'rgba(247,184,75,.18)', color: 'rgba(247,184,75,1)' } } >
+        <
+        AccountCircleOutlinedIcon / >
+        <
+        /div> <
+        /div> <
+        /div>
 
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '11rem' }}>
-                                <MonetizationOnIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Stock Price</p>
-                                    <h5 className='mb-0 font15 fw-bold'>9 ꜩ</h5>
-                                </div>
+        <
+        div className = 'bg-white p-3 rounded shadow'
+        style = {
+            { width: '22%' } } >
+        <
+        div className = 'd-flex justify-content-between' >
+        <
+        p className = 'text-secondary fw-bold' > MY BALANCE < /p> <
+        p className = 'fw-bold font13'
+        style = {
+            { color: 'rgb(37, 186, 168)' } } > 13.45 % < /p> <
+        /div> <
+        h5 > 165.89 k ꜩ < /h5> <
+        div className = 'd-flex justify-content-between align-items-end' >
+        <
+        a href = '#'
+        style = {
+            { color: '#405189', textDecoration: 'underline' } } > Withdraw Money < /a> <
+        div className = 'p-2 rounded'
+        style = {
+            { backgroundColor: 'rgba(64,81,137,.18)', color: 'rgba(64,81,137,1)' } } >
+        <
+        AccountBalanceWalletOutlinedIcon / >
+        <
+        /div> <
+        /div> <
+        /div>
 
-                            </div>
+        <
+        /div>
 
-                        </div>
+        <
+        div className = 'd-flex my-5 justify-content-between' >
+        <
+        div className = 'p-3 bg-white shadow'
+        style = {
+            { width: '60%' } } >
+        <
+        h5 > Revenue < /h5> <
+        div className = 'd-flex align-items-center my-3 bg-light' >
+        <
+        div className = 'w-25 text-center border p-2' >
+        <
+        h5 className = 'm-0 font15 fw-bold' > 7, 585 < /h5> <
+        p className = 'm-0 text-secondary' > Orders < /p> <
+        /div> <
+        div className = 'w-25 text-center border p-2' >
+        <
+        h5 className = 'm-0 font15 fw-bold' > $22 .89 k < /h5> <
+        p className = 'm-0 text-secondary' > Earnings < /p> <
+        /div> <
+        div className = 'w-25 text-center border p-2' >
+        <
+        h5 className = 'm-0 font15 fw-bold' > 367 < /h5> <
+        p className = 'm-0 text-secondary' > Funds < /p> <
+        /div> <
+        div className = 'w-25 text-center border p-2' >
+        <
+        h5 className = 'm-0 font15 fw-bold' > 18.92 % < /h5> <
+        p className = 'm-0 text-secondary' > Conversation Ratio < /p> <
+        /div> <
+        /div> <
+        Chart options = { options }
+        series = { series }
+        type = "bar"
+        height = '300px' /
+        >
+        <
+        /div>
 
-                        <div className='mb-4 d-flex justify-content-center align-items-center'>
-                            <div className='rounded15 mx-3' style={{ cursor: 'pointer' }}>
-                                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Stocks Owned</h6>
-                                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                                    <thead className='table-light'>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Stakeholder</th>
-                                            <th scope="col">Shares Owned</th>
-                                            <th scope="col">Ownership</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className='font13 text-secondary'>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Company Name</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                                        </tr>
+        <
+        div className = 'bg-white p-3 shadow' >
+        <
+        h5 className = 'mb-5' > Store visited by source < /h5> <
+        ReactFC className = 'doughnut'
+        style = {
+            { backgroundColor: 'white' } } {...doughnutConfigs }
+        /> <
+        /div> <
+        /div>
 
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Company Name</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Company Name</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className='bg-white rounded15 mx-3' style={{ cursor: 'pointer' }}>
-                                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Recent Transactions</h6>
-                                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
-                                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                                    <thead className='table-light'>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Account Holder</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className='font13 text-secondary'>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Account Name</td>
-                                            <td className='align-middle'>Mar 20, 2022</td>
-                                            <td className='align-middle fw-bold text-black'><ArrowUpwardRoundedIcon className='color-credit me-2' />36,000 ꜩ</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Account Name</td>
-                                            <td className='align-middle'>Mar 20, 2022</td>
-                                            <td className='align-middle fw-bold text-black'><ArrowDownwardRoundedIcon className='color-debit me-2' />36,000 ꜩ</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Account Name</td>
-                                            <td className='align-middle'>Mar 20, 2022</td>
-                                            <td className='align-middle fw-bold text-black'><ArrowDownwardRoundedIcon className='color-debit me-2' />36,000 ꜩ</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+        <
+        div className = 'd-flex justify-content-between' >
+        <
+        div className = 'bg-white p-3 shadow'
+        style = {
+            { width: '56%' } } >
+        <
+        div className = 'd-flex justify-content-between align-items-center mb-3' >
+        <
+        h5 className = 'ms-2 mb-0' > Recent Investments < /h5> <
+        p className = 'me-3 mb-0' > Report < /p> <
+        /div>
 
-                        </div>
+        <
+        table className = "table table-hover" >
+        <
+        tbody >
+        <
+        tr >
+        <
+        th scope = "row" > < img style = {
+            { width: '32px', height: '32px', borderRadius: '50%' } }
+        alt = "Remy Sharp"
+        src = { appleLogo }
+        /></th >
+        <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > 8547 < /p> <
+        span className = 'text-secondary' > Stock < /span> <
+        /td> <
+        td > $541200 < /td> <
+        td className = 'fw-bold text-end' >
+        <
+        span > 32 % < /span> <
+        BarChartOutlinedIcon className = 'mb-1 ms-1'
+        style = {
+            { color: 'rgb(37, 186, 168)' } }
+        /> <
+        /td> <
+        /tr>
 
-                        <div className='d-flex align-items-center justify-content-around mb-1'>
-                            <div className='bg-white shadow rounded15 pt-3' style={{ width: 'fit-content' }}>
-                                {/* <div className="px-3 d-flex justify-content-between">
-                                    <div>
-                                        <p className="text-secondary mb-1">Company Valuation</p>
-                                        <h4>$149.7K</h4>
-                                    </div>
-                                    <div>
-                                        <h4 className='text-danger'><ArrowDownwardRoundedIcon />2%</h4>
-                                    </div>
-                                </div> */}
-                                <ReactFC {...zoomlineConfig} />
-                            </div>
+        <
+        tr >
+        <
+        th scope = "row" >
+        <
+        svg width = "32px"
+        height = "32px"
+        viewBox = "-3 0 262 262"
+        xmlns = "http://www.w3.org/2000/svg"
+        preserveAspectRatio = "xMidYMid" > < path d = "M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+        fill = "#4285F4" / > < path d = "M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+        fill = "#34A853" / > < path d = "M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+        fill = "#FBBC05" / > < path d = "M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+        fill = "#EB4335" / > < /svg> <
+        /th> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > 8547 < /p> <
+        span className = 'text-secondary' > Stock < /span> <
+        /td> <
+        td > $541200 < /td> <
+        td className = 'fw-bold text-end' >
+        <
+        span > 32 % < /span> <
+        BarChartOutlinedIcon className = 'mb-1 ms-1'
+        style = {
+            { color: 'rgb(37, 186, 168)' } }
+        /> <
+        /td> <
+        /tr>
 
+        <
+        tr >
+        <
+        th scope = "row" >
+        <
+        svg width = "32px"
+        height = "32px"
+        viewBox = "126.444 2.281 589 589"
+        xmlns = "http://www.w3.org/2000/svg" > < circle cx = "420.944"
+        cy = "296.781"
+        r = "294.5"
+        fill = "#2daae1" / > < path d = "M609.773 179.634c-13.891 6.164-28.811 10.331-44.498 12.204 16.01-9.587 28.275-24.779 34.066-42.86a154.78 154.78 0 0 1-49.209 18.801c-14.125-15.056-34.267-24.456-56.551-24.456-42.773 0-77.462 34.675-77.462 77.473 0 6.064.683 11.98 1.996 17.66-64.389-3.236-121.474-34.079-159.684-80.945-6.672 11.446-10.491 24.754-10.491 38.953 0 26.875 13.679 50.587 34.464 64.477a77.122 77.122 0 0 1-35.097-9.686v.979c0 37.54 26.701 68.842 62.145 75.961-6.511 1.784-13.344 2.716-20.413 2.716-4.998 0-9.847-.473-14.584-1.364 9.859 30.769 38.471 53.166 72.363 53.799-26.515 20.785-59.925 33.175-96.212 33.175-6.25 0-12.427-.373-18.491-1.104 34.291 21.988 75.006 34.824 118.759 34.824 142.496 0 220.428-118.052 220.428-220.428 0-3.361-.074-6.697-.236-10.021a157.855 157.855 0 0 0 38.707-40.158z"
+        fill = "#fff" / > < /svg> <
+        /th> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > 8547 < /p> <
+        span className = 'text-secondary' > Stock < /span> <
+        /td> <
+        td > $541200 < /td> <
+        td className = 'fw-bold text-end' >
+        <
+        span > 32 % < /span> <
+        BarChartOutlinedIcon className = 'mb-1 ms-1'
+        style = {
+            { color: 'rgb(37, 186, 168)' } }
+        /> <
+        /td> <
+        /tr>
 
-                            {/* <div className='ms-2' style={{ height: '340px', width: 'fit-content', overflow: 'hidden' }}>
-                                <ReactFC className='doughnut' {...doughnutConfigs} />
-                            </div> */}
-                        </div>
+        <
+        tr >
+        <
+        th scope = "row" > < img style = {
+            { width: '32px', height: '32px', borderRadius: '50%' } }
+        alt = "Remy Sharp"
+        src = { appleLogo }
+        /></th >
+        <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > 8547 < /p> <
+        span className = 'text-secondary' > Stock < /span> <
+        /td> <
+        td > $541200 < /td> <
+        td className = 'fw-bold text-end' >
+        <
+        span > 32 % < /span> <
+        BarChartOutlinedIcon className = 'mb-1 ms-1'
+        style = {
+            { color: 'rgb(37, 186, 168)' } }
+        /> <
+        /td> <
+        /tr> <
+        /tbody> <
+        /table> <
+        /div>
 
-                        
-                    </div>
+        <
+        div className = 'bg-white p-3 shadow'
+        style = {
+            { width: '43%' } } >
+        <
+        div className = 'd-flex justify-content-between align-items-center mb-3' >
+        <
+        h5 className = 'ms-2 mb-0' > Top Companies < /h5> <
+        p className = 'me-3 mb-0' > Report < /p> <
+        /div>
 
+        <
+        table className = "table table-hover" >
+        <
+        tbody >
+        <
+        tr >
+        <
+        th scope = "row" > < img style = {
+            { width: '32px', height: '32px', borderRadius: '50%' } }
+        alt = "Remy Sharp"
+        src = { appleLogo }
+        /></th >
+        <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td > $541200 < /td> <
+        /tr>
 
+        <
+        tr >
+        <
+        th scope = "row" >
+        <
+        svg width = "32px"
+        height = "32px"
+        viewBox = "-3 0 262 262"
+        xmlns = "http://www.w3.org/2000/svg"
+        preserveAspectRatio = "xMidYMid" > < path d = "M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+        fill = "#4285F4" / > < path d = "M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+        fill = "#34A853" / > < path d = "M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+        fill = "#FBBC05" / > < path d = "M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+        fill = "#EB4335" / > < /svg> <
+        /th> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td > $541200 < /td> <
+        /tr>
 
-                    {/* <div className='d-flex align-items-start'>
+        <
+        tr >
+        <
+        th scope = "row" >
+        <
+        svg width = "32px"
+        height = "32px"
+        viewBox = "126.444 2.281 589 589"
+        xmlns = "http://www.w3.org/2000/svg" > < circle cx = "420.944"
+        cy = "296.781"
+        r = "294.5"
+        fill = "#2daae1" / > < path d = "M609.773 179.634c-13.891 6.164-28.811 10.331-44.498 12.204 16.01-9.587 28.275-24.779 34.066-42.86a154.78 154.78 0 0 1-49.209 18.801c-14.125-15.056-34.267-24.456-56.551-24.456-42.773 0-77.462 34.675-77.462 77.473 0 6.064.683 11.98 1.996 17.66-64.389-3.236-121.474-34.079-159.684-80.945-6.672 11.446-10.491 24.754-10.491 38.953 0 26.875 13.679 50.587 34.464 64.477a77.122 77.122 0 0 1-35.097-9.686v.979c0 37.54 26.701 68.842 62.145 75.961-6.511 1.784-13.344 2.716-20.413 2.716-4.998 0-9.847-.473-14.584-1.364 9.859 30.769 38.471 53.166 72.363 53.799-26.515 20.785-59.925 33.175-96.212 33.175-6.25 0-12.427-.373-18.491-1.104 34.291 21.988 75.006 34.824 118.759 34.824 142.496 0 220.428-118.052 220.428-220.428 0-3.361-.074-6.697-.236-10.021a157.855 157.855 0 0 0 38.707-40.158z"
+        fill = "#fff" / > < /svg> <
+        /th> <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td > $541200 < /td> <
+        /tr>
 
-            <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{ width: '20%' }}>
-              <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
-              <h5 className='font13 fw-bold text-secondary'>Balance</h5>
-              <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
-            </div>
+        <
+        tr >
+        <
+        th scope = "row" > < img style = {
+            { width: '32px', height: '32px', borderRadius: '50%' } }
+        alt = "Remy Sharp"
+        src = { appleLogo }
+        /></th >
+        <
+        td >
+        <
+        p className = 'm-0 fw-bold' > iTest Factory < /p> <
+        span className = 'text-secondary' > Oliver Tyler < /span> <
+        /td> <
+        td className = 'text-secondary' > Tech Company < /td> <
+        td > $541200 < /td> <
+        /tr> <
+        /tbody> <
+        /table> <
+        /div>
 
+        <
+        /div> <
+        /div>
 
-
-            <div id='stock-enteries' className='container rounded25 shadow-sm cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
-              <h4 className='fw-bold'>Stocks</h4>
-              <div className='container'>
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div id='cap-table' className='container rounded25 shadow-sm background-cream p-4 ms-0' style={{ width: '40%' }}>
-              <h4 className='fw-bold'>Cap table</h4>
-              <div className='container p-0 bg-white my-3 d-flex rounded' style={{ height: '35px', overflow: 'hidden' }}>
-                <div id='founder-percent' className='h-100 background-darkBlue' style={{ width: '64.20%' }}></div>
-                <div id='employee-percent' className='h-100 background-chocolate' style={{ width: '23.76%' }}></div>
-                <div id='seriesA-percent' className='h-100 bg-black' style={{ width: '6.02%' }}></div>
-                <div id='seriesB-percent' className='h-100 bg-white' style={{ width: '6.02%' }}></div>
-              </div>
-              <div id='cap-table-enteries'>
-                <div className='container'>
-                  <div className='mb-3 px-4 d-flex justify-content-between text-secondary'>
-                    <span className='font10'>Authorized</span>
-                    <span className='font10'>Issued</span>
-                    <span className='font10'>Ownership</span>
-                  </div>
-                  <div className='mb-4'>
-                    <div className='d-flex align-items-center'>
-                      <div className='rounded background-darkBlue me-2' style={{ height: '15px', width: '15px' }}></div>
-                      <span className='fw-bold font15'>Founders</span>
-                    </div>
-                    <div className='d-flex justify-content-between my-1 px-4'>
-                      <span className='font13'>50,000,000</span>
-                      <span className='font13'>50,000,000</span>
-                      <span className='font13'>70.22%</span>
-                    </div>
-                  </div>
-
-                  <div className='mb-4'>
-                    <div className='d-flex align-items-center'>
-                      <div className='rounded background-chocolate me-2' style={{ height: '15px', width: '15px' }}></div>
-                      <span className='fw-bold font15'>Employees</span>
-                    </div>
-                    <div className='d-flex justify-content-between my-1 px-4'>
-                      <span className='font13'>30,000,000</span>
-                      <span className='font13'>10,000,000</span>
-                      <span className='font13'>23.76%</span>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          <div id='recent-transaction' className='shadow-sm container mt-3 ms-0 rounded25 px-5 py-2' style={{ width: '80%', backgroundColor: 'rgb(177 248 232 / 25%)', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
-            <h6 className='fw-bold pt-3 mb-4 pb-2'>Recent Investments</h6>
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-
-
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-
-
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-
-            <div className='row'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-          </div> */}
-
-                </main>
-            </div>
-        </>
+        <
+        div className = 'mt-4 bg-white d-flex justify-content-between align-items-center p-4 text-secondary font15'
+        style = {
+            { height: '50px' } } >
+        <
+        span > 2022© DevilsList. < /span> <
+        span > Design & Develop by Dev4Bros < /span> <
+        /div> <
+        /main> <
+        /div> <
+        />
     )
 }

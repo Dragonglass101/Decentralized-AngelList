@@ -21,7 +21,7 @@ import walletImg from '../images/wallet.png'
 
 import { getActiveAccount } from "../utils/wallet";
 import { Link } from "react-router-dom";
-import { getBalance } from "../utils/Api";
+import { getBalance, getRootStorage, getKeyBigMapByID } from "../utils/Api";
 import { useRef } from "react";
 import { raiseFunds } from "../utils/operation";
 
@@ -71,9 +71,15 @@ const useStyles = makeStyles((theme) => ({
 
 const CompanyNavbar = () => {
     const classes = useStyles();
-    const [currentindex, setcurrentindex] = useState(-1)
     const [loading, setLoading] = useState(false);
-    const [balance, setbalance] = useState(null)
+    const [balance, setbalance] = useState(null);
+    const [storage, setstorage] = useState();
+    const [fundAlreadyRaised, setfundAlreadyRaised] = useState(null);
+    const [name, setname] = useState();
+    const [photoCID, setphotoCID] = useState();
+
+    const companyBigMapID = 74523;
+    const investorBigMapID = 74527;
 
     const investementRaised = useRef();
     const ownershipRaised = useRef();
@@ -87,6 +93,13 @@ const CompanyNavbar = () => {
                 setWallet(activeAccount);
             })();
         }
+        const retrieveStorage = async () => {
+            const st = await getRootStorage();
+            console.log(st);
+            setstorage(st);
+        }
+        if(!storage)
+            retrieveStorage();
     }, []);
 
     useEffect(() => {
@@ -94,21 +107,51 @@ const CompanyNavbar = () => {
             const bal = await getBalance(wallet.address);
             setbalance(bal)
         }
-        if (wallet && !balance)
+        const getProfile = async () => {
+            const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
+            const companyProfileHash = companyDetails.value["company_profile_Id"];
+            console.log(companyProfileHash);
+            const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
+            console.log(companyJSON);
+            setname(companyJSON.name);
+            setphotoCID(companyJSON.photoCID);
+        }
+        if (wallet && !balance){
             retrieveBalance();
+            getProfile();
+        }
     }, [wallet])
+
+    async function fetchJSON(url) {
+        const response = await fetch(url);
+        const jsonfile = await response.json();
+        return jsonfile;
+    }
 
     async function handleRaiseFund() {
         console.log(typeof Number(investementRaised.current.value), typeof Number(ownershipRaised.current.value), typeof typeOfInvestement.current.value);
         setLoading(true)
         try {
             await raiseFunds(Number(investementRaised.current.value), Number(ownershipRaised.current.value), typeOfInvestement.current.value);
-            alert("Transaction Confirmed! Fund has been raised");
+            alert("Fund has been raised");
+            window.location.reload();
         } catch (error) {
             alert("Transaction Failed:", error.message);
         }
 
         setLoading(false);
+    }
+
+    async function checkFundRaised(){
+        for( let companyAddress of storage["fundraised_companies"]){
+            if(wallet.address === companyAddress)
+                setfundAlreadyRaised(true);
+            else
+                setfundAlreadyRaised(false);
+        }
+    }
+    if(wallet && storage && fundAlreadyRaised === null){
+        checkFundRaised();
     }
 
 
@@ -139,19 +182,24 @@ const CompanyNavbar = () => {
                         
                         {/* <Divider style={{ color: 'grey', backgroundColor: 'grey', variant: 'middle' }} /> */}
                         <div className="d-flex py-3 ps-4 my-2" style={{ borderRadius: '5px', border:'1px solid rgba(63, 81, 181, 0.5)' }}>
-                            <svg width="42" height="42" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg" className="css-2tcqb0 me-3"><path fillRule="evenodd" clipRule="evenodd" d="M22.6744 4.50247L31.9038 9.66459C32.117 9.78381 32.2944 9.95738 32.4178 10.1674C32.5413 10.3775 32.6064 10.6164 32.6064 10.8597C32.6064 11.1031 32.5413 11.342 32.4178 11.5521C32.2944 11.7621 32.117 11.9357 31.9038 12.0549L22.6745 17.2172C22.0854 17.5467 21.4212 17.7198 20.7456 17.7198C20.0698 17.7198 19.4056 17.5467 18.8166 17.2172L9.5873 12.0549C9.37415 11.9357 9.1967 11.7621 9.0732 11.5521C8.94971 11.342 8.8846 11.1031 8.8846 10.8597C8.8846 10.6164 8.94971 10.3775 9.0732 10.1674C9.1967 9.95738 9.37415 9.78381 9.5873 9.66459L18.8166 4.50247C19.4056 4.17301 20.0698 4 20.7456 4C21.4212 4 22.0854 4.17301 22.6744 4.50247Z" fill="#5048E5"></path><path opacity="0.7" d="M22.6244 9.34853L35.8422 16.7415C36.0554 16.8607 36.2328 17.0343 36.3563 17.2443C36.4798 17.4544 36.5449 17.6933 36.5449 17.9366C36.5449 18.18 36.4798 18.419 36.3563 18.629C36.2328 18.8391 36.0554 19.0126 35.8422 19.1319L22.6244 26.5248C22.0355 26.8541 21.3712 27.0272 20.6956 27.0272C20.0199 27.0272 19.3557 26.8541 18.7667 26.5248L5.54893 19.1319C5.33578 19.0126 5.15833 18.8391 5.03483 18.629C4.91133 18.419 4.84623 18.18 4.84623 17.9366C4.84623 17.6933 4.91133 17.4544 5.03483 17.2443C5.15833 17.0343 5.33578 16.8607 5.54893 16.7415L18.7667 9.34853C19.3557 9.01916 20.0199 8.84615 20.6956 8.84615C21.3712 8.84615 22.0355 9.01916 22.6244 9.34853Z" fill="#5048E5"></path><path opacity="0.4" d="M22.9257 14.1939L41.2984 24.4703C41.5113 24.5894 41.6884 24.7626 41.8117 24.9724C41.935 25.182 42 25.4206 42 25.6636C42 25.9065 41.935 26.1451 41.8117 26.3548C41.6884 26.5645 41.5113 26.7378 41.2984 26.8568L22.9257 37.1329C22.3377 37.4618 21.6745 37.6346 21 37.6346C20.3254 37.6346 19.6623 37.4618 19.0743 37.1329L0.701542 26.8568C0.488743 26.7378 0.311581 26.5645 0.188286 26.3548C0.0649948 26.1451 0 25.9065 0 25.6636C0 25.4206 0.0649948 25.182 0.188286 24.9724C0.311581 24.7626 0.488743 24.5894 0.701542 24.4703L19.0743 14.1939C19.6623 13.8651 20.3254 13.6923 21 13.6923C21.6745 13.6923 22.3377 13.8651 22.9257 14.1939Z" fill="#5048E5"></path></svg>
+                        {photoCID ?
+                            <img src={`https://ipfs.io/ipfs/${photoCID}`} className="me-3" style={{width: "42px", height: "42px", borderRadius:"50%"}}/> : null}
                             <div>
-                                <h6 className="font15 menu-item-color mb-1">Acme Inc.</h6>
-                                <h6 className="font10 m-0">Your tier: Premium</h6>
+                                <h6 className="font15 menu-item-color mb-1">{name}</h6>
+                                <h6 className="font10 m-0">Bangalore, Karnataka</h6>
                             </div>
                             
                         </div>
 
+                        {fundAlreadyRaised ?
+                        <Button className="mt-3 d-block w-100" variant="outlined" color="primary">
+                            Fund Raised
+                        </Button> : 
                         <Button className="mt-3 d-block w-100" variant="outlined" color="primary" data-bs-toggle="modal" data-bs-target="#RaiseFund">
                             Raise Fund
-                        </Button>
+                        </Button>}
 
-                        <div className="modal fade" id="RaiseFund" tabindex="-1" aria-labelledby="RaiseFundLabel" aria-hidden="true">
+                        <div className="modal fade" id="RaiseFund" tabIndex="-1" aria-labelledby="RaiseFundLabel" aria-hidden="true">
                             <div className="modal-dialog my-auto">
                                 <div className="modal-content">
                                     <div className="modal-header bg-dark">
@@ -166,7 +214,7 @@ const CompanyNavbar = () => {
                                         </div> */}
 
                                         <select ref={typeOfInvestement} className="form-select mb-3" aria-label="Default select example">
-                                            <option selected>Select Investment Type</option>
+                                            <option disabled>Select Investment Type</option>
                                             <option value="SAFE">SAFE</option>
                                             <option value="DirectEquity">Direct</option>
                                             <option value="SAFT">SAFT</option>
@@ -227,6 +275,16 @@ const CompanyNavbar = () => {
                             </ListItem>
                         </Link>
 
+                        <Link to="/add-founders" style={{ color: "inherit", textDecoration: 'unset' }}>
+                            <ListItem
+                                className={(currentLocation === "/add-founders" ? "highlight-karo" : "")}
+                                style={{ marginBottom: '10px' }} button key='Add Founders'>
+                                <AccountBalanceWalletIcon className={(currentLocation === "/add-founders" ? "green-karo" : "") + " menu-icon-color"} />
+                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
+                                <span className={(currentLocation === "/add-founders" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Add Members</span>
+                            </ListItem>
+                        </Link>
+
                         <Link to="/make-payment" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem
                                 className={(currentLocation === "/make-payment" ? "highlight-karo" : "")}
@@ -262,15 +320,14 @@ const CompanyNavbar = () => {
                         <Divider className="mt-3" style={{ color: 'grey', backgroundColor: 'grey', marginBottom: 'auto' }} />
                         <h6 className="font10 ps-2 mt-4">EMPLOYEE</h6>
 
-                        <Link to="/employees-appointed" style={{ color: "inherit", textDecoration: 'unset' }}>
+                        {/* <Link to="/employees-appointed" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem
                                 className={(currentLocation === "/employees-appointed" ? "highlight-karo" : "")}
                                 style={{ marginBottom: '10px' }} button key='Startups List'>
                                 <PeopleAltIcon className={(currentLocation === "/employees-appointed" ? "green-karo" : "") + " menu-icon-color"} />
-                                {/* <ListItemText className="ms-2" primary='Dashboard'/> */}
                                 <span className={(currentLocation === "/employees-appointed" ? "green-karo" : "") + " font13 fw-bold ms-2 menu-item-color"}>Employee Details</span>
                             </ListItem>
-                        </Link>
+                        </Link> */}
 
                         <Link to="/hire-employees" style={{ color: "inherit", textDecoration: 'unset' }}>
                             <ListItem

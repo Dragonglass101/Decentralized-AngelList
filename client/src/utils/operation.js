@@ -6,7 +6,7 @@ export const signupInvestor = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
@@ -31,7 +31,7 @@ export const signupCompany = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
@@ -57,6 +57,7 @@ export const addFounders = async(
     commonOptions,
     commonShares,
     investment,
+    walletAddress,
     preferredShares,
     stakeHolderName,
     stakeHolderProfileId,
@@ -65,12 +66,12 @@ export const addFounders = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
             .add_member_to_company(
-                commonOptions, commonShares, 0, 0, investment, preferredShares, stakeHolderName,
+                commonOptions, commonShares, 0, 0, investment, walletAddress, preferredShares, stakeHolderName,
                 stakeHolderProfileId, stakeHolderType
             )
             .send({
@@ -91,7 +92,7 @@ export const raiseFunds = async(
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
@@ -114,7 +115,7 @@ export const requestFromInvestor = async(companyWallet, directEquity, investment
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
@@ -138,7 +139,7 @@ export const changeMessageHash = async(companyAddress, investorAddress, messageH
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
@@ -160,7 +161,7 @@ export const acceptOffer = async(investorAddress) => {
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
@@ -182,7 +183,7 @@ export const investThroughSAFE = async(companyAddress, investorName, investmentA
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods
@@ -204,7 +205,7 @@ export const investThroughDirectEquity = async(companyAddress, investorName, inv
     try {
         const contract = await tezos.wallet.at(
             //Contract Address
-            "KT1RArmy5HmL5ZW4B4S6x1ewHom2CZ79C3ee"
+            "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
 
         const op = await contract.methods

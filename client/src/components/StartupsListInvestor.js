@@ -15,7 +15,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 import SearchIcon from '@material-ui/icons/Search';
-import { getKeyBigMapByID, getRootStorage } from '../utils/Api';
+import { getBigMapKeys, getKeyBigMapByID, getRootStorage } from '../utils/Api';
 import { requestFromInvestor } from '../utils/operation';
 
 const drawerWidth = 240;
@@ -76,8 +76,9 @@ export const StartupsListInvestor = () => {
     const [investementType, setinvestementType] = useState("SAFE");
     const [companyWalletAddress, setcompanyWalletAddress] = useState();
 
-    const companyBigMapID = 69823;
-
+    const companyBigMapID = 74523;
+    const fundraiseBigMapID = 74526;
+ 
     useEffect(() => {
       const retrieveStorage = async () => {
         const st = await getRootStorage();
@@ -96,31 +97,30 @@ export const StartupsListInvestor = () => {
 
     async function makeCards(){
         const allCards = [];
-        for( let companyAddress of storage["companies_for_funding"]){
+        for( let companyAddress of storage["fundraised_companies"]){
             console.log(companyAddress);
 
             const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
             console.log(companyDetails);
             const companyProfileHash = companyDetails.value["company_profile_Id"];
-            const fundraiseDetails = companyDetails.value["fundraise_details"][`${companyDetails.value["round_num"]}`];
-
+            const fundraiseDetails = await getKeyBigMapByID(fundraiseBigMapID, `{"address":"${companyAddress}","nat":"${companyDetails.value["round_num"]}"}`);
             const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
             console.log(companyJSON);
 
             allCards.push(
-                <div className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
+                <div key={companyProfileHash} className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
                     <div className="card-body">
                         <div className='d-flex justify-content-between align-items-center mb-3'>
                             <Avatar alt="Remy Sharp" src={appleLogo} />
                             <div className='p-2 d-flex'>
-                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>{fundraiseDetails.ownership}%</span>
+                                <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>{fundraiseDetails.value.ownership}%</span>
                             </div>
                         </div>
                         <h5 className="card-title fw-bold">{companyJSON.name}</h5>
                         <p className="card-subtitle mb-2 fw-bold">{companyJSON.startupCity}, {companyJSON.startupState}</p>
                         <p className="card-text font13 text-secondary">{companyJSON.whatWillCompanyDo}</p>
                         <div className='d-flex align-items-center justify-content-between'>
-                            <h6 className='fw-bold mb-0'>{fundraiseDetails.investment} ꜩ</h6>
+                            <h6 className='fw-bold mb-0'>{fundraiseDetails.value.investment} ꜩ</h6>
                             <Button onClick={()=>{setcompanyWalletAddress(companyAddress)}}style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary" data-bs-toggle="modal" data-bs-target="#requestingBtn">Request</Button>
                             <Link to={"/view-startup-profile?profile=" + companyProfileHash}>
                                 <Button className='' style={{ textTransform: 'capitalize' }} size='small' variant='outlined' color="primary">View Profile</Button>
@@ -142,9 +142,10 @@ export const StartupsListInvestor = () => {
     const handleRequestFromInvestor = async (e) => {
         e.preventDefault();
         if(investementType === "DirectEquity")
-            requestFromInvestor(companyWalletAddress, Number(directEquity.current.value), Number(investement.current.value), investementType, 0);
+            await requestFromInvestor(companyWalletAddress, Number(directEquity.current.value), Number(investement.current.value), investementType, 0);
         if(investementType === "SAFE")
-            requestFromInvestor(companyWalletAddress, 0, Number(investement.current.value), investementType, Number(valuationCap.current.value));
+            await requestFromInvestor(companyWalletAddress, 0, Number(investement.current.value), investementType, Number(valuationCap.current.value));
+        window.location.reload();
     }
 
     return (

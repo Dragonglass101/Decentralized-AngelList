@@ -244,9 +244,9 @@ color-green-spent {
 
 /* Playing with Charts  */
 .doughnut{
-    position:relative;
+    /* position:relative;
     top:-30px;
-    left:-25px;
+    left:-25px; */
 }
 
 .chatSelected:hover{
@@ -259,4 +259,10 @@ color-green-spent {
 .chatSelected:active,
 .chatSelected:visited {
     background-color: rgb(232, 238, 249) !important;
+}
+
+.create-avatar{
+    width: '32px';
+    height: '32px';
+    border-radius: '50%' ;
 }
