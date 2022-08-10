@@ -8,6 +8,7 @@ import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import SearchIcon from '@material-ui/icons/Search';
+import Divider from '@material-ui/core/Divider';
 
 import stock1 from '../images/stocks/stock1.png'
 import stock2 from '../images/stocks/stock2.png'
@@ -21,6 +22,13 @@ import img5 from '../images/home/end_minus_1.png';
 import img6 from '../images/home/end.png';
 import img7 from '../images/home/end_plus_1.png';
 import angellist_abstract from '../images/stocks/angellist_abstract.png'
+
+import TwitterIcon from '@material-ui/icons/Twitter';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import RedditIcon from '@material-ui/icons/Reddit';
 
 import angellist_logo from '../images/home/angellist_logo.png'
 import devils_logo_img from '../images/logo/devils_logo_800px_trans.png'
@@ -145,7 +153,7 @@ export const Home = () => {
                 </div>
             </div>
 
-            <div class="ps-5 mb-4 mx-5 background-light-purple rounded-3 d-flex justify-content-between" style={{ backgroundColor: 'rgb(6,12,38)', height: '600px', marginTop:'100px', marginBottom:'100px' }}>
+            <div class="ps-5 mb-4 mx-5 background-light-purple rounded-3 d-flex justify-content-between" style={{ backgroundColor: 'rgb(6,12,38)', height: '600px', marginTop: '100px', marginBottom: '100px' }}>
                 <div className='p-4 my-auto' style={{ width: '45%' }}>
                     <h3 className='fw-bold mb-4' style={{ color: '#dbc0f8' }}>Featured Funds</h3>
                     <h3 className='display-5 fw-bold text-white mb-4'>Invest in Rolling Funds</h3>
@@ -157,7 +165,57 @@ export const Home = () => {
                 </div>
             </div>
 
-            
+            <div className='px-5 mt-5 sidebar-background'>
+                <div className='d-flex justify-content-between'>
+                    <div className='p-5 w-50 text-white'>
+                        <h3 className='fw-bold'>Stay in the loop</h3>
+                        <h5 className='text-light my-3'>Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating OpenSea.</h5>
+                        <div className='d-flex mt-4 justify-content-between'>
+                            <input style={{ width: '70%', fontSize: '20px' }} type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email address" />
+                            <Button style={{ textTransform: 'capitalize', fontSize: '20px' }} className='w-25 fw-bold' variant='contained' color='primary'>Sign Up</Button>
+                        </div>
+                    </div>
+
+                    <div className='py-5 d-flex flex-column justify-content-between align-items-center w-25 text-white'>
+                        <h3 className='fw-bold text-center'>Join the community</h3>
+                        <div className='d-flex flex-wrap justify-content-center'>
+                            <div className='p-2 m-2 background-chat-request rounded15'>
+                                <TwitterIcon style={{ width: '32px', height: '32px' }} />
+                            </div>
+                            <div className='p-2 m-2 background-chat-request rounded15'>
+                                <YouTubeIcon style={{ width: '32px', height: '32px' }} />
+                            </div>
+                            <div className='p-2 m-2 background-chat-request rounded15'>
+                                <FacebookIcon style={{ width: '32px', height: '32px' }} />
+                            </div>
+                            <div className='p-2 m-2 background-chat-request rounded15'>
+                                <MailOutlineIcon style={{ width: '32px', height: '32px' }} />
+                            </div>
+                            <div className='p-2 m-2 background-chat-request rounded15'>
+                                <RedditIcon style={{ width: '32px', height: '32px' }} />
+                            </div>
+                            <div className='p-2 m-2 background-chat-request rounded15'>
+                                <InstagramIcon style={{ width: '32px', height: '32px' }} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <Divider variant='middle' className='my-2' style={{ color: 'white', background: 'white' }} />
+
+                <div className='d-flex p-5'>
+                    <div className='w-25'>
+                        <img src={small_devils_logo} style={{ height: '80px', width: '80px' }} />
+                        <h3 className='text-white my-3'>Devils List</h3>
+                        <p className='text-light my-3'>The world’s first and largest digital marketplace for crypto collectibles and non-fungible tokens (NFTs). Buy, sell, and discover exclusive digital items.</p>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
 
             {/* <div className='mt-5 container'>
                 <img className='w-100' src={img1} />

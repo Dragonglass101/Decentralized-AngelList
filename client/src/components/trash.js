@@ -1,662 +1,784 @@
-import React from 'react';
-import { alpha, makeStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import countryList from "react-select-country-list";
+import Select from "react-select";
 import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
 
-import Navbar from './CompanyNavbar';
-import NavFloating from './NavFloating';
+import { connectWallet } from "../utils/wallet";
+import { signupInvestor } from "../utils/operation";
 
-import searchIcon from '../images/search.png'
-import appleLogo from '../images/apple-logo.png'
-import pieChart from '../images/pie-chart.png'
-import walletImg from '../images/wallet.png'
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
-import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-import PaymentIcon from '@material-ui/icons/Payment';
+import ipfs_api from "../ipfs_api";
+import ipfs_mini from "../ipfs_mini";
 
-//Transaction Debit/credit/pending
-import SyncProblemIcon from '@material-ui/icons/SyncProblem';
-import EjectIcon from '@material-ui/icons/Eject';
-import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
-import TrendingDownRoundedIcon from '@material-ui/icons/TrendingDownRounded';
-import TrendingUpRoundedIcon from '@material-ui/icons/TrendingUpRounded';
-import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
-import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
-import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-import AccountBalanceWalletRoundedIcon from '@material-ui/icons/AccountBalanceWalletRounded';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-
-import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
-import SearchIcon from '@material-ui/icons/Search';
-
-// Step 2 - Include the react-fusioncharts component
-import ReactFC from "react-fusioncharts";
-
-// Step 3 - Include the fusioncharts library
-import FusionCharts from "fusioncharts";
-
-// Step 4 - Include the chart type
-import Column2D from "fusioncharts/fusioncharts.charts";
-import ZoomLine from "fusioncharts/fusioncharts.zoomline"
-
-// Step 5 - Include the theme as fusion
-import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
-
-// Step 6 - Adding the chart and theme as dependency to the core fusioncharts
-ReactFC.fcRoot(FusionCharts, ZoomLine, Column2D, FusionTheme);
-
-
-const chartData = [
-  {
-    label: "Founders",
-    value: "285040"
-  },
-  {
-    label: "Employees",
-    value: "146330"
-  },
-  {
-    label: "Investor A",
-    value: "105070"
-  },
-  {
-    label: "Option Pool",
-    value: "49100"
-  }
-];
-
-// Create a JSON object to store the chart configurations
-const doughnutConfigs = {
-  type: "doughnut2d", // The chart type
-  width: "400", // Width of the chart
-  height: "400", // Height of the chart
-  dataFormat: "json", // Data type
-  dataSource: {
-    // Chart Configuration
-    chart: {
-      // caption: "Companies Market Share",
-      // subCaption: "Last year",
-      numberPrefix: "$",
-      bgColor: "#fbfafa",
-      startingAngle: "310",
-      showLegend: "1",
-      defaultCenterLabel: "Total Shares: $64.08K",
-      centerLabel: "$label: $value",
-      centerLabelBold: "1",
-      enableSmartLabels: "0",
-      showLegend: '0',
-      // doughnutRadius:'85',
-      // showTooltip: "0",
-      // showPercentValues: "1",
-      valuePosition: 'inside',
-      labelPosition: "inside",
-      minAngleForLabel: "360",
-      showPercentInTooltip: "1",
-      decimals: "0",
-      theme: "fusion"
-    },
-    // Chart Data - from step 2
-    data: chartData
-  }
-};
-
-const lineChart = {
-  "caption": "Company Valuation Graph",
-  // "subcaption": "Last year",
-  "yaxisname": "Valuation",
-  "xaxisname": "Date",
-  "yaxisminValue": "800",
-  "yaxismaxValue": "1400",
-  "pixelsPerPoint": "0",
-  "pixelsPerLabel": "30",
-  "lineThickness": "1",
-  "compactdatamode": "1",
-  "dataseparator": "|",
-  "labelHeight": "30",
-  "theme": "fusion"
-}
-
-const valuationData = [
-  {
-    label: "03:34, 25Jun",
-    value: "35000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "34000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "37000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "32000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "40000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "50000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "47000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "53000$"
-  },
-  {
-    label: "03:34, 25Jun",
-    value: "30000$"
-  }
-];
-
-const currencyChart = {
-  bgcolor: "#FFFFFF",
-  canvasBgColor: "#FFFFFF",
-  showBorder: "0",
-  showCanvasBorder: "0",
-  showLabels: "0",
-  drawCrossLine: "1",
-  divLineAlpha: "0",
-  showYAxisValues: "0",
-  chartLeftMargin: "0",
-  chartRightMargin: "0",
-  canvasRightMargin: "0",
-  canvasLeftMargin: "0",
-  chartBottomMargin: "0",
-  canvasBottomMargin: "0",
-  chartTopMargin: "0",
-  canvasTopMargin: "0",
-  showValues: "0",
-  shadow: "0",
-  legendPadding: "0",
-  showShadow: "0",
-  paletteColors: "#3273DC",
-  drawAnchors: "0",
-  showAlternateHGridColor: "0",
-  crossLineColor: "#363636",
-  crossLineAlpha: "15",
-  drawCrossLineOnTop: "0",
-  usePlotGradientColor: "1",
-  plotFillAlpha: "15",
-  plotColorinTooltip: "0",
-  tooltipBorderAlpha: "0",
-  toolTipPadding: "0",
-  baseFontColor: "#205BBB",
-  baseFontSize: "15",
-  baseFont: "Nunito",
-  tooltipbgalpha: "0",
-  plotFillAngle: "90",
-  numberPrefix: "$",
-  plotToolText: "<b>$label: $dataValue</b>"
-}
-
-const nrChartConfig = {
-  type: "mscombi2d",
-  width: "500",
-  height: "200",
-  dataFormat: "json",
-  dataSource: {
-    chart: currencyChart,
-    categories: [{
-      category: valuationData
-    }],
-    dataset: [
-      {
-        renderAs: "spline",
-        lineThickness: "3",
-        alpha: "50",
-        data: valuationData
-      }, {
-        renderAs: "splinearea",
-        showPlotBorder: "0",
-        plotToolText: " ",
-        data: valuationData
-      }
-    ]
-  }
-};
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: 'rgb(26,27,47)',
-    color: 'grey'
-  },
-  // necessary for content to be below app bar
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(0),
-  },
-  padded: {
-    padding: theme.spacing(3),
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
-      width: 'auto',
-    },
-  },
-}));
+import "../styles/FormInvestor.css";
 
 export const Trash = () => {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [step, setStep] = useState(1);
+  const countries = countryList().getData();
+  const [loading, setLoading] = useState(false);
+  const [identity, setIdentity] = useState("Individual");
+  const [details, setDetails] = useState({
+    amountToAccredition: 10,
+    email: "",
+    howAccredited: 0,
+    linkedIn: "",
+    name: "",
+    number: 0,
+    percentageNetworth: 2,
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    bufferPhoto: null,
+    bufferResume: null,
+  });
+  const [photoCID, setphotoCID] = useState(null);
+  const [resumeCID, setresumeCID] = useState(null);
+  const [investorDetailsCID, setInvestorDetailsCID] = useState(null);
+
+  const [wallet, setWallet] = useState(null);
+  const handleConnectWallet = async () => {
+    const { wallet } = await connectWallet();
+    setWallet(wallet);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  useEffect(() => {
+    console.log(investorDetailsCID)
+    const investorSignup = async () => {
+      console.log(photoCID, resumeCID)
+      try {
+        await signupInvestor(investorDetailsCID);
+        alert("Transaction Confirmed! You are now an Accredited Investor");
+      } catch (error) {
+        alert("Transaction Failed:", error.message);
+      }
+
+      setLoading(false);
+
+    }
+    if (investorDetailsCID != null)
+      investorSignup();
+  }, [investorDetailsCID]);
+  useEffect(() => {
+    console.log(photoCID, resumeCID);
+
+    const uploadInvestorDetailsIpfs = async () => {
+      let investorData = {
+        amountToAccredition: 10,
+        email: details["email"],
+        howAccredited: details["howAccredited"],
+        linkedIn: details["linkedIn"],
+        name: details["name"],
+        number: details["number"],
+        percentageNetworth: details["percentageNetworth"],
+        photoCID: photoCID,
+        resumeCID: resumeCID
+      }
+      ipfs_mini.addJSON(investorData, (err, hash) => {
+        if (err)
+          console.error(err);
+        console.log("hash of JSON", hash);
+        setInvestorDetailsCID(hash);
+      });
+    }
+    if (photoCID != null && resumeCID != null)
+      uploadInvestorDetailsIpfs();
+
+  }, [photoCID, resumeCID])
+
+
+  function capturePhoto(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      setDetails({ ...details, bufferPhoto: Buffer(reader.result) })
+    }
+  }
+  function captureResume(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      setDetails({ ...details, bufferResume: Buffer(reader.result) })
+    }
+  }
+
+  function uploadPhoto() {
+    ipfs_api.files.add(details["bufferPhoto"], (error, result) => {
+      if (error) {
+        console.error(error)
+        return
+      }
+      setphotoCID(result[0].hash)
+    })
+  }
+  function uploadResume() {
+    ipfs_api.files.add(details["bufferResume"], (error, result) => {
+      if (error) {
+        console.error(error)
+        return
+      }
+      setresumeCID(result[0].hash)
+    })
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    await handleConnectWallet();
+    setLoading(true);
+    uploadPhoto();
+    uploadResume();
+  }
+
   return (
-    <>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar position="fixed" className={classes.appBar}>
-        </AppBar>
-        <Navbar />
-        <main className={classes.content}>
-
-          <NavFloating />
-
-          <div className='px-3'>
-
-            <div className='d-flex justify-content-around mb-3'>
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '17rem' }}>
-                <PeopleAltRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Employees Appointed</p>
-                  <h5 className='mb-0 font15 fw-bold'>8.02K</h5>
-                </div>
-
-              </div>
-
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '15rem' }}>
-                <AccountBalanceWalletRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Company Valuation</p>
-                  <h5 className='mb-0 font15 fw-bold'>1300 ꜩ</h5>
-                </div>
-
-              </div>
-
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '12rem' }}>
-                <TrendingUpRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Shares Issued</p>
-                  <h5 className='mb-0 font15 fw-bold'>1300 ꜩ</h5>
-                </div>
-
-              </div>
-
-              <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '11rem' }}>
-                <MonetizationOnIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                <div className='w-75'>
-                  <p className='mb-1 font13'>Stock Price</p>
-                  <h5 className='mb-0 font15 fw-bold'>9 ꜩ</h5>
-                </div>
-
-              </div>
-
-            </div>
-
-            <div className='d-flex align-items-center justify-content-around mb-1'>
-              <div className='bg-white shadow rounded15 pt-3' style={{ width: 'fit-content' }}>
-                <div className="px-3 d-flex justify-content-between">
-                  <div>
-                    <p className="text-secondary mb-1">Company Valuation</p>
-                    <h4>$149.7K</h4>
-                  </div>
-                  <div>
-                    <h4 className='text-danger'><ArrowDownwardRoundedIcon />2%</h4>
-                  </div>
-                </div>
-                <ReactFC {...nrChartConfig} />
-              </div>
-
-              <div className='ms-2' style={{ height: '340px',width:'fit-content', overflow: 'hidden' }}>
-                <ReactFC className='doughnut' {...doughnutConfigs} />
-              </div>
-            </div>
-
-
-            <div className='d-flex justify-content-around align-items-center'>
-
-              <div className='bg-white rounded15' style={{ width: '500px', cursor: 'pointer' }}>
-                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Recent Transactions</h6>
-                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
-                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                  <thead className='table-light'>
-                    <tr>
-                      <th scope="col"></th>
-                      <th scope="col">Account Holder</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody className='font13 text-secondary'>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Account Name</td>
-                      <td className='align-middle'>Mar 20, 2022</td>
-                      <td className='align-middle fw-bold text-black'><ArrowUpwardRoundedIcon className='color-credit me-2' />36,000 ꜩ</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Account Name</td>
-                      <td className='align-middle'>Mar 20, 2022</td>
-                      <td className='align-middle fw-bold text-black'><ArrowDownwardRoundedIcon className='color-debit me-2' />36,000 ꜩ</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Account Name</td>
-                      <td className='align-middle'>Mar 20, 2022</td>
-                      <td className='align-middle fw-bold text-black'><ArrowDownwardRoundedIcon className='color-debit me-2' />36,000 ꜩ</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className='rounded15' style={{ width: '400px', cursor: 'pointer' }}>
-                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Stocks Owned</h6>
-                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                  <thead className='table-light'>
-                    <tr>
-                      <th scope="col"></th>
-                      <th scope="col">Stakeholder</th>
-                      <th scope="col">Shares Owned</th>
-                      <th scope="col">Ownership</th>
-                    </tr>
-                  </thead>
-                  <tbody className='font13 text-secondary'>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                    </tr>
-
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                      </th>
-                      <td className='align-middle'>Company Name</td>
-                      <td className='align-middle'>2,000,000</td>
-                      <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-
-            </div>
+    <form onSubmit={handleSubmit}>
+      {/* Step 1 */}
+      <div className={"main " + `${step != 1 ? "hidden" : ""}`}>
+        <h1 className="title"> Step 1 of 3 : Accreditation </h1>
+        <p className="p1">
+          You must be an accredited investor to invest in AnglelList Venture
+        </p>
+        <div className="q1">
+          <p className="q">
+            Will you be investing money as an Individual, a Trust, or a Firm
+            or Fund ?
+          </p>
+          <div className="radio">
+            <label>
+              <input
+                type="radio"
+                className="me-2"
+                name="q1"
+                onClick={() => {
+                  setIdentity("Individual");
+                }}
+              />
+              Individual
+            </label>
+            <label>
+              <input
+                type="radio"
+                className="me-2"
+                name="q1"
+                onClick={() => {
+                  setIdentity("Trust");
+                }}
+              />
+              Trust
+            </label>
+            <label>
+              <input
+                type="radio"
+                className="me-2"
+                name="q1"
+                onClick={() => {
+                  setIdentity("Firm");
+                }}
+              />
+              Firm or Fund
+            </label>
           </div>
-
-
-
-          {/* <div className='d-flex align-items-start'>
-
-            <div id='walletImg' className='d-flex flex-column align-items-center justify-content-center' style={{ width: '20%' }}>
-              <img style={{ width: '70%', height: 'fit-content' }} src={walletImg} />
-              <h5 className='font13 fw-bold text-secondary'>Balance</h5>
-              <h5 className='fw-bold font-numbers'>36,000 ꜩ</h5>
+        </div>
+        {identity == "Individual" ? (
+          <>
+            <div className="q1">
+              <p className="q"> What is your full legal name ? </p>
+              <input
+                type="text"
+                className="input-text"
+                onChange={(e) =>
+                  setDetails({ ...details, name: e.target.value })
+                }
+                required
+              />
             </div>
-
-
-
-            <div id='stock-enteries' className='container rounded25 shadow-sm cardColorGreyish p-4 ms-0 mt-4' style={{ width: '50%' }}>
-              <h4 className='fw-bold'>Stocks</h4>
-              <div className='container'>
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-
-                <div className='row mb-2'>
-                  <div className='col-2'>
-                    <Avatar style={{ width: '30px', height: '30px' }} alt="Remy Sharp" src={appleLogo} />
-                  </div>
-                  <div className='col-4'>
-                    <p className='font13 fw-bold mb-0'>Foina Founder</p>
-                    <p className='font10 text-secondary'>Founder</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>2,000,000</p>
-                  </div>
-                  <div className='col-3'>
-                    <p className='font13 fw-bold mb-0'>25%</p>
-                  </div>
-                </div>
-              </div>
-
+            <div className="q2">
+              <p className="q"> Enter Your Phone Number </p>
+              <input
+                type="tel"
+                pattern="[0-9]{10}"
+                className="input-text"
+                onChange={(e) =>
+                  setDetails({ ...details, number: parseInt(e.target.value) })
+                }
+                required
+              />
             </div>
-
-            <div id='cap-table' className='container rounded25 shadow-sm background-cream p-4 ms-0' style={{ width: '40%' }}>
-              <h4 className='fw-bold'>Cap table</h4>
-              <div className='container p-0 bg-white my-3 d-flex rounded' style={{ height: '35px', overflow: 'hidden' }}>
-                <div id='founder-percent' className='h-100 background-darkBlue' style={{ width: '64.20%' }}></div>
-                <div id='employee-percent' className='h-100 background-chocolate' style={{ width: '23.76%' }}></div>
-                <div id='seriesA-percent' className='h-100 bg-black' style={{ width: '6.02%' }}></div>
-                <div id='seriesB-percent' className='h-100 bg-white' style={{ width: '6.02%' }}></div>
-              </div>
-              <div id='cap-table-enteries'>
-                <div className='container'>
-                  <div className='mb-3 px-4 d-flex justify-content-between text-secondary'>
-                    <span className='font10'>Authorized</span>
-                    <span className='font10'>Issued</span>
-                    <span className='font10'>Ownership</span>
-                  </div>
-                  <div className='mb-4'>
-                    <div className='d-flex align-items-center'>
-                      <div className='rounded background-darkBlue me-2' style={{ height: '15px', width: '15px' }}></div>
-                      <span className='fw-bold font15'>Founders</span>
-                    </div>
-                    <div className='d-flex justify-content-between my-1 px-4'>
-                      <span className='font13'>50,000,000</span>
-                      <span className='font13'>50,000,000</span>
-                      <span className='font13'>70.22%</span>
-                    </div>
-                  </div>
-
-                  <div className='mb-4'>
-                    <div className='d-flex align-items-center'>
-                      <div className='rounded background-chocolate me-2' style={{ height: '15px', width: '15px' }}></div>
-                      <span className='fw-bold font15'>Employees</span>
-                    </div>
-                    <div className='d-flex justify-content-between my-1 px-4'>
-                      <span className='font13'>30,000,000</span>
-                      <span className='font13'>10,000,000</span>
-                      <span className='font13'>23.76%</span>
-                    </div>
-                  </div>
-
-                </div>
+            <div className="q2">
+              <p className="q"> Enter Your Email Id </p>
+              <input
+                type="email"
+                className="input-text"
+                onChange={(e) =>
+                  setDetails({ ...details, email: e.target.value })
+                }
+                required
+              />
+            </div>
+            <div>
+              <p className="q"> Profile Picture </p>
+              <input type="file" onChange={capturePhoto} required />
+            </div>
+            <div>
+              <p className="q"> Resume </p>
+              <input type="file" onChange={captureResume} required />
+            </div>
+            <div className="q3">
+              <p className="q"> Where is your legal place of Residence ? </p>
+              <Select isSearchable options={countries} className="select" />
+            </div>
+            <div className="q4">
+              <p className="q"> How are you accredited ? </p>
+              <div className="radio">
+                <label>
+                  <input
+                    type="radio"
+                    className="me-2"
+                    name="q4"
+                  />
+                  I have atleast 500k Tez in investments
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className="me-2"
+                    name="q4"
+                  />
+                  I have between 220k to 500k Tez in net assets
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className="me-2"
+                    name="q4"
+                  />
+                  I have between 100k to 200k Tez in net assets
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className="me-2"
+                    name="q4"
+                  />
+                  I have income of 200k Tez( or 300k Tez jointly with spouse) for
+                  the past 2 years and expect the same for this year
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className="me-2"
+                    name="q4"
+                  />
+                  I am Series 7, Series65, or Series 82 holder and my license
+                  is active and in good standing
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    className="me-2"
+                    name="q4"
+                  />
+                  I am not accredited yet
+                </label>
               </div>
             </div>
-
-          </div>
-
-          <div id='recent-transaction' className='shadow-sm container mt-3 ms-0 rounded25 px-5 py-2' style={{ width: '80%', backgroundColor: 'rgb(177 248 232 / 25%)', height: '295px', cursor: 'pointer', overflow: 'hidden' }}>
-            <h6 className='fw-bold pt-3 mb-4 pb-2'>Recent Investments</h6>
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+          </>
+        ) : identity == "Trust" ? (
+          <>
+            <div className="q2">
+              <p className="q"> What is your trust 's legal name?</p>
+              <input
+                type="text"
+                className="input-text"
+                onChange={(e) =>
+                  setDetails({ ...details, name: e.target.value })
+                }
+              />
+            </div>
+            <div className="q3">
+              <p className="q"> Where is your trust located ? </p>
+              <Select isSearchable options={countries} className="select" />
+            </div>
+            <div className="q4">
+              <p className="q"> Is your trust revocable ? </p>
+              <div className="radio">
+                <label>
+                  <input type="radio" name="q4" /> Yes, revocable
+                </label>
+                <label>
+                  <input type="radio" name="q4" /> No, revocable
+                </label>
               </div>
             </div>
-
-            <Divider className='mt-2 mb-3' />
-
-
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
-              </div>
-            </div>
-
-            <Divider className='mt-2 mb-3' />
-
-
-            <div className='row align-items-center'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+            <div className="q5">
+              <p className="q"> How is your trust accredited ? </p>
+              <div className="radio">
+                <label>
+                  <input
+                    type="radio"
+                    name="q5"
+                  />
+                  The trust has over $25M in investments
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="q5"
+                  />
+                  The trust has over $5M in net assets
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="q5"
+                  />
+                  None of the above
+                </label>
               </div>
             </div>
-
-            <Divider className='mt-2 mb-3' />
-
-            <div className='row'>
-              <div className='col-1'>
-                <Avatar alt="Remy Sharp" src={appleLogo} />
-              </div>
-              <div className='col-3'>
-                <p className='font13 fw-bold mb-0'>Figma Pro Plan</p>
-                <p className='font13 text-secondary'>SAFE</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>Mar 20, 2022</p>
-              </div>
-              <div className='col-3'>
-                <p className='font15 fw-bold'>1300 ꜩ</p>
-              </div>
-              <div className='col-2'>
-                <Chip className='fw-bold' style={{ fontSize: '12px', backgroundColor: '#90ee90' }} label="Success" />
+          </>
+        ) : identity == "Firm" ? (
+          <>
+            <div className="q2">
+              <p className="q">
+                What is your firm 's or fund' s legal name ?
+              </p>
+              <input
+                type="text"
+                className="input-text"
+                onChange={(e) =>
+                  setDetails({ ...details, name: e.target.value })
+                }
+              />
+            </div>
+            <div className="q3">
+              <p className="q"> Where is your firm or fund located ? </p>
+              <Select isSearchable options={countries} className="select" />
+            </div>
+            <div className="q4">
+              <p className="q"> How is your firm / fund accredited ? </p>
+              <div className="radio">
+                <label>
+                  <input
+                    type="radio"
+                    name="q4"
+                  />
+                  The investing entity has over $25M in investments
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="q4"
+                  />
+                  The investing entity has between $5M and $25M in net assets
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="q4"
+                  />
+                  All the owners of the investing enituty are qualified
+                  purchasers
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="q4"
+                  />
+                  All the owners of the investing enituty are individually
+                  accredited
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="q4"
+                  />
+                  The investing entity is a state or SEC registered investment
+                  adviser or any exempt reporting adviser
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="q4"
+                  />
+                  None of the above
+                </label>
               </div>
             </div>
-
-            <Divider className='mt-2 mb-3' />
-          </div> */}
-
-        </main>
+          </>
+        ) : null}
+        <Button
+          className="continue mt-3 mb-4"
+          variant="contained"
+          color="primary"
+          type="button"
+          onClick={() => {
+            console.log(details);
+            setStep(2);
+          }}
+        >
+          Continue
+        </Button>
       </div>
-    </>
-  )
-}
+      {/* Step 2 */}
+      <div className={"main " + `${step != 2 ? "hidden" : ""}`}>
+        <h1 className="title"> Step 2 of 3 : Investment Goals </h1>
+        <p className="p1">
+          Tell us more about why you want to invest on AngelList Venture
+        </p>
+        <div className="q1">
+          <p className="q">
+            Which of the following investment strategies(or products) best
+            match your preferences ?
+          </p>
+          <div className="radio">
+            <label>
+              <input className="me-2" type="checkbox" name="q1" />
+              Picking Companies...
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q1" />
+              Investing in funds....
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q1" />
+              Investing behind.....
+            </label>
+          </div>
+        </div>
+        <div className="q2">
+          <p className="q">
+            How much are you hoping to allocate( in Tez) to startups using
+            AngelList Venture over the next 12 months ?
+          </p>
+          <div className="radio">
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q2"
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    howAccredited: 1,
+                  })
+                }
+              />
+              Up to 20, 000
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q2"
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    howAccredited: 2,
+                  })
+                }
+              />
+              Up to 50,000
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q2"
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    howAccredited: 3,
+                  })
+                }
+              />
+              Up to 100,000
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q2"
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    howAccredited: 4,
+                  })
+                }
+              />
+              Up to 250,000
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q2"
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    howAccredited: 5,
+                  })
+                }
+              />
+              Up to 500, 000
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q2"
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    howAccredited: 6,
+                  })
+                }
+              />
+              More than 500,000
+            </label>
+          </div>
+        </div>
+        <div className="q3">
+          <p className="q">
+            What percentage of your net - worth do you want to allocate to
+            investing in startups ?
+          </p>
+          <div className="radio">
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q3"
+                onChange={(e) =>
+                  setDetails({ ...details, percentageNetworth: 1 })
+                }
+              />
+              Up to 5 %
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q3"
+                onChange={(e) =>
+                  setDetails({ ...details, percentageNetworth: 2 })
+                }
+              />
+              Up to 10 %
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q3"
+                onChange={(e) =>
+                  setDetails({ ...details, percentageNetworth: 3 })
+                }
+              />
+              Up to 15 %
+            </label>
+            <label>
+              <input
+                className="me-2"
+                type="radio"
+                name="q3"
+                onChange={(e) =>
+                  setDetails({
+                    ...details,
+                    percentageNetworth: 4,
+                  })
+                }
+              />
+              More than % 15
+            </label>
+          </div>
+        </div>
+        <div className="q4">
+          <p className="q">
+            What are your main reasons for choosing AngelList Venture ?
+          </p>
+          <div className="radio">
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Generating financial...
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Meeting new people....
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Accessing dealflow.....
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Learing more.....
+            </label>
+          </div>
+        </div>
+        <div className="q5">
+          <p className="q"> How are you hoping to use AngelList Venture ? </p>
+          <textarea
+            id="q"
+            className="input-text"
+            style={{ width: "650px" }}
+            rows="3"
+          />
+        </div>
+        <div className="d-flex justify-content-between w-50">
+          <Button
+            className="continue my-2"
+            variant="contained"
+            color="primary"
+            type="button"
+            onClick={() => {
+              setStep(1);
+            }}
+          >
+            Back
+          </Button>
+          <Button
+            className="continue my-2"
+            variant="contained"
+            color="primary"
+            type="button"
+            onClick={() => {
+              setStep(3);
+            }}
+          >
+            Continue
+          </Button>
+        </div>
+      </div>
+      {/* Step 3 */}
+      <div className={"main " + `${step != 3 ? "hidden" : ""}`}>
+        <h1 className="title"> Step 3 of 3 : Past Experience </h1>
+        <p className="p1">
+          Yours goals and past experience can help unlock access to investment
+          opportunities
+        </p>
+        <div className="q1">
+          <p className="q"> LinkedIn Profile </p>
+          <input
+            type="text"
+            className="input-text"
+            onChange={(e) =>
+              setDetails({ ...details, linkedIn: e.target.value })
+            }
+          />
+        </div>
+        <div className="q2">
+          <p className="q">
+            What is your experience in investing in venture - backed tech
+            startups or venture capital funds ?
+          </p>
+          <div className="radio">
+            <label>
+              <input className="me-2" type="checkbox" name="q2" />I invested in a...
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q2" />I invested in ...
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q2" />I work or worked.....
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q2" />I represent or
+              represented.....
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q2" />
+              None of the above
+            </label>
+          </div>
+        </div>
+        <div className="q3">
+          <p className="q">
+            What is your experience working with tech startups ?
+          </p>
+          <div className="radio">
+            <label>
+              <input className="me-2" type="checkbox" name="q3" />I work or...
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q3" />I advise..
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q3" />I am or.....
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q3" />
+              None of the above
+            </label>
+          </div>
+        </div>
+        <div className="q4">
+          <p className="q"> How did you hear about AngelList Venture ? </p>
+          <div className="radio">
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Google Search
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Newsletter / Media Sites
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Twitter
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Friend or Connection
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              AngelList Syndicate Lead or Fund Manager
+            </label>
+            <label>
+              <input className="me-2" type="checkbox" name="q4" />
+              Others
+            </label>
+          </div>
+        </div>
+        <div className="q5">
+          <p className="q">
+            Please carefully review the information below before submitting
+            your application.
+          </p>
+          <ol>
+            <li> I understand that.. </li> <li> I understand that.. </li>
+            <li> I promise to.. </li> <li> If I invest, I.. </li>
+            <li> I understand that.. </li>
+            <li> I declare that I am the resident of India.. </li>
+          </ol>
+          <label>
+            <input className="me-2" type="checkbox" name="q4" />I agree to the terms and
+            conditions, as well as the terms above.
+          </label>
+        </div>
+        <div className="w-50 d-flex justify-content-between my-3">
+          <Button
+            className="continue"
+            variant="contained"
+            color="primary"
+            type="button"
+            onClick={() => {
+              setStep(2);
+            }}
+          >
+            Back
+          </Button>
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            {loading === true ? "Loading..." : "Submit Form"}
+          </Button>
+        </div>
+      </div>
+    </form>
+  );
+};
