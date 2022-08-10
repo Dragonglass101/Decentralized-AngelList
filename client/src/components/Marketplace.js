@@ -38,7 +38,7 @@ import small_devils_logo from '../images/logo/small_devils_logo.png'
 
 import { Button } from '@material-ui/core';
 
-export const Home = () => {
+export const Marketplace = () => {
 
     const navigate = useNavigate();
     const [connectAndLogin, setconnectAndLogin] = useState(false);
@@ -96,7 +96,7 @@ export const Home = () => {
             <nav className='d-flex justify-content-between align-items-center shadow rounded15 px-3' style={{ height: '70px', marginBottom: '30px' }}>
                 <div className='d-flex align-items-center justify-content-start'>
                     <img src={small_devils_logo} style={{ width: '48px' }} />
-                    <span className='pt-3 ms-3 fw-bold' style={{ fontFamily: 'devils_lairs_font', fontSize: '40px', alignSelf: 'flex-end' }}>Devils List</span>
+                    <span className='pt-3 ms-3 fw-bold' style={{ fontFamily: 'devils_lairs_font', fontSize: '40px', alignSelf: 'flex-end' }}>Devils Marketplace</span>
                 </div>
                 {/* <span className='font15 ms-5 ps-5 fw-bold'>Dashboard</span> */}
                 <div className='d-flex align-items-center w-50 justify-content-between'>

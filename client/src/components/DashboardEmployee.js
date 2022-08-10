@@ -29,6 +29,9 @@ import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import PaymentIcon from '@material-ui/icons/Payment';
+import MonetizationOn from '@material-ui/icons/MonetizationOn';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 //Transaction Debit/credit/pending
 import SyncProblemIcon from '@material-ui/icons/SyncProblem';
@@ -84,8 +87,8 @@ const chartData = [
 // Create a JSON object to store the chart configurations
 const doughnutConfigs = {
     type: "doughnut2d", // The chart type
-    width: "400", // Width of the chart
-    height: "400", // Height of the chart
+    width: "360", // Width of the chart
+    height: "360", // Height of the chart
     dataFormat: "json", // Data type
     dataSource: {
         // Chart Configuration
@@ -100,7 +103,7 @@ const doughnutConfigs = {
             centerLabel: "$label: $value",
             centerLabelBold: "1",
             enableSmartLabels: "0",
-            showLegend: '0',
+            showLegend: '1',
             // doughnutRadius:'85',
             // showTooltip: "0",
             // showPercentValues: "1",
@@ -115,22 +118,6 @@ const doughnutConfigs = {
         data: chartData
     }
 };
-
-const lineChart = {
-    "caption": "Company Valuation Graph",
-    // "subcaption": "Last year",
-    "yaxisname": "Valuation",
-    "xaxisname": "Date",
-    "yaxisminValue": "800",
-    "yaxismaxValue": "1400",
-    "pixelsPerPoint": "0",
-    "pixelsPerLabel": "30",
-    "lineThickness": "1",
-    "compactdatamode": "1",
-    "dataseparator": "|",
-    "labelHeight": "30",
-    "theme": "fusion"
-}
 
 const valuationData = [
     {
@@ -214,8 +201,8 @@ const currencyChart = {
 
 const nrChartConfig = {
     type: "mscombi2d",
-    width: "700",
-    height: "300",
+    width: "100%",
+    // height: "200",
     dataFormat: "json",
     dataSource: {
         chart: currencyChart,
@@ -295,6 +282,56 @@ export const DashboardEmployee = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const series = [ //data on the y-axis
+        {
+            name: "Temperature in Celsius",
+            data: [4132, 4124, 3153, 5323, 5123, 4444, 6532, 7555, 6488, 7690, 3000, 2345]
+        }
+    ];
+    const options = { //data on the x-axis
+        series: [{
+            name: 'Website Blog',
+            type: 'column',
+            data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
+        },
+        {
+            name: 'Social Media',
+            type: 'line',
+            data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
+        }],
+        chart: {
+            height: 350,
+            type: 'line',
+        },
+        stroke: {
+            width: [0, 4]
+        },
+        // title: {
+        //   text: 'Traffic Sources'
+        // },
+        dataLabels: {
+            enabled: true,
+            enabledOnSeries: [1]
+        },
+        labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
+        xaxis: {
+            type: 'datetime'
+        },
+        yaxis: [{
+            title: {
+                text: 'Website Blog',
+            },
+
+        },
+            // {
+            //   opposite: true,
+            //   title: {
+            //     text: 'Social Media'
+            //   }
+            // }
+        ]
+    };
     return (
         <>
             <div className={classes.root}>
@@ -307,124 +344,92 @@ export const DashboardEmployee = () => {
                     <NavFloating />
 
                     <div className='px-3'>
-
-                    <h4 className='text-center my-3'>Company Name</h4>
-
-                        <div className='d-flex justify-content-around mb-3'>
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '17rem' }}>
-                                <PeopleAltRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Monthly Stipend</p>
-                                    <h5 className='mb-0 font15 fw-bold'>1300 ꜩ</h5>
-                                </div>
-
-                            </div>
-
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '15rem' }}>
-                                <AccountBalanceWalletRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Company Valuation</p>
-                                    <h5 className='mb-0 font15 fw-bold'>1300 ꜩ</h5>
-                                </div>
-
-                            </div>
-
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '12rem' }}>
-                                <TrendingUpRoundedIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Shares Owned</p>
-                                    <h5 className='mb-0 font15 fw-bold'>5.3 K</h5>
-                                </div>
-
-                            </div>
-
-                            <div className="shadow-sm color-purple-border sidebar-background p-2 d-flex align-items-center justify-content-between" style={{ width: '11rem' }}>
-                                <MonetizationOnIcon style={{ fontSize: '40px', color: 'linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)' }} className='w-25 color-chat-request me-3' />
-                                <div className='w-75'>
-                                    <p className='mb-1 font13'>Stock Price</p>
-                                    <h5 className='mb-0 font15 fw-bold'>9 ꜩ</h5>
-                                </div>
-
-                            </div>
-
-                        </div>
-                        
-                        <div className='d-flex align-items-center justify-content-around mb-1'>
-                            <div className='bg-white shadow rounded15 pt-3' style={{ width: 'fit-content' }}>
-                                <div className="px-3 d-flex justify-content-between">
-                                    <div>
-                                        <p className="text-secondary mb-1">Company Valuation</p>
-                                        <h4>$149.7K</h4>
-                                    </div>
-                                    <div>
-                                        <h4 className='text-danger'><ArrowDownwardRoundedIcon />2%</h4>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <div className='bg-white rounded shadow d-flex justify-content-around p-3' style={{ width: '32%' }}>
+                                <div className='w-25'>
+                                    <div className='d-flex justify-content-center align-items-center' style={{ width: '48px', height: '48px', backgroundColor: 'rgba(64,81,137,0.1)', borderRadius: '50%' }}>
+                                        <MonetizationOn style={{ color: 'rgba(64,81,137,1)' }} />
                                     </div>
                                 </div>
-                                <ReactFC {...nrChartConfig} />
+                                <div className='w-50'>
+                                    <p className='my-1 font13 fw-bold text-secondary'>TOTAL INVESTED</p>
+                                    <h6 className='fw-bold mb-0'>$ 19,523.25</h6>
+                                </div>
+                                <div className='w-25' style={{ alignSelf: 'flex-end' }}>
+                                    <div className='py-1 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                        <KeyboardArrowUpIcon className='font15' />
+                                        <span className='fw-bold font10' style={{}}>6.24%</span>
+                                    </div>
+                                </div>
                             </div>
 
-                        </div>
+                            <div className='bg-white rounded shadow d-flex justify-content-around p-3' style={{ width: '32%' }}>
+                                <div className='w-25'>
+                                    <div className='d-flex justify-content-center align-items-center' style={{ width: '48px', height: '48px', backgroundColor: 'rgba(64,81,137,0.1)', borderRadius: '50%' }}>
+                                        <MonetizationOn style={{ color: 'rgba(64,81,137,1)' }} />
+                                    </div>
+                                </div>
+                                <div className='w-50'>
+                                    <p className='my-1 font13 fw-bold text-secondary'>TOTAL CHANGE</p>
+                                    <h6 className='fw-bold mb-0'>$ 19,523.25</h6>
+                                </div>
+                                <div className='w-25' style={{ alignSelf: 'flex-end' }}>
+                                    <div className='py-1 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                        <KeyboardArrowUpIcon className='font15' />
+                                        <span className='fw-bold font10' style={{}}>6.24%</span>
+                                    </div>
+                                </div>
+                            </div>
 
-
-                        <div className='d-flex justify-content-around align-items-center'>
-
-                        <div className='d-flex mt-2 justify-content-center'>
-                            <div className='bg-white rounded15' style={{ cursor: 'pointer' }}>
-                                <h6 className='fw-bold shadow-sm py-3 m-0 text-center banner'>Cap Table</h6>
-                                {/* <h6 className='fw-bold mb-3 pb-2 ms-3'>Recent Transactions</h6> */}
-                                <table className="table shadow-sm pb-0 mb-0 sidebar-color" style={{ overflow: 'hidden', height: '200px', borderRadius: '0px 0px 17px 17px' }}>
-                                    <thead className='table-light'>
-                                        <tr>
-                                            <th scope="col"></th>
-                                            <th scope="col">Stakeholder</th>
-                                            <th scope="col">Common Shares</th>
-                                            <th scope="col">Common Options</th>
-                                            <th scope="col">Preferred Shares</th>
-                                            <th scope="col">Total Shares</th>
-                                            <th scope="col">Ownership</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className='font13 text-secondary'>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Company Name</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle sidebar-color'>2,000,000</td>
-                                            <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Company Name</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle sidebar-color'>2,000,000</td>
-                                            <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} />
-                                            </th>
-                                            <td className='align-middle'>Company Name</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle'>2,000,000</td>
-                                            <td className='align-middle sidebar-color'>2,000,000</td>
-                                            <td className='align-middle fw-bold sidebar-color'><DataUsageRoundedIcon className='me-2' />25%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div className='bg-white rounded shadow d-flex justify-content-around p-3' style={{ width: '32%' }}>
+                                <div className='w-25'>
+                                    <div className='d-flex justify-content-center align-items-center' style={{ width: '48px', height: '48px', backgroundColor: 'rgba(64,81,137,0.1)', borderRadius: '50%' }}>
+                                        <MonetizationOn style={{ color: 'rgba(64,81,137,1)' }} />
+                                    </div>
+                                </div>
+                                <div className='w-50'>
+                                    <p className='my-1 font13 fw-bold text-secondary'>DAY CHANGE</p>
+                                    <h6 className='fw-bold mb-0'>$ 19,523.25</h6>
+                                </div>
+                                <div className='w-25' style={{ alignSelf: 'flex-end' }}>
+                                    <div className='py-1 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(240,101,72,.1)', color: 'rgba(240,101,72,1)' }}>
+                                        <KeyboardArrowDownIcon className='font15' />
+                                        <span className='fw-bold font10' style={{}}>6.24%</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
+                        <div className='d-flex my-5 justify-content-between'>
+                            <div className='p-3 bg-white shadow' style={{ width: '60%' }}>
+                                <h5>Revenue</h5>
+                                <div className='d-flex align-items-center my-3 bg-light'>
+                                    <div className='w-25 text-center border p-2'>
+                                        <h5 className='m-0 font15 fw-bold'>7,585</h5>
+                                        <p className='m-0 text-secondary'>Orders</p>
+                                    </div>
+                                    <div className='w-25 text-center border p-2'>
+                                        <h5 className='m-0 font15 fw-bold'>$22.89k</h5>
+                                        <p className='m-0 text-secondary'>Earnings</p>
+                                    </div>
+                                    <div className='w-25 text-center border p-2'>
+                                        <h5 className='m-0 font15 fw-bold'>367</h5>
+                                        <p className='m-0 text-secondary'>Funds</p>
+                                    </div>
+                                    <div className='w-25 text-center border p-2'>
+                                        <h5 className='m-0 font15 fw-bold'>18.92%</h5>
+                                        <p className='m-0 text-secondary'>Conversation Ratio</p>
+                                    </div>
+                                </div>
+                                <ReactFC style={{ backgroundColor: 'white' }} {...nrChartConfig} />
+                            </div>
 
+                            <div className='bg-white p-3 shadow'>
+                                <h5 className='mb-5'>Store visited by source</h5>
+                                <ReactFC className='doughnut' style={{ backgroundColor: 'white' }} {...doughnutConfigs} />
+                            </div>
                         </div>
+
                     </div>
 
                 </main>
