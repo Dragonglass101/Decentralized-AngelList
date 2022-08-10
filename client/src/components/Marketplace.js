@@ -38,7 +38,7 @@ import small_devils_logo from '../images/logo/small_devils_logo.png'
 
 import { Button } from '@material-ui/core';
 
-export const Home = () => {
+export const Marketplace = () => {
 
     const navigate = useNavigate();
     const [connectAndLogin, setconnectAndLogin] = useState(false);
@@ -96,7 +96,7 @@ export const Home = () => {
             <nav className='d-flex justify-content-between align-items-center shadow rounded15 px-3' style={{ height: '70px', marginBottom: '30px' }}>
                 <div className='d-flex align-items-center justify-content-start'>
                     <img src={small_devils_logo} style={{ width: '48px' }} />
-                    <span className='pt-3 ms-3 fw-bold' style={{ fontFamily: 'devils_lairs_font', fontSize: '40px', alignSelf: 'flex-end' }}>Devils List</span>
+                    <span className='pt-3 ms-3 fw-bold' style={{ fontFamily: 'devils_lairs_font', fontSize: '40px', alignSelf: 'flex-end' }}>Devils Marketplace</span>
                 </div>
                 {/* <span className='font15 ms-5 ps-5 fw-bold'>Dashboard</span> */}
                 <div className='d-flex align-items-center w-50 justify-content-between'>
@@ -119,13 +119,13 @@ export const Home = () => {
                 </div>
             </nav>
 
-            <div className="p-5 mb-4 mx-5 background-light-purple rounded-3 d-flex">
-                <div className="container-fluid py-4" style={{ width: '55%' }}>
-                    <h1 className="display-5 fw-bold mb-3">Invest in world-changing startups</h1>
-                    <p className="col-md-8 fs-4 p-0 mb-5">Join leading investors funding the next wave of world-changing startups.</p>
-                    <button className="btn button-purple text-white btn-lg" type="button">Invest Now</button>
+            <div class="p-5 mb-4 mx-5 background-light-purple rounded-3 d-flex">
+                <div class="container-fluid py-4" style={{ width: '55%' }}>
+                    <h1 class="display-5 fw-bold mb-3">Invest in world-changing startups</h1>
+                    <p class="col-md-8 fs-4 p-0 mb-5">Join leading investors funding the next wave of world-changing startups.</p>
+                    <button class="btn button-purple text-white btn-lg" type="button">Invest Now</button>
                 </div>
-                <div className="container-fluid py-4" style={{ width: '45%' }}>
+                <div class="container-fluid py-4" style={{ width: '45%' }}>
                     <img className='w-100' src={devils_logo_img} />
                     {/* <img className='w-100' src={devils_logo_svg} /> */}
                 </div>
