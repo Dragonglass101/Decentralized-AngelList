@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import countryList from "react-select-country-list";
 import Select from "react-select";
 import Button from '@material-ui/core/Button';
@@ -33,8 +33,6 @@ export const FormInvestor = () => {
   const [resumeCID, setresumeCID] = useState(null);
   const [investorDetailsCID, setInvestorDetailsCID] = useState(null);
 
-  const navigate = useNavigate();
-
   const [wallet, setWallet] = useState(null);
   const handleConnectWallet = async () => {
     const { wallet } = await connectWallet();
@@ -47,7 +45,7 @@ export const FormInvestor = () => {
         console.log(photoCID, resumeCID)
         try{
           await signupInvestor(investorDetailsCID);
-          navigate("/dashboard-investor")
+          alert("Transaction Confirmed! You are now an Accredited Investor");
         }catch(error){
           alert("Transaction Failed:", error.message);
         }

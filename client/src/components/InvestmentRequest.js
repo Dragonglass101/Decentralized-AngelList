@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 
-import Navbar from './CompanyNavbar';
+import InvestorNavbar from './InvestorNavbar';
 import NavFloating from './NavFloating';
-
 
 import { getActiveAccount } from '../utils/wallet';
 
@@ -74,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const InvestmentRequest = () => {
   const classes = useStyles();
-  const companyBigMapID = 71727;
-  const investorBigMapID = 71729;
+  const companyBigMapID = 74523;
+  const investorBigMapID = 74527;
 
   const [wallet, setWallet] = useState(null);
   const [loading, setloading] = useState(false);
@@ -116,29 +115,32 @@ export const InvestmentRequest = () => {
     for (let companyAddress of storage["all_companies"]) {
       const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
       console.log(companyDetails);
+      const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyDetails.value["company_profile_Id"]}`);
+      const investmentDetails = (companyDetails.value["investor_requests"]);
       if (companyDetails.value["request_accepted"] && companyDetails.value["investor_accepted"] === wallet.address) {
-        const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyDetails.value["company_profile_Id"]}`);
-        const investmentDetails = (companyDetails.value["request_from_investor"])[wallet.address];
-        tempElements.push(
-          <>
-            <ToggleButton 
-              onClick={() => { setcurrCompany(companyAddress); handleShowAgreement(companyJSON.name, investmentDetails.type, investmentDetails.ownership, investmentDetails.valuation_cap, investmentDetails.investment) }}
-              value="chat1" aria-label="chat1" style={{ textTransform: 'capitalize', border: '0px' }}>
-                <div className='' style={{ width: '25%' }}>
-                  <Avatar />
-                </div>
-                <div className='text-start' style={{ width: '58%' }}>
-                  <h6 className='m-0 text-black'>{companyJSON.name}</h6>
-                  <span className='text-secondary font13'>{investmentDetails.investment} ꜩ</span>
-                </div>
-                <div className='text-end' style={{ width: '17%' }}>
-                  <span className='text-secondary font13'>25Jul</span>
-                </div>
-              </ToggleButton>
+        for(let request of investmentDetails){
+          console.log(request);
+          tempElements.push(
+            <>
+              <ToggleButton 
+                onClick={() => { setcurrCompany(companyAddress); handleShowAgreement(companyJSON.name, request.type, request.ownership, request.valuation_cap, request.investment) }}
+                value="chat1" aria-label="chat1" style={{ textTransform: 'capitalize', border: '0px' }}>
+                  <div className='' style={{ width: '25%' }}>
+                    <Avatar />
+                  </div>
+                  <div className='text-start' style={{ width: '58%' }}>
+                    <h6 className='m-0 text-black'>{companyJSON.name}</h6>
+                    <span className='text-secondary font13'>{request.investment} ꜩ</span>
+                  </div>
+                  <div className='text-end' style={{ width: '17%' }}>
+                    <span className='text-secondary font13'>25Jul</span>
+                  </div>
+                </ToggleButton>
 
-              <Divider />
-          </>
-        )
+                <Divider />
+            </>
+          )
+        }
       }
     }
     setpendingList(tempElements);
@@ -180,7 +182,7 @@ export const InvestmentRequest = () => {
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
         </AppBar>
-        <Navbar />
+        <InvestorNavbar />
         <main className={classes.content}>
 
           <NavFloating />
@@ -200,20 +202,7 @@ export const InvestmentRequest = () => {
                 </div>
                 <div className='container p-0 shadow mt-4 rounded15' style={{ overflowY: 'auto', overflowX: 'hidden', height: '380px' }}>
                   <ToggleButtonGroup className='w-100' orientation="vertical" value={view} exclusive onChange={handleChange} style={{ textTransform: 'capitalize', border: '0px' }}>
-                    <ToggleButton value="chat3" aria-label="chat3" style={{ textTransform: 'capitalize', border: '0px' }}>
-                      <div className='' style={{ width: '25%' }}>
-                        <Avatar />
-                      </div>
-                      <div className='text-start' style={{ width: '58%' }}>
-                        <h6 className='m-0 text-black'>Harry Poters</h6>
-                        <span className='text-secondary font13'>1300 ꜩ</span>
-                      </div>
-                      <div className='text-end' style={{ width: '17%' }}>
-                        <span className='text-secondary font13'>25Jul</span>
-                      </div>
-                    </ToggleButton>
-
-                    <Divider />
+                    {pendingList}
                   </ToggleButtonGroup>
                 </div>
               </div>
