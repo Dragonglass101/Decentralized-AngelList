@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { getRootStorage } from '../utils/Api';
 import { getActiveAccount, connectWallet } from '../utils/wallet';
@@ -9,6 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import SearchIcon from '@material-ui/icons/Search';
 
+import stock1 from '../images/stocks/stock1.png'
+import stock2 from '../images/stocks/stock2.png'
+import stock3 from '../images/stocks/stock3.png'
+
 import img1 from '../images/home/end_minus_5.png';
 import img2 from '../images/home/end_minus_4.png';
 import img3 from '../images/home/end_minus_3.png';
@@ -16,6 +20,8 @@ import img4 from '../images/home/end_minus_2.png';
 import img5 from '../images/home/end_minus_1.png';
 import img6 from '../images/home/end.png';
 import img7 from '../images/home/end_plus_1.png';
+import angellist_abstract from '../images/stocks/angellist_abstract.png'
+
 import angellist_logo from '../images/home/angellist_logo.png'
 import devils_logo_img from '../images/logo/devils_logo_800px_trans.png'
 import devils_logo_svg from '../images/logo/devils_logo.svg'
@@ -31,46 +37,46 @@ export const Home = () => {
 
     const [wallet, setWallet] = useState(null);
     useEffect(() => {
-        if(wallet){
+        if (wallet) {
             setconnectAndLogin(true);
         }
         (async () => {
-          const activeAccount = await getActiveAccount();
-          setWallet(activeAccount);
+            const activeAccount = await getActiveAccount();
+            setWallet(activeAccount);
         })();
-      }, []);
+    }, []);
 
-      useEffect(() => {
+    useEffect(() => {
         const connectAndLoginFun = async () => {
             const storage = await getRootStorage();
 
-            for( let companyAddress of storage["all_companies"]){
+            for (let companyAddress of storage["all_companies"]) {
                 console.log(wallet.address, companyAddress)
-                if(wallet.address === companyAddress)
+                if (wallet.address === companyAddress)
                     navigate("/dashboard-company", true);
             }
-            for( let investorAddress of storage["all_investors"]){
+            for (let investorAddress of storage["all_investors"]) {
                 console.log(wallet.address, investorAddress)
-                if(wallet.address === investorAddress)
+                if (wallet.address === investorAddress)
                     navigate("/dashboard-investor");
             }
-            for( let employeeAddress of storage["all_employee"]){
+            for (let employeeAddress of storage["all_employee"]) {
                 console.log(wallet.address, employeeAddress)
-                if(wallet.address === employeeAddress)
+                if (wallet.address === employeeAddress)
                     navigate("/dashboard-company");
             }
         }
-        if(wallet && connectAndLogin)
+        if (wallet && connectAndLogin)
             connectAndLoginFun()
-      }, [wallet, connectAndLogin]);
-    
+    }, [wallet, connectAndLogin]);
+
     const handleConnectWallet = async () => {
         const { wallet } = await connectWallet();
         setWallet(wallet);
     };
 
-    async function handleLogin(){
-        if(!wallet){
+    async function handleLogin() {
+        if (!wallet) {
             await handleConnectWallet();
             setconnectAndLogin(true);
         }
@@ -81,16 +87,16 @@ export const Home = () => {
         <>
             <nav className='d-flex justify-content-between align-items-center shadow rounded15 px-3' style={{ height: '70px', marginBottom: '30px' }}>
                 <div className='d-flex align-items-center justify-content-start'>
-                    <img src={small_devils_logo} style={{width:'48px'}}/>
+                    <img src={small_devils_logo} style={{ width: '48px' }} />
                     <span className='pt-3 ms-3 fw-bold' style={{ fontFamily: 'devils_lairs_font', fontSize: '40px', alignSelf: 'flex-end' }}>Devils List</span>
                 </div>
                 {/* <span className='font15 ms-5 ps-5 fw-bold'>Dashboard</span> */}
                 <div className='d-flex align-items-center w-50 justify-content-between'>
-                    <span className='btn'>For Investors</span>
+                    {/* <span className='btn'>For Investors</span>
                     <span className='btn'>For Fund Managers</span>
                     <span className='btn'>For Founders</span>
                     <span className='btn'>Company</span>
-                    <span className='btn'>Help</span>
+                    <span className='btn'>Help</span> */}
                 </div>
 
                 <div className='d-flex justify-content-between align-items-center'>
@@ -139,7 +145,21 @@ export const Home = () => {
                 </div>
             </div>
 
-            <div className='container'>
+            <div class="ps-5 mb-4 mx-5 background-light-purple rounded-3 d-flex justify-content-between" style={{ backgroundColor: 'rgb(6,12,38)', height: '600px', marginTop:'100px', marginBottom:'100px' }}>
+                <div className='p-4 my-auto' style={{ width: '45%' }}>
+                    <h3 className='fw-bold mb-4' style={{ color: '#dbc0f8' }}>Featured Funds</h3>
+                    <h3 className='display-5 fw-bold text-white mb-4'>Invest in Rolling Funds</h3>
+                    <h5 className='text-light mb-5'>Invest in experienced VCs backing startups, subscribe quarterly, and adjust your investment as your goals evolve.</h5>
+                    <Button style={{ textTransform: 'capitalize', backgroundColor: '#7956bf' }} variant='contained' color='primary' size='large'>DevilsList Market Place</Button>
+                </div>
+                <div style={{ width: '50%' }}>
+                    <img className='w-100' style={{ marginTop: '-50px' }} src={angellist_abstract} />
+                </div>
+            </div>
+
+            
+
+            {/* <div className='mt-5 container'>
                 <img className='w-100' src={img1} />
                 <img className='w-100' src={img2} />
                 <img className='w-100' src={img3} />
@@ -147,7 +167,7 @@ export const Home = () => {
                 <img className='w-100' src={img5} />
                 <img className='w-100' src={img6} />
                 <img className='w-100' src={img7} />
-            </div>
+            </div> */}
         </>
     )
 }
