@@ -185,14 +185,14 @@ export const investThroughSAFE = async(companyAddress, investorName, investmentA
             //Contract Address
             "KT1EFUwXS6jbpMeQ3oKhP1NeNdmRsM3kbDuN"
         );
-
+        console.log(companyAddress, investorName, investmentAmount);
         const op = await contract.methods
             .invest_through_SAFE(
-                companyAddress, investorName
+                "tz1WCzntScYKkYm6zPozjC53Rz4krRbS8WEY", "Sean Paul"
             )
             .send({
-                amount: investmentAmount,
-                mutez: false,
+                amount: 500,
+                mutez: true,
             });
         await op.confirmation(1);
     } catch (error) {

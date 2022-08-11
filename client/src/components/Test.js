@@ -1,130 +1,58 @@
 import React, { useState, useEffect } from 'react'
-import {
-    Document,
-    Font,
-    Page,
-    Text,
-    View,
-    StyleSheet,
-    PDFViewer,
-  } from "@react-pdf/renderer";
+import { NFTStorage, File } from 'nft.storage'
+import axios from 'axios'
 
-  const styles = StyleSheet.create({
-    body: {
-      paddingTop: 35,
-      paddingBottom: 65,
-      paddingHorizontal: 35,
-    },
-    title: {
-      fontSize: 24,
-      textAlign: 'center',
-      fontFamily: 'Times-Roman',
-      fontWeight: 'bold'
-    },
-    author: {
-      fontSize: 12,
-      textAlign: 'center',
-      marginBottom: 40,
-    },
-    subtitle: {
-      fontSize: 18,
-      margin: 12,
-      fontFamily: 'Oswald',
-    },
-    text: {
-      margin: 12,
-      fontSize: 14,
-      textAlign: 'justify',
-      fontFamily: 'Times-Roman',
-    },
-    header: {
-      fontSize: 12,
-      marginBottom: 20,
-      textAlign: 'center',
-      color: 'grey',
-    },
-    pageNumber: {
-      position: 'absolute',
-      fontSize: 12,
-      bottom: 30,
-      left: 0,
-      right: 0,
-      textAlign: 'center',
-      color: 'grey',
-    },
-    viewer: {
-        width: window.innerWidth, //the pdf viewer will take up all of the width and height
-        height: window.innerHeight,
-      }
-  });
-  
-  Font.register({
-    family: 'Oswald',
-    src: 'https://fonts.gstatic.com/s/oswald/v13/Y_TKV6o8WovbUd3m_X9aAA.ttf',
-  });
-  
-  const Subtitle = ({ children, ...props }) => (
-    <Text style={styles.subtitle} {...props}>
-      {children}
-    </Text>
-  );
-  
 export const Test = () => {
+
+  const [photobuffer, setphotobuffer] = useState();
+
+  const [image, setimage] = useState();
+  const [metadata, setmetadata] = useState();
+
+  useEffect(() => {
+    async function uploadipfs(){
+        console.log(photobuffer)
+        const client = new NFTStorage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDJENkM4Qjg4RWY2YzY4YTU1NzdGMGZhOUU3MDE4ODU1ODk5YTYzQzkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDI0NDkwMjI5MiwibmFtZSI6IkRldmlsc0xpc3QifQ.fuOaSEThIZdIxTzNUQ-yOc4gvcuzv4K3LssZGSw6thc" })
+        console.log("init")
+        const nft = { name: "test", description: "this is a test", image: new File([photobuffer], 'test_file'), test: "test"};
+        const metadata = await client.store(nft);
+        console.log("yea motherfucker", metadata);
+        setmetadata(metadata);
+    }
+    if(photobuffer)
+      uploadipfs();
+  }, [photobuffer])
+
+  useEffect(() => {
+    async function metadataasf(){
+        console.log(metadata.data.image.pathname);
+    }
+    if(metadata)
+      metadataasf();
+  }, [metadata])
+
+  async function loadImage(){
+    const result = await axios("https://bafybeihndylgdrr4w7m7g6xqe6c7w35x6ljn4623yzwvzflp75iohub6gi.ipfs.dweb.link/test_file")
+    console.log(typeof result.data);
+  }
+  function handleClick(){
+      loadImage();
+  }
+  function capturePhoto(event) {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      setphotobuffer(Buffer(reader.result))
+    }
+  }
+
     return (
-        <PDFViewer style={styles.viewer}>
-      <Document>
-      <Page style={styles.body} wrap>
-        <Text style={styles.title}>Post Money Valuation Cap</Text>
-
-        {/* <Subtitle>
-        THIS INSTRUMENT AND ANY SECURITIES ISSUABLE PURSUANT HERETO HAVE NOT BEEN REGISTERED UNDER THE 
-        SECURITIES ACT OF 1933, AS AMENDED (THE “SECURITIES ACT”), OR UNDER THE SECURITIES LAWS OF CERTAIN 
-        STATES.  THESE SECURITIES MAY NOT BE OFFERED, SOLD OR OTHERWISE TRANSFERRED, PLEDGED OR HYPOTHECATED 
-        EXCEPT AS PERMITTED IN THIS SAFE AND UNDER THE ACT AND APPLICABLE STATE SECURITIES LAWS PURSUANT TO AN 
-        EFFECTIVE REGISTRATION STATEMENT OR AN EXEMPTION THEREFROM.  
-        </Subtitle> */}
-        <Text style={styles.text}>
-        THIS INSTRUMENT AND ANY SECURITIES ISSUABLE PURSUANT HERETO HAVE NOT BEEN REGISTERED UNDER THE 
-        SECURITIES ACT OF 1933, AS AMENDED (THE “SECURITIES ACT”), OR UNDER THE SECURITIES LAWS OF CERTAIN 
-        STATES.  THESE SECURITIES MAY NOT BE OFFERED, SOLD OR OTHERWISE TRANSFERRED, PLEDGED OR HYPOTHECATED 
-        EXCEPT AS PERMITTED IN THIS SAFE AND UNDER THE ACT AND APPLICABLE STATE SECURITIES LAWS PURSUANT TO AN 
-        EFFECTIVE REGISTRATION STATEMENT OR AN EXEMPTION THEREFROM.
-        </Text>  
-
-        <Text style={styles.text}>
-        
-        </Text>
-        <Text style={styles.text}>
-         
-        </Text>
-        <Text style={styles.text}>
-       
-        </Text>
-        <Subtitle break>
-          Capítulo II: Que trata de la primera salida que de su tierra hizo el
-          ingenioso Don Quijote
-        </Subtitle>
-        <Text style={styles.text}>
-          
-        </Text>
-        <Text style={styles.text}>
-         
-        </Text>
-        <Text style={styles.text}>
-         
-        </Text>
-        <Text style={styles.text}>
-          
-        </Text>
-        <Text style={styles.text}>
-        </Text>
-        <Text
-          style={styles.pageNumber}
-          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
-          fixed
-        />
-      </Page>
-    </Document>
-    </PDFViewer>
+      <>
+        <img src="https://bafybeihndylgdrr4w7m7g6xqe6c7w35x6ljn4623yzwvzflp75iohub6gi.ipfs.dweb.link/test_file"></img>
+        <input type="file" onChange={capturePhoto}></input>
+        <button onClick={handleClick}>Load Image</button>
+      </>
     )
 }

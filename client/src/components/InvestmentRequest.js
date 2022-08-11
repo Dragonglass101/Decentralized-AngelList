@@ -75,6 +75,7 @@ export const InvestmentRequest = () => {
   const classes = useStyles();
   const companyBigMapID = 74523;
   const investorBigMapID = 74527;
+  const fundraiseBigMapID = 74526;
 
   const [wallet, setWallet] = useState(null);
   const [loading, setloading] = useState(false);
@@ -116,6 +117,8 @@ export const InvestmentRequest = () => {
       const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
       console.log(companyDetails);
       const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyDetails.value["company_profile_Id"]}`);
+      const fundraiseDetails = await getKeyBigMapByID(fundraiseBigMapID, `{"address":"${companyAddress}","nat":"${companyDetails.value["round_num"]}"}`);
+      console.log(fundraiseDetails);
       const investmentDetails = (companyDetails.value["investor_requests"]);
       if (companyDetails.value["request_accepted"] && companyDetails.value["investor_accepted"] === wallet.address) {
         for(let request of investmentDetails){
@@ -123,14 +126,14 @@ export const InvestmentRequest = () => {
           tempElements.push(
             <>
               <ToggleButton 
-                onClick={() => { setcurrCompany(companyAddress); handleShowAgreement(companyJSON.name, request.type, request.ownership, request.valuation_cap, request.investment) }}
+                onClick={() => { setcurrCompany(companyAddress); handleShowAgreement(companyJSON.name, fundraiseDetails.value.investment_type, fundraiseDetails.value.ownership, fundraiseDetails.value.valuation_cap, Number(fundraiseDetails.value.investment)) }}
                 value="chat1" aria-label="chat1" style={{ textTransform: 'capitalize', border: '0px' }}>
                   <div className='' style={{ width: '25%' }}>
                     <Avatar />
                   </div>
                   <div className='text-start' style={{ width: '58%' }}>
                     <h6 className='m-0 text-black'>{companyJSON.name}</h6>
-                    <span className='text-secondary font13'>{request.investment} ꜩ</span>
+                    <span className='text-secondary font13'>{fundraiseDetails.value.investment_type} ꜩ</span>
                   </div>
                   <div className='text-end' style={{ width: '17%' }}>
                     <span className='text-secondary font13'>25Jul</span>
