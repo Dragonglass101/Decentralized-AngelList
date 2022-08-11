@@ -24,6 +24,7 @@ import { ViewCompanyPortfolio } from "./components/ViewCompanyPortfolio"
 import { ProfileInvestor } from "./components/ProfileInvestor"
 import { EmployeeRequestsCompany } from "./components/EmployeeRequestsCompany";
 import { Marketplace } from "./components/Marketplace.js"
+import { BuySellShares } from "./components/BuySellShares.js"
 
 import { HireEmployees } from "./components/HireEmployees"
 import { EmployeesAppointed } from "./components/EmployeesAppointed";
@@ -65,6 +66,7 @@ import { Trash } from "./components/Trash"
           <Route path='employee-requests-company' element={<EmployeeRequestsCompany/>} />
           <Route path='trash' element={<Trash/>} />
           <Route path='marketplace' element={<Marketplace/>} />
+          <Route path='share-market' element={<BuySellShares/>} />
         </Routes>
     </Router>
     );

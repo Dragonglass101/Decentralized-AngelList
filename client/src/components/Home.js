@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { getRootStorage } from '../utils/Api';
 import { getActiveAccount, connectWallet } from '../utils/wallet';
 
+import '../styles/animation.css'
+
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
@@ -126,7 +128,7 @@ export const Home = () => {
                     <button className="btn button-purple text-white btn-lg" type="button">Invest Now</button>
                 </div>
                 <div className="container-fluid py-4" style={{ width: '45%' }}>
-                    <img className='w-100' src={devils_logo_img} />
+                    <img className='w-100 swing' src={devils_logo_img} />
                     {/* <img className='w-100' src={devils_logo_svg} /> */}
                 </div>
             </div>
