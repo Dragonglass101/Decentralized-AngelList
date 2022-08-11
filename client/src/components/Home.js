@@ -31,6 +31,7 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import RedditIcon from '@material-ui/icons/Reddit';
+import TelegramIcon from '@material-ui/icons/Telegram';
 
 import angellist_logo from '../images/home/angellist_logo.png'
 import devils_logo_img from '../images/logo/devils_logo_800px_trans.png'
@@ -125,10 +126,10 @@ export const Home = () => {
                 <div className="container-fluid py-4" style={{ width: '55%' }}>
                     <h1 className="display-5 fw-bold mb-3">Invest in world-changing startups</h1>
                     <p className="col-md-8 fs-4 p-0 mb-5">Join leading investors funding the next wave of world-changing startups.</p>
-                    <button className="btn button-purple text-white btn-lg" type="button">Invest Now</button>
+                    <div style={{cursor:'default'}} className="btn button-purple text-white btn-lg">Invest Now</div>
                 </div>
                 <div className="container-fluid py-4" style={{ width: '45%' }}>
-                    <img className='w-100 swing' src={devils_logo_img} />
+                    <img className='w-100' src={devils_logo_img} />
                     {/* <img className='w-100' src={devils_logo_svg} /> */}
                 </div>
             </div>
@@ -155,12 +156,13 @@ export const Home = () => {
                 </div>
             </div>
 
-            <div class="ps-5 mb-4 mx-5 background-light-purple rounded-3 d-flex justify-content-between" style={{ backgroundColor: 'rgb(6,12,38)', height: '600px', marginTop: '100px', marginBottom: '100px' }}>
+            <div className="ps-5 mb-4 mx-5 rounded-3 d-flex justify-content-between" style={{ backgroundColor: 'rgb(6,12,38)', height: '600px', marginTop: '100px', marginBottom: '100px' }}>
                 <div className='p-4 my-auto' style={{ width: '45%' }}>
-                    <h3 className='fw-bold mb-4' style={{ color: '#dbc0f8' }}>Featured Funds</h3>
-                    <h3 className='display-5 fw-bold text-white mb-4'>Invest in Rolling Funds</h3>
-                    <h5 className='text-light mb-5'>Invest in experienced VCs backing startups, subscribe quarterly, and adjust your investment as your goals evolve.</h5>
-                    <Button style={{ textTransform: 'capitalize', backgroundColor: '#7956bf' }} variant='contained' color='primary' size='large'>DevilsList Market Place</Button>
+                    <h3 className='fw-bold mb-4' style={{ color: '#dbc0f8' }}>Future of Trading is here!</h3>
+                    <h3 className='display-5 fw-bold text-white mb-4'>Buy & Sell Company Tokens</h3>
+                    {/* <h4 className='mb-4 fw-bold' style={{color:'rgb(64, 80, 181)'}}>Future of Trading is here!</h4> */}
+                    <h5 className='text-light mb-5'>A Stock Trading Platform that uses FA2 tokens to buy & sell company shares</h5>
+                    <Button style={{ textTransform: 'capitalize', backgroundColor: '#7956bf' }} variant='contained' color='primary' size='large'>Go To Marketplace</Button>
                 </div>
                 <div style={{ width: '50%' }}>
                     <img style={{ marginTop: '-50px', width:'550px' }} src={angellist_abstract} />
@@ -171,9 +173,9 @@ export const Home = () => {
                 <div className='d-flex justify-content-between'>
                     <div className='p-5 w-50 text-white'>
                         <h3 className='fw-bold'>Stay in the loop</h3>
-                        <h5 className='text-light my-3'>Join our mailing list to stay in the loop with our newest feature releases, NFT drops, and tips and tricks for navigating OpenSea.</h5>
+                        <h5 className='text-light my-3'>Join our mailing list to stay in the loop with our newest feature releases, and tips and tricks for navigating DevilsList.</h5>
                         <div className='d-flex mt-4 justify-content-between'>
-                            <input style={{ width: '70%', fontSize: '20px' }} type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email address" />
+                            <input style={{ width: '70%', fontSize: '20px' }} type="email" className="form-control" id="exampleFormControlInput1" placeholder="Email address" />
                             <Button style={{ textTransform: 'capitalize', fontSize: '20px' }} className='w-25 fw-bold' variant='contained' color='primary'>Sign Up</Button>
                         </div>
                     </div>
@@ -209,15 +211,13 @@ export const Home = () => {
                     <div className='w-25'>
                         <img className='mb-3' src={small_devils_logo} style={{ height: '80px', width: '80px' }} />
                         <h3 className='text-white my-3'>Devils List</h3>
-                        <p className='text-light my-3'>The world’s first and largest digital marketplace for crypto collectibles and non-fungible tokens (NFTs). Buy, sell, and discover exclusive digital items.</p>
+                        <p className='text-light my-3'>An end-to-end platform to invest, raise funds, maintain cap-table, manage cash-flow and payroll & accounting done on-chain.</p>
                     </div>
 
                     <div className='w-75 d-flex ms-5'>
                         <div className='w-25 text-white'>
                             <h4 className='fw-bold mb-4'>Marketplace</h4>
                             <div>
-                                <p>All NFTs</p>
-                                <p>Solana NFTs</p>
                                 <p>Art</p>
                                 <p>Collections</p>
                                 <p>Domain Names</p>
