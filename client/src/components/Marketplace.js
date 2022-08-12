@@ -206,24 +206,35 @@ export const Marketplace = () => {
                     <img src={small_devils_logo} style={{ width: '48px' }} />
                     <span className='pt-3 ms-3 fw-bold' style={{ fontFamily: 'devils_lairs_font', fontSize: '40px', alignSelf: 'flex-end' }}>Devils Marketplace</span>
                 </div>
-                {/* <span className='font15 ms-5 ps-5 fw-bold'>Dashboard</span> */}
-                <div className='d-flex align-items-center w-50 justify-content-between'>
-                    {/* <span className='btn'>For Investors</span>
-                    <span className='btn'>For Fund Managers</span>
-                    <span className='btn'>For Founders</span>
-                    <span className='btn'>Company</span>
-                    <span className='btn'>Help</span> */}
-                </div>
+                <Button className='mx-2' variant="outlined" color="primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Log in
+                </Button>
 
-                <div className='d-flex justify-content-between align-items-center'>
-                    {/* <Button className='mx-2' variant="outlined" color="primary" onClick={handleLogin}>
-                        Log in
-                    </Button>
-                    <Link to='/sign-up'>
-                        <Button className='mx-2' variant="contained" color="primary">
-                            Join
-                        </Button>
-                    </Link> */}
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div className='mb-3'>
+                                    <label for="exampleFormControlInput1" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter Name" />
+                                </div>
+
+                                <div className='mb-3'>
+                                    <label for="exampleFormControlInput1" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" />
+                                </div>
+
+                                
+                            </div>
+                            <div class="modal-footer">
+                            <Button className='mt-3 d-block w-100' variant='contained' color='primary'>Connect Wallet</Button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </nav>
 
@@ -308,7 +319,7 @@ export const Marketplace = () => {
                         </div>
                         <img style={{ height: '40px' }} src={chart1} />
                         <div className='d-flex justify-content-around text-align-center'>
-                        <div className='text-center'>
+                            <div className='text-center'>
                                 <p className='mb-0 fw-bold'>4 . 00 ꜩ</p>
                                 <p className='mb-0 font13 text-secondary'>Price per Token</p>
                             </div>
@@ -331,7 +342,7 @@ export const Marketplace = () => {
                         </div>
                         <img style={{ height: '40px' }} src={chart5} />
                         <div className='d-flex justify-content-around text-align-center'>
-                        <div className='text-center'>
+                            <div className='text-center'>
                                 <p className='mb-0 fw-bold'>2 . 56 ꜩ</p>
                                 <p className='mb-0 font13 text-secondary'>Price per Token</p>
                             </div>

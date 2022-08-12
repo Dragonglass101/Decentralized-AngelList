@@ -14,6 +14,10 @@ import stock1 from '../images/stocks/stock1.png'
 import stock2 from '../images/stocks/stock2.png'
 import stock3 from '../images/stocks/stock3.png'
 
+import sample1 from '../images/logo/sample-1.jpg'
+import sample2 from '../images/logo/sample-2.jpg'
+import dragon_glass from '../images/logo/dragon_glass.png'
+
 import buy1 from '../images/Marketplace/ProfilePic.png'
 import buy2 from '../images/Marketplace/stockPrice.png'
 
@@ -318,7 +322,7 @@ export const BuySellShares = () => {
                 </div>
             </nav>
 
-            <div className='px-3 d-flex'>
+            <div className='d-flex'>
                 <div className='p-4 mx-auto shadow' style={{ width: '80%' }}>
                     <div className='pb-4 ms-5'>
                         <h5 className='mb-0'>Wallet Balance</h5>
@@ -448,6 +452,41 @@ export const BuySellShares = () => {
                     
                 </div> */}
             </div>
+
+
+            <div className='shadow mt-5 my-4 p-4 mx-auto' style={{width:'80%'}}>
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <h5 className='fw-bold mb-0'>Top Firms</h5>
+                        <MoreVertIcon />
+                    </div>
+                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
+
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <Avatar className='me-4' src={dragon_glass} />
+                            <div>
+                                <p className='mb-0 fw-bold'>Dragon Glass</p>
+                                <p className='mb-0 font13 text-secondary'>2,500 Tokens</p>
+                            </div>
+                        </div>
+                        <img style={{ height: '40px' }} src={chart1} />
+                        <div className='d-flex justify-content-around text-align-center'>
+                            <div className='text-center'>
+                                <p className='mb-0 fw-bold'>4 . 00 ꜩ</p>
+                                <p className='mb-0 font13 text-secondary'>Price per Token</p>
+                            </div>
+
+                            <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded px-2 ms-3' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                <span className='fw-bold font13' style={{}}>0 . 00%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
+
+
+
+                </div>
 
 
 
