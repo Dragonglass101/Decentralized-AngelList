@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import { NFTStorage, File } from 'nft.storage'
+
 import CompanyNavbar from './CompanyNavbar';
 import NavFloating from './NavFloating'
 import { alpha, makeStyles } from '@material-ui/core/styles';
@@ -60,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
 export const AddFounders = () => {
     const classes = useStyles();
 
+    const nftstore_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDJENkM4Qjg4RWY2YzY4YTU1NzdGMGZhOUU3MDE4ODU1ODk5YTYzQzkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDI0NDkwMjI5MiwibmFtZSI6IkRldmlsc0xpc3QifQ.fuOaSEThIZdIxTzNUQ-yOc4gvcuzv4K3LssZGSw6thc"
+
     const [loading, setloading] = useState();
     const [founderDetailsCID, setfounderDetailsCID] = useState();
 
@@ -76,6 +80,7 @@ export const AddFounders = () => {
                                 details["stakeHolderType"]
                                 );
             alert("Member has been added");
+            document.getElementById("founderForm").reset();
           }catch(error){
             alert("Transaction Failed:", error.message);
           }
@@ -115,19 +120,12 @@ export const AddFounders = () => {
         stakeHolderType: null
     });
 
-    const uploadDataIpfs = async(data) => {
-        ipfs_mini.addJSON(data, (err, hash) => {
-            if (err)
-                console.error(err);
-            setfounderDetailsCID(hash);
-        });
-    }
-
-    async function handleFounderSubmit(e){
-        e.preventDefault();
-        console.log("add founder")
-        setloading(true);
-        const founderDetails = {
+    const uploadDataIpfs = async() => {
+        const client = new NFTStorage({ token:  nftstore_token});
+        const data = {
+            name: "founderDetails",
+            description: "founderDetails",
+            image: new File([], 'blob'),
             founderFirstName: details["founderFirstName"], 
             founderLastName: details["founderLastName"], 
             founderEmail: details["founderEmail"],
@@ -140,10 +138,17 @@ export const AddFounders = () => {
             founderState: details["founderState"],
             founderZipCode: details["founderZipCode"],
             founderCountry: details["founderCountry"]
-        }
-        await uploadDataIpfs(founderDetails)
+        };
+        const metadata = await client.store(data);
+        console.log("metadata", metadata);
+        setfounderDetailsCID(metadata.ipnft);
+    }
 
-        document.getElementById("founderForm").reset();
+    async function handleFounderSubmit(e){
+        e.preventDefault();
+        console.log("add founder")
+        setloading(true);
+        await uploadDataIpfs()
     }
 
   return (

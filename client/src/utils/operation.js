@@ -222,3 +222,47 @@ export const investThroughDirectEquity = async(companyAddress, investorName, inv
         throw error;
     }
 }
+
+export const payEmp = async(amount, companyAddress, receiverWallet, tag) => {
+    try {
+        const contract = await tezos.wallet.at(
+            //Contract Address
+            "KT1RgCskZanXW1mtz4aeFB9txG5Uce454V3q"
+        );
+
+        const op = await contract.methods
+            .pay_from_company_wallet(
+                amount, companyAddress, receiverWallet, tag
+            )
+            .send({
+                amount: amount,
+                mutez: false,
+            });
+        await op.confirmation(1);
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+}
+
+export const payVndr = async(amount, companyAddress, receiverWallet, tag) => {
+    try {
+        const contract = await tezos.wallet.at(
+            //Contract Address
+            "KT1RgCskZanXW1mtz4aeFB9txG5Uce454V3q"
+        );
+
+        const op = await contract.methods
+            .pay_from_company_wallet(
+                amount, companyAddress, receiverWallet, tag
+            )
+            .send({
+                amount: amount,
+                mutez: false,
+            });
+        await op.confirmation(1);
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+}

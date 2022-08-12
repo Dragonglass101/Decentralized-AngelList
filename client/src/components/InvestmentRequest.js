@@ -25,6 +25,7 @@ import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 
 import SearchIcon from '@material-ui/icons/Search';
 import TimerRoundedIcon from '@material-ui/icons/TimerRounded';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -83,6 +84,8 @@ export const InvestmentRequest = () => {
   const [pendingList, setpendingList] = useState(null);
 
   const [currCompany, setcurrCompany] = useState(null);
+
+  const navigate = useNavigate();
 
   const [details, setDetails] = useState({
     companyName: "",
@@ -338,8 +341,8 @@ export const InvestmentRequest = () => {
                     </div>
                   </div>
                 </div>
-                <div id='contract-end' className='m-0' style={{ height: '10%', borderRadius:'0 0 15px 15px', backgroundColor:'#e9e9e9' }}>
-                  <div className='p-3 d-flex justify-content-between align-items-center h-100'>
+                <div id='contract-end' className='m-0 d-flex justify-content-center' style={{ height: '10%', borderRadius:'0 0 15px 15px', backgroundColor:'#e9e9e9' }}>
+                  {/* <div className='p-3 d-flex justify-content-between align-items-center h-100'>
                     {details["alreadyInvested"] ? 
                       <Tooltip title='Deposit Fund' aria-label='deposit-fund'>
                         <Button className='me-3 text-black background-accept py-1 font13 shadow' variant='contained'>
@@ -362,7 +365,12 @@ export const InvestmentRequest = () => {
                       </Tooltip>
                     </div>
                     </>}
-                  </div>
+                  </div> */}
+                    <Tooltip title='Deposit Fund' aria-label='deposit-fund'>
+                      <Button onClick={()=>{navigate(`/agreement?ca=${currCompany}&ia=${wallet.address}&vc=${details["companyValuation"]}&inv=${details["investement"]}`)}} className='me-3 text-black background-accept py-1 font13 shadow' variant='contained'>
+                        View Agreement
+                      </Button>
+                    </Tooltip>
                 </div>
               </div>
               :   
