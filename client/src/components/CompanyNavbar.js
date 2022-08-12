@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios"
 
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -78,8 +79,8 @@ const CompanyNavbar = () => {
     const [name, setname] = useState();
     const [photoCID, setphotoCID] = useState();
 
-    const companyBigMapID = 74523;
-    const investorBigMapID = 74527;
+    const companyBigMapID = 79636;
+    const investorBigMapID = 79640;
 
     const investementRaised = useRef();
     const ownershipRaised = useRef();
@@ -111,10 +112,11 @@ const CompanyNavbar = () => {
             const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
             const companyProfileHash = companyDetails.value["company_profile_Id"];
             console.log(companyProfileHash);
-            const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
+            const companyJSON = await axios("https://" + companyProfileHash + ".ipfs.dweb.link/metadata.json")
             console.log(companyJSON);
-            setname(companyJSON.name);
-            setphotoCID(companyJSON.photoCID);
+            setname(companyJSON.data.name);
+            const imageUri = companyJSON.data.image;
+            setphotoCID(imageUri.substring(7, imageUri.length-5));
         }
         if (wallet && !balance){
             retrieveBalance();
@@ -183,7 +185,7 @@ const CompanyNavbar = () => {
                         {/* <Divider style={{ color: 'grey', backgroundColor: 'grey', variant: 'middle' }} /> */}
                         <div className="d-flex py-3 ps-4 my-2" style={{ borderRadius: '5px', border:'1px solid rgba(63, 81, 181, 0.5)' }}>
                         {photoCID ?
-                            <img src={`https://ipfs.io/ipfs/${photoCID}`} className="me-3" style={{width: "42px", height: "42px", borderRadius:"50%"}}/> : null}
+                            <img src={"https://" + photoCID + ".ipfs.dweb.link/blob"} className="me-3" style={{width: "42px", height: "42px", borderRadius:"50%"}}/> : null}
                             <div>
                                 <h6 className="font15 menu-item-color mb-1">{name}</h6>
                                 <h6 className="font10 m-0">Bangalore, Karnataka</h6>

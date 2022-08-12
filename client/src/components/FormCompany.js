@@ -12,9 +12,8 @@ import Switch from '@material-ui/core/Switch';
 import Divider from '@material-ui/core/Divider';
 
 import { connectWallet } from "../utils/wallet";
-import ipfs_mini from "../ipfs_mini";
 import { signupCompany } from '../utils/operation';
-import ipfs_api from '../ipfs_api';
+import { NFTStorage, File } from 'nft.storage'
 
 import small_devils_logo from '../images/logo/small_devils_logo.png'
 
@@ -47,6 +46,8 @@ export const FormCompany = () => {
 
     const navigate = useNavigate();
 
+    const nftstore_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDJENkM4Qjg4RWY2YzY4YTU1NzdGMGZhOUU3MDE4ODU1ODk5YTYzQzkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDI0NDkwMjI5MiwibmFtZSI6IkRldmlsc0xpc3QifQ.fuOaSEThIZdIxTzNUQ-yOc4gvcuzv4K3LssZGSw6thc"
+
     const [details, setDetails] = useState({
         industry: "",
         linkedIn: "",
@@ -61,9 +62,7 @@ export const FormCompany = () => {
         startupWebsiteUrl: "",
 
         bufferPhoto: null,
-        bufferResume: null
       });
-      const [photoCID, setphotoCID] = useState(null);
 
       useEffect(() => {
           const onVerifyCompany = async () =>{
@@ -81,31 +80,31 @@ export const FormCompany = () => {
             onVerifyCompany();
       }, [companyDetailsCID]);
 
-      useEffect(() => {
-        console.log(photoCID);
-    
-        const uploadCompanyDetailsIpfs = async ()=>{
-            const startupDetails = {
-                industry: details["industry"],
-                linkedIn: details["linkedIn"],
-                name: details["name"],
-                walletID: details["walletID"],
-                whatWillCompanyDo: details["whatWillCompanyDo"],
-                address: details["address"],
-                startupCity: details["startupCity"],
-                startupZipCode: details["startupZipCode"],
-                startupState: details["startupState"],
-                startupCountry: details["startupCountry"],
-                startupWebsiteUrl: details["startupWebsiteUrl"],
-                companyValuation: companyValuation,
-                photoCID: photoCID
-            }
-            await uploadDataIpfs(startupDetails);
-        }
-        if(photoCID != null)
-          uploadCompanyDetailsIpfs();
-        
-      }, [photoCID])
+    async function uploadToIpfs(){
+        const client = new NFTStorage({ token:  nftstore_token});
+        const data = {
+            industry: details["industry"],
+            linkedIn: details["linkedIn"],
+            name: details["name"],
+            walletID: details["walletID"],
+            whatWillCompanyDo: details["whatWillCompanyDo"],
+            address: details["address"],
+            startupCity: details["startupCity"],
+            startupZipCode: details["startupZipCode"],
+            startupState: details["startupState"],
+            startupCountry: details["startupCountry"],
+            startupWebsiteUrl: details["startupWebsiteUrl"],
+            companyValuation: companyValuation,
+            description: "Investor", 
+            image: new File([details["bufferPhoto"]], 'blob'), 
+            number: details["number"],
+            email: details["email"],
+            linkedIn: details["linkedIn"]
+        };
+        const metadata = await client.store(data);
+        console.log("metadata", metadata);
+        setcompanyDetailsCID(metadata.ipnft);
+    }
 
     const [wallet, setWallet] = useState(null);
     const handleConnectWallet = async () => {
@@ -123,28 +122,9 @@ export const FormCompany = () => {
 
     async function handleSubmit(e){
         e.preventDefault()
+        setloading(true)
         await handleConnectWallet();
-        uploadPhoto();
-    }
-
-    const uploadDataIpfs = async(data) => {
-        ipfs_mini.addJSON(data, (err, hash) => {
-            if (err)
-                console.error(err);
-            setcompanyDetailsCID(hash);
-            
-            setloading(false);
-        });
-    }
-
-    function uploadPhoto() {
-        ipfs_api.files.add(details["bufferPhoto"], (error, result) => {
-          if(error) {
-            console.error(error)
-            return
-          }
-          setphotoCID(result[0].hash)
-        })
+        uploadToIpfs();
     }
 
     function capturePhoto(event) {
@@ -491,7 +471,7 @@ export const FormCompany = () => {
                             </div>
 
                             {activeStep === steps.length - 1 ? 
-                                <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>Finish</Button> : 
+                                <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>{loading ? "loading...": "Finish"}</Button> : 
                                 null
                             }
                         </form>

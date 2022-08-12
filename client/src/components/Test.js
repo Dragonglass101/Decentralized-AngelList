@@ -14,7 +14,7 @@ export const Test = () => {
         console.log(photobuffer)
         const client = new NFTStorage({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDJENkM4Qjg4RWY2YzY4YTU1NzdGMGZhOUU3MDE4ODU1ODk5YTYzQzkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDI0NDkwMjI5MiwibmFtZSI6IkRldmlsc0xpc3QifQ.fuOaSEThIZdIxTzNUQ-yOc4gvcuzv4K3LssZGSw6thc" })
         console.log("init")
-        const nft = { name: "test", description: "this is a test", image: new File([photobuffer], 'test_file'), test: "test"};
+        const nft = { name: "test", description: "this is a test", image: new File([photobuffer], 'blob'), test: "test"};
         const metadata = await client.store(nft);
         console.log("yea motherfucker", metadata);
         setmetadata(metadata);
@@ -35,6 +35,7 @@ export const Test = () => {
     const result = await axios("https://bafybeihndylgdrr4w7m7g6xqe6c7w35x6ljn4623yzwvzflp75iohub6gi.ipfs.dweb.link/test_file")
     console.log(typeof result.data);
   }
+  
   function handleClick(){
       loadImage();
   }
@@ -50,7 +51,7 @@ export const Test = () => {
 
     return (
       <>
-        <img src="https://bafybeihndylgdrr4w7m7g6xqe6c7w35x6ljn4623yzwvzflp75iohub6gi.ipfs.dweb.link/test_file"></img>
+        <img src="https://bafybeihndylgdrr4w7m7g6xqe6c7w35x6ljn4623yzwvzflp75iohub6gi.ipfs.dweb.link/blob"></img>
         <input type="file" onChange={capturePhoto}></input>
         <button onClick={handleClick}>Load Image</button>
       </>
