@@ -21,9 +21,9 @@ import Chip from '@material-ui/core/Chip';
 import Navbar from './CompanyNavbar';
 import NavFloating from './NavFloating';
 
-import sample1 from '../images/logo/sample-1.jpg'
-import sample2 from '../images/logo/sample-2.jpg'
-import dragon_glass from '../images/logo/dragon_glass.png'
+import sample1 from '../images/people/person1.jpeg'
+import sample2 from '../images/people/person2.jpeg'
+import dragon_glass from '../images/people/person3.jpeg'
 
 import searchIcon from '../images/search.png'
 import appleLogo from '../images/apple-logo.png'
@@ -462,73 +462,7 @@ export const DashboardCompany = () => {
             </div>
 
             <div className='d-flex justify-content-between'>
-              <div className='bg-white p-3 shadow' style={{ width: '54%' }}>
-                <div className='d-flex justify-content-between align-items-center mb-3'>
-                  <h5 className='ms-2 mb-0'>Recent Transactions</h5>
-                  <p className='me-3 mb-0'>Report</p>
-                </div>
-
-                <table className="table table-hover">
-                  <tbody>
-                    <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={dragon_glass} /></th>
-                      <td>
-                        <p className='m-0 fw-bold'>Dragon Glass</p>
-                        <span className='text-secondary'>Anurag Naruka</span>
-                      </td>
-                      <td className='text-secondary'>Glass Manf.</td>
-                      <td>
-                        <p className='m-0 fw-bold'>700</p>
-                        <span className='text-secondary'>Stocks</span>
-                      </td>
-                      <td>4000ꜩ</td>
-                      <td className='fw-bold text-end'>
-                        <span>3%</span>
-                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample1} /></th>
-                      <td>
-                        <p className='m-0 fw-bold'>Supreme Pvt. Ltd.</p>
-                        <span className='text-secondary'>Rahul Jain</span>
-                      </td>
-                      <td className='text-secondary'>Automobile</td>
-                      <td>
-                        <p className='m-0 fw-bold'>1250</p>
-                        <span className='text-secondary'>Stocks</span>
-                      </td>
-                      <td>9000ꜩ</td>
-                      <td className='fw-bold text-end'>
-                        <span>12%</span>
-                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample2} /></th>
-                      <td>
-                        <p className='m-0 fw-bold'>Phoenix Creations</p>
-                        <span className='text-secondary'>Rakshit Bang</span>
-                      </td>
-                      <td className='text-secondary'>Artworks</td>
-                      <td>
-                        <p className='m-0 fw-bold'>320</p>
-                        <span className='text-secondary'>Stocks</span>
-                      </td>
-                      <td>8000ꜩ</td>
-                      <td className='fw-bold text-end'>
-                        <span>7%</span>
-                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
-                      </td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </div>
-
-              <div className='bg-white p-3 shadow' style={{ width: '45%' }}>
+            <div className='bg-white p-3 shadow' style={{ width: '54%' }}>
                 <div className='d-flex justify-content-between align-items-center mb-3'>
                   <h5 className='ms-2 mb-0'>List of Signed Contracts</h5>
                   <p className='me-3 mb-0'>Report</p>
@@ -537,10 +471,9 @@ export const DashboardCompany = () => {
                 <table className="table table-hover" style={{ overflow: 'auto' }}>
                   <tbody>
                     <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={dragon_glass} /></th>
+                      <th scope="row"><Avatar style={{ width: '42px', height: '42px' }} alt="Remy Sharp" src={dragon_glass} /></th>
                       <td>
-                        <p className='m-0 fw-bold'>Dragon Glass</p>
-                        <span className='text-secondary'>Anurag Naruka</span>
+                        <p className='m-0 fw-bold'>Carlo Mann</p>
                       </td>
                       <td className='text-secondary'>Not Converted</td>
                       <td className='text-secondary'>
@@ -552,11 +485,10 @@ export const DashboardCompany = () => {
 
                     <tr>
                       <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample1} />
+                        <Avatar style={{ width: '42px', height: '42px'}} alt="Remy Sharp" src={sample1} />
                       </th>
                       <td>
-                        <p className='m-0 fw-bold'>Supreme Pvt. Ltd.</p>
-                        <span className='text-secondary'>Rahul Jain</span>
+                        <p className='m-0 fw-bold'>Matlias Dilon</p>
                       </td>
                       <td className='text-secondary'>Converted</td>
                       <td className='text-black fw-bold'>11%</td>
@@ -565,11 +497,10 @@ export const DashboardCompany = () => {
 
                     <tr>
                       <th scope="row">
-                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample2} />
+                        <Avatar style={{ width: '42px', height: '42px'}} alt="Remy Sharp" src={sample2} />
                       </th>
                       <td>
-                        <p className='m-0 fw-bold'>Phoenix Creations</p>
-                        <span className='text-secondary'>Rakshit Bang</span>
+                        <p className='m-0 fw-bold'>Santino Murray</p>
                       </td>
                       <td className='text-secondary'>Converted</td>
                       <td className='text-black fw-bold'>5%</td>
@@ -578,6 +509,53 @@ export const DashboardCompany = () => {
                   </tbody>
                 </table>
               </div>
+
+              <div className='bg-white p-3 shadow' style={{ width: '45%' }}>
+                <div className='d-flex justify-content-between align-items-center mb-3'>
+                  <h5 className='ms-2 mb-0'>Cash Flow</h5>
+                  <p className='me-3 mb-0'>Report</p>
+                </div>
+
+                <table className="table table-hover">
+                  <tbody>
+                    <tr>
+                      <th scope="row"><Avatar style={{ width: '42px', height: '42px' }} alt="Remy Sharp" src={dragon_glass} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>Carlo Mann</p>
+                        <span className='text-secondary'>Supreme Pvt. Ltd.</span>
+                      </td>
+                      <td className='fw-bold text-end'>
+                        <span style={{ color: 'rgb(37, 186, 168)' }}>+ 1000 ꜩ</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row"><Avatar style={{ width: '42px', height: '42px'}} alt="Remy Sharp" src={sample1} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>Matlias Dilon</p>
+                        <span className='text-secondary'>DragonGlass</span>
+                      </td>
+                      <td className='fw-bold text-end'>
+                      <span style={{ color: 'red' }}>- 800 ꜩ</span>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th scope="row"><Avatar style={{ width: '42px', height: '42px'}} alt="Remy Sharp" src={sample2} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>Santino Murray</p>
+                        <span className='text-secondary'>Phoenix Creations</span>
+                      </td>
+                      <td className='fw-bold text-end'>
+                      <span style={{ color: 'rgb(37, 186, 168)' }}>+ 1200 ꜩ</span>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+              
 
             </div>
           </div>
