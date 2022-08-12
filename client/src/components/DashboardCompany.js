@@ -24,6 +24,7 @@ import NavFloating from './NavFloating';
 import sample1 from '../images/people/person1.jpeg'
 import sample2 from '../images/people/person2.jpeg'
 import dragon_glass from '../images/people/person3.jpeg'
+import sean_paul from '../images/people/seanpaulPic.png'
 
 import searchIcon from '../images/search.png'
 import appleLogo from '../images/apple-logo.png'
@@ -471,9 +472,9 @@ export const DashboardCompany = () => {
                 <table className="table table-hover" style={{ overflow: 'auto' }}>
                   <tbody>
                     <tr>
-                      <th scope="row"><Avatar style={{ width: '42px', height: '42px' }} alt="Remy Sharp" src={dragon_glass} /></th>
+                      <th scope="row"><Avatar style={{ width: '42px', height: '42px' }} alt="Remy Sharp" src={sean_paul} /></th>
                       <td>
-                        <p className='m-0 fw-bold'>Carlo Mann</p>
+                        <p className='m-0 fw-bold'>Sean Paul</p>
                       </td>
                       <td className='text-secondary'>Not Converted</td>
                       <td className='text-secondary'>
@@ -518,6 +519,17 @@ export const DashboardCompany = () => {
 
                 <table className="table table-hover">
                   <tbody>
+                  <tr>
+                      <th scope="row"><Avatar style={{ width: '42px', height: '42px' }} alt="Remy Sharp" src={sean_paul} /></th>
+                      <td>
+                        <p className='m-0 fw-bold'>Sean Paul</p>
+                        <span className='text-secondary'>Supreme Pvt. Ltd.</span>
+                      </td>
+                      <td className='fw-bold text-end'>
+                        <span style={{ color: 'rgb(37, 186, 168)' }}>+ 3000 ꜩ</span>
+                      </td>
+                    </tr>
+
                     <tr>
                       <th scope="row"><Avatar style={{ width: '42px', height: '42px' }} alt="Remy Sharp" src={dragon_glass} /></th>
                       <td>
@@ -529,16 +541,16 @@ export const DashboardCompany = () => {
                       </td>
                     </tr>
 
-                    <tr>
+                    {/* <tr>
                       <th scope="row"><Avatar style={{ width: '42px', height: '42px'}} alt="Remy Sharp" src={sample1} /></th>
                       <td>
                         <p className='m-0 fw-bold'>Matlias Dilon</p>
-                        <span className='text-secondary'>DragonGlass</span>
+                        <span className='text-secondary'>Employee</span>
                       </td>
                       <td className='fw-bold text-end'>
                       <span style={{ color: 'red' }}>- 800 ꜩ</span>
                       </td>
-                    </tr>
+                    </tr> */}
 
                     <tr>
                       <th scope="row"><Avatar style={{ width: '42px', height: '42px'}} alt="Remy Sharp" src={sample2} /></th>

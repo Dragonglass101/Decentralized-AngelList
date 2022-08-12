@@ -157,16 +157,13 @@ export const ChatRoom = () => {
 
             tempSenderlist.push(
                 <div key={sender.investor} style={{cursor: "pointer"}}>
-                    <div onClick={listClickAction} className='row p-3'>
-                        <div className='col-3'>
+                    <div onClick={listClickAction} className={'d-flex p-3 chatSelected'}>
+                        <div style={{width:'25%'}}>
                             <Avatar src={"https://" + investorimageHash + ".ipfs.dweb.link/blob"}/>
                         </div>
-                        <div className='col-7'>
+                        <div style={{width:'55%'}}>
                             <h6 className='m-0'>{investorJSON.data.name}</h6>
-                            <span className='text-secondary font13'>Type a message</span>
-                        </div>
-                        <div className='col-2'>
-                            <span className='text-secondary font13'></span>
+                            <span className='text-secondary font13'>Click to view chat</span>
                         </div>
                     </div>
 
@@ -346,7 +343,7 @@ export const ChatRoom = () => {
                                         <SearchIcon style={{ color: 'white' }} />
                                     </button>
                                 </div>
-                                <div className='container shadow mt-4 rounded15' style={{ overflow: 'auto', height: '380px' }}>
+                                <div className='shadow mt-4 rounded15' style={{ overflowY: 'auto', height: '380px' }}>
                                   {sendersList}
                                 </div>
                             </div>

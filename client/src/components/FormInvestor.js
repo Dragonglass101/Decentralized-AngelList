@@ -95,6 +95,7 @@ export const FormInvestor = () => {
   }
 
   async function uploadToIpfs(){
+    console.log("uploading");
     const client = new NFTStorage({ token:  nftstore_token});
     const data = { 
       name: details["name"],
