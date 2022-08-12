@@ -84,19 +84,12 @@ export const InvestmentRequest = () => {
 
   const [currCompany, setcurrCompany] = useState(null);
 
-  const [companyName, setcompanyName] = useState();
-  const [contractType, setcontractType] = useState();
-  const [ownership, setownership] = useState();
-  const [companyValuation, setcompanyValuation] = useState();
-  const [alreadyInvested, setalreadyInvested] = useState();
-  const [investement, setinvestement] = useState();
-
   const [details, setDetails] = useState({
     companyName: "",
     contractType: "",
     ownership: null,
     companyValuation: null,
-    alreadyInvested: null,
+    alreadyInvested: true,
     investement: null
   });
 
@@ -140,7 +133,7 @@ export const InvestmentRequest = () => {
                   setcurrCompany(companyAddress); 
                   handleShowAgreement(
                     companyJSON.data.name, 
-                    fundraiseDetails.value.investment_type, 
+                    fundraiseDetails.value.investment_type,
                     fundraiseDetails.value.ownership, 
                     fundraiseDetails.value.valuation_cap, 
                     Number(fundraiseDetails.value.investment), 
