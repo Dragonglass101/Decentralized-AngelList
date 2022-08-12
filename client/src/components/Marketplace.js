@@ -10,6 +10,10 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import SearchIcon from '@material-ui/icons/Search';
 import Divider from '@material-ui/core/Divider';
 
+import sample1 from '../images/logo/sample-1.jpg'
+import sample2 from '../images/logo/sample-2.jpg'
+import dragon_glass from '../images/logo/dragon_glass.png'
+
 import stock1 from '../images/stocks/stock1.png'
 import stock2 from '../images/stocks/stock2.png'
 import stock3 from '../images/stocks/stock3.png'
@@ -92,15 +96,6 @@ const nftGraphConfigs = {
                         "label": "Wed"
                     },
                     {
-                        "vline": "true",
-                        "lineposition": "0",
-                        "color": "#62B58F",
-                        "labelHAlign": "center",
-                        "labelPosition": "0",
-                        "label": "National holiday",
-                        "dashed": "1"
-                    },
-                    {
                         "label": "Thu"
                     },
                     {
@@ -117,55 +112,72 @@ const nftGraphConfigs = {
         ],
         "dataset": [
             {
-                "seriesname": "Bakersfield Central",
+                "seriesname": "Phoenix Artworks",
                 "data": [
                     {
-                        "value": "15123"
+                        "value": "0.24"
                     },
                     {
-                        "value": "14233"
+                        "value": "0.72"
                     },
                     {
-                        "value": "25507"
+                        "value": "1.07"
                     },
                     {
-                        "value": "9110"
+                        "value": "2.110"
                     },
                     {
-                        "value": "15529"
+                        "value": "2.5529"
                     },
                     {
-                        "value": "20803"
+                        "value": "0.56"
                     },
-                    {
-                        "value": "19202"
-                    }
                 ]
             },
             {
-                "seriesname": "Los Angeles Topanga",
+                "seriesname": "Dragon Glass",
                 "data": [
                     {
-                        "value": "13400"
+                        "value": "4"
                     },
                     {
-                        "value": "12800"
+                        "value": "4"
                     },
                     {
-                        "value": "22800"
+                        "value": "4"
                     },
                     {
-                        "value": "12400"
+                        "value": "4"
                     },
                     {
-                        "value": "15800"
+                        "value": "4"
                     },
                     {
-                        "value": "19800"
+                        "value": "4"
+                    },
+                ]
+            },
+            {
+                "seriesname": "Supeme Fertilizers Pvt. Ltd.",
+                "data": [
+                    {
+                        "value": "1.3400"
                     },
                     {
-                        "value": "21800"
-                    }
+                        "value": "1.2800"
+                    },
+                    {
+                        "value": "2.2800"
+                    },
+                    {
+                        "value": "1.2400"
+                    },
+                    {
+                        "value": "1.5800"
+                    },
+                    {
+                        "value": "1.62"
+                    },
                 ]
             }
         ],
@@ -173,7 +185,7 @@ const nftGraphConfigs = {
             {
                 "line": [
                     {
-                        "startvalue": "17022",
+                        "startvalue": "1.00",
                         "color": "#62B58F",
                         "valueOnRight": "1",
                         "displayvalue": "Average"
@@ -219,11 +231,11 @@ export const Marketplace = () => {
                 <div className='d-flex justify-content-between'>
                     <div className='w-50 shadow bg-white rounded d-flex justify-content-between align-items-end'>
                         <div className='p-4' style={{ width: '52%' }}>
-                            <h4 className='fw-bold pe-3 mb-3'>Discover, Collect, Sell and Create your own NFTs.</h4>
-                            <p className='text-secondary mb-3'>The world's first and largets digital marketplace.</p>
+                            <h4 className='fw-bold pe-3 mb-3'>Buy and Sell Company Tokens.</h4>
+                            <p className='text-secondary mb-3'>The world's first decentralized marketplace with FA2 company tokens.</p>
                             <div className='d-flex justify-content-between'>
-                                <Button style={{ backgroundColor: '#405189', textTransform: 'capitalize' }} color='primary' variant='contained'>Discover Now</Button>
-                                <Button style={{ backgroundColor: '#0ab39c', textTransform: 'capitalize' }} color='primary' variant='contained'>Create Your Own</Button>
+                                <Button style={{ backgroundColor: '#405189', textTransform: 'capitalize' }} color='primary' variant='contained'>Buy Token</Button>
+                                <Button style={{ backgroundColor: '#0ab39c', textTransform: 'capitalize' }} color='primary' variant='contained'>Sell Token</Button>
                             </div>
                         </div>
                         <div style={{ width: '48%' }}>
@@ -237,17 +249,17 @@ export const Marketplace = () => {
                                     <div className='p-2 rounded' style={{ backgroundColor: 'rgba(64,81,137,.1)', color: 'rgba(64,81,137,1)' }}>
                                         <MonetizationOnOutlinedIcon style={{ width: '40px', height: '40px' }} />
                                     </div>
-                                    <span className='ms-3 fw-bold text-secondary'>TOTAL REVENUE</span>
+                                    <span className='ms-3 fw-bold text-secondary'>BUYERS</span>
                                 </div>
                                 <MoreVertIcon />
                             </div>
 
-                            <h4 className='fw-bold my-4'>624,562.564</h4>
+                            <h4 className='fw-bold my-4'>1,571 . 564</h4>
 
                             <div className='d-flex'>
-                                <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(240,101,72,.1)', color: 'rgba(240,101,72,1)' }}>
-                                    <KeyboardArrowDownIcon className='font15' />
-                                    <span className='fw-bold font13' style={{}}>6.24%</span>
+                                <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                    <KeyboardArrowUpIcon className='font15' />
+                                    <span className='fw-bold font13' style={{}}>2 . 74%</span>
                                 </div>
                                 <span className='text-secondary'>vs. previous month</span>
                             </div>
@@ -261,17 +273,17 @@ export const Marketplace = () => {
                                     <div className='p-2 rounded' style={{ backgroundColor: 'rgba(64,81,137,.1)', color: 'rgba(64,81,137,1)' }}>
                                         <AccountBalanceWalletOutlinedIcon style={{ width: '40px', height: '40px' }} />
                                     </div>
-                                    <span className='ms-3 fw-bold text-secondary'>ESTIMATED</span>
+                                    <span className='ms-3 fw-bold text-secondary'>SELLERS</span>
                                 </div>
                                 <MoreVertIcon />
                             </div>
 
-                            <h4 className='fw-bold my-4'>559,526.564</h4>
+                            <h4 className='fw-bold my-4'>1,526 . 564</h4>
 
                             <div className='d-flex'>
                                 <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
                                     <KeyboardArrowUpIcon className='font15' />
-                                    <span className='fw-bold font13' style={{}}>6.24%</span>
+                                    <span className='fw-bold font13' style={{}}>3 . 24%</span>
                                 </div>
                                 <span className='text-secondary'>vs. previous month</span>
                             </div>
@@ -281,113 +293,102 @@ export const Marketplace = () => {
 
                 <div className='shadow my-4 p-4'>
                     <div className='d-flex justify-content-between align-items-center'>
-                        <h5 className='fw-bold mb-0'>Top Artworks</h5>
+                        <h5 className='fw-bold mb-0'>Top Firms</h5>
                         <MoreVertIcon />
                     </div>
                     <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
 
                     <div className='d-flex justify-content-between align-items-center'>
                         <div className='d-flex justify-content-between align-items-center'>
-                            <Avatar className='me-4' src={appleLogo} />
+                            <Avatar className='me-4' src={dragon_glass} />
                             <div>
-                                <p className='mb-0 fw-bold'>One Shop Destination On</p>
-                                <p className='mb-0 font13 text-secondary'>13,450 Sales</p>
+                                <p className='mb-0 fw-bold'>Dragon Glass</p>
+                                <p className='mb-0 font13 text-secondary'>2,500 Tokens</p>
                             </div>
                         </div>
                         <img style={{ height: '40px' }} src={chart1} />
-                        <div>
-                            <p className='mb-0 fw-bold'>$23,5000 +</p>
-                            <p className='mb-0 font13 text-secondary'>Total USD</p>
-                        </div>
-                    </div>
+                        <div className='d-flex justify-content-around text-align-center'>
+                        <div className='text-center'>
+                                <p className='mb-0 fw-bold'>4 . 00 ꜩ</p>
+                                <p className='mb-0 font13 text-secondary'>Price per Token</p>
+                            </div>
 
-                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
-
-                    <div className='d-flex justify-content-between align-items-center'>
-                        <div className='d-flex justify-content-between align-items-center'>
-                            <Avatar className='me-4' src={appleLogo} />
-                            <div>
-                                <p className='mb-0 fw-bold'>One Shop Destination On</p>
-                                <p className='mb-0 font13 text-secondary'>13,450 Sales</p>
+                            <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded px-2 ms-3' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                <span className='fw-bold font13' style={{}}>0 . 00%</span>
                             </div>
                         </div>
-                        <img style={{ height: '40px' }} src={chart2} />
-                        <div>
-                            <p className='mb-0 fw-bold'>$23,5000 +</p>
-                            <p className='mb-0 font13 text-secondary'>Total USD</p>
-                        </div>
                     </div>
 
                     <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
 
                     <div className='d-flex justify-content-between align-items-center'>
                         <div className='d-flex justify-content-between align-items-center'>
-                            <Avatar className='me-4' src={appleLogo} />
+                            <Avatar className='me-4' src={sample1} />
                             <div>
-                                <p className='mb-0 fw-bold'>One Shop Destination On</p>
-                                <p className='mb-0 font13 text-secondary'>13,450 Sales</p>
-                            </div>
-                        </div>
-                        <img style={{ height: '40px' }} src={chart3} />
-                        <div>
-                            <p className='mb-0 fw-bold'>$23,5000 +</p>
-                            <p className='mb-0 font13 text-secondary'>Total USD</p>
-                        </div>
-                    </div>
-
-                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
-
-                    <div className='d-flex justify-content-between align-items-center'>
-                        <div className='d-flex justify-content-between align-items-center'>
-                            <Avatar className='me-4' src={appleLogo} />
-                            <div>
-                                <p className='mb-0 fw-bold'>One Shop Destination On</p>
-                                <p className='mb-0 font13 text-secondary'>13,450 Sales</p>
-                            </div>
-                        </div>
-                        <img style={{ height: '40px' }} src={chart4} />
-                        <div>
-                            <p className='mb-0 fw-bold'>$23,5000 +</p>
-                            <p className='mb-0 font13 text-secondary'>Total USD</p>
-                        </div>
-                    </div>
-
-                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
-
-                    <div className='d-flex justify-content-between align-items-center'>
-                        <div className='d-flex justify-content-between align-items-center'>
-                            <Avatar className='me-4' src={appleLogo} />
-                            <div>
-                                <p className='mb-0 fw-bold'>One Shop Destination On</p>
-                                <p className='mb-0 font13 text-secondary'>13,450 Sales</p>
+                                <p className='mb-0 fw-bold'>Supreme Pvt. Ltd.</p>
+                                <p className='mb-0 font13 text-secondary'>3,600 Tokens</p>
                             </div>
                         </div>
                         <img style={{ height: '40px' }} src={chart5} />
-                        <div>
-                            <p className='mb-0 fw-bold'>$23,5000 +</p>
-                            <p className='mb-0 font13 text-secondary'>Total USD</p>
+                        <div className='d-flex justify-content-around text-align-center'>
+                        <div className='text-center'>
+                                <p className='mb-0 fw-bold'>2 . 56 ꜩ</p>
+                                <p className='mb-0 font13 text-secondary'>Price per Token</p>
+                            </div>
+
+                            <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded px-2 ms-3' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                <span className='fw-bold font13' style={{}}>+ 2 . 15%</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
+
+                    <div className='d-flex justify-content-between align-items-center'>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            <Avatar className='me-4' src={sample2} />
+                            <div>
+                                <p className='mb-0 fw-bold'>Phoenix Artworks </p>
+                                <p className='mb-0 font13 text-secondary'>4,000 Tokens</p>
+                            </div>
+                        </div>
+                        <img style={{ height: '40px' }} src={chart3} />
+                        <div className='d-flex justify-content-around text-align-center'>
+                            <div className='text-center'>
+                                <p className='mb-0 fw-bold'>1 . 62 ꜩ</p>
+                                <p className='mb-0 font13 text-secondary'>Price per Token</p>
+                            </div>
+
+                            <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded px-2 ms-3' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                <span className='fw-bold font13' style={{}}>+ 2 . 12%</span>
+                            </div>
                         </div>
                     </div>
 
+                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
+
+
+
                 </div>
                 <div className='my-5 p-4 bg-white shadow mx-auto text-center'>
-                    <h5>Revenue</h5>
+                    <h5>Token Analysis</h5>
                     <div className='d-flex align-items-center my-3 '>
                         <div className='w-25 text-center border p-2'>
-                            <h5 className='m-0 font15 fw-bold'>7,585</h5>
-                            <p className='m-0 text-secondary'>Orders</p>
+                            <h5 className='m-0 font15 fw-bold'>245</h5>
+                            <p className='m-0 text-secondary'>Token Orders</p>
                         </div>
                         <div className='w-25 text-center border p-2'>
-                            <h5 className='m-0 font15 fw-bold'>$22.89k</h5>
-                            <p className='m-0 text-secondary'>Earnings</p>
+                            <h5 className='m-0 font15 fw-bold'>7,600</h5>
+                            <p className='m-0 text-secondary'>Tokens Sold</p>
                         </div>
                         <div className='w-25 text-center border p-2'>
-                            <h5 className='m-0 font15 fw-bold'>367</h5>
-                            <p className='m-0 text-secondary'>Funds</p>
+                            <h5 className='m-0 font15 fw-bold'>3</h5>
+                            <p className='m-0 text-secondary'>Companies</p>
                         </div>
                         <div className='w-25 text-center border p-2'>
-                            <h5 className='m-0 font15 fw-bold'>18.92%</h5>
-                            <p className='m-0 text-secondary'>Conversation Ratio</p>
+                            <h5 className='m-0 font15 fw-bold'>83.92%</h5>
+                            <p className='m-0 text-secondary'>Trade Success Rate</p>
                         </div>
                     </div>
                     <ReactFC style={{ backgroundColor: 'white' }} {...nftGraphConfigs} />

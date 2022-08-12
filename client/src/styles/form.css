@@ -253,6 +253,10 @@ a:visited {
     background-color: rgb(245, 247, 251) !important;
 }
 
+.chatSelected{
+    background-color: rgb(245, 247, 251) !important;
+}
+
 .chatSelected:focus,
 .chatSelected:checked,
 .chatSelected:target,
