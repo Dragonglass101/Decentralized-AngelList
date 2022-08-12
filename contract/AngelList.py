@@ -510,6 +510,8 @@ class Core(sp.Contract):
             all_employee = sp.list(t = sp.TAddress),
             all_companies = sp.list(t = sp.TAddress),
 
+            buy_shares_request = sp.list(t = sp.TRecord(buyer_wallet = sp.TAddress, company_token = sp.TNat, shares = sp.TNat, price_per_share = sp.TNat)),
+            sell_shares_request = sp.list(t = sp.TRecord(seller_wallet = sp.TAddress, company_token = sp.TNat, shares = sp.TNat, price_per_share = sp.TNat)),
             # investors = self.config.my_map(tvalue = Investors_value.get_type()),
             investors = sp.big_map(
                             tkey = sp.TAddress, 
@@ -733,15 +735,40 @@ class FA2_mint(Core):
 class DevilList(Core):
     
    
+    @sp.entry_point
+    def sell_shares(self, params):
+        sp.set_type(params, sp.TRecord(seller_wallet = sp.TAddress, company_token = sp.TNat, shares = sp.TNat, price_per_share = sp.TNat))
+        self.data.sell_shares_request.push(params)
 
     @sp.entry_point
-    def transfer_entry(self, params):
+    def buy_shares(self, params):
+        sp.set_type(params, sp.TRecord(buyer_wallet = sp.TAddress, company_token = sp.TNat, shares = sp.TNat, price_per_share = sp.TNat))
+        self.data.buy_shares_request.push(params)
+
+    @sp.entry_point
+    def token_transfer(self, params):
         sp.set_type(params, sp.TRecord(from_ = sp.TAddress, to_ = sp.TAddress, token_id = token_id_type, amount = sp.TNat))
+
+        sp.send(params.to_, sp.amount, "Transaction Failed") 
         txs = sp.local("txs", sp.list([]))
         tranfer_entry = sp.local("tranfer_entry", sp.list([]))
         txs.value.push(sp.record(to_ = params.to_, token_id = params.token_id,amount = params.amount))
         tranfer_entry.value.push(sp.record(from_ = params.from_, txs = txs.value))
         self.transfer(tranfer_entry.value)
+
+
+    
+    
+    # @sp.entry_point 
+    # def transfer_entry(self, params):
+    #     sp.set_type(params, sp.TRecord(from_ = sp.TAddress, to_ = sp.TAddress, token_id = token_id_type, amount = sp.TNat))
+    #     txs = sp.local("txs", sp.list([]))
+    #     tranfer_entry = sp.local("tranfer_entry", sp.list([]))
+    #     txs.value.push(sp.record(to_ = params.to_, token_id = params.token_id,amount = params.amount))
+    #     tranfer_entry.value.push(sp.record(from_ = params.from_, txs = txs.value))
+    #     self.transfer(tranfer_entry.value)
+
+    
 
     @sp.entry_point
     def investor_signup(self, params):
@@ -807,7 +834,7 @@ class DevilList(Core):
     @sp.entry_point
     def pay_from_company_wallet(self, params):
         sp.set_type(params, sp.TRecord(company_wallet = sp.TAddress, receiver_wallet = sp.TAddress, amount = sp.TMutez, tag = sp.TString))
-        sp.verify(sp.amount == params.amount, "Invalid Amount")
+        sp.verify(sp.amount == sp.utils.nat_to_mutez(sp.utils.mutez_to_nat(params.amount)*sp.nat(1000000)), "Invalid Amount")
         sp.send(params.receiver_wallet, sp.amount, message='Transaction Failed')
         self.data.companies[params.company_wallet].cashflow.push(CashFlow.make(sp.amount, params.tag, sp.now, False))
         self.data.companies[params.company_wallet].company_valuation = self.data.companies[params.company_wallet].company_valuation - sp.amount
@@ -853,8 +880,6 @@ class DevilList(Core):
         fd_shares = sp.local("fd_shares", params.common_shares + params.common_options + params.preferred_shares)
         self.data.company_members[params.member_wallet].fd_shares = fd_shares.value
     
-
-      
         self.data.companies[sp.sender].cap_table.push(Cap_table.make(params.stakeHolder_name, params.stakeHolder_type, params.investment,
                          params.common_shares, params.common_options,params.preferred_shares, sp.string(""), fd_shares.value, 0))
         
@@ -918,7 +943,7 @@ class DevilList(Core):
         
         round_num = sp.local('round_num', self.data.companies[params.company_wallet].round_num )
         fund_raise = sp.local('fund_raise',Fundraise_key.make(self, params.company_wallet, round_num.value))
-        sp.verify(sp.amount == self.data.fundraise[fund_raise.value].investment , "Invalid Amount") 
+        sp.verify(sp.amount == sp.utils.nat_to_mutez(sp.utils.mutez_to_nat(self.data.fundraise[fund_raise.value].investment) *sp.nat(1000000)) , "Invalid Amount") 
         sp.send( params.company_wallet, sp.amount, message = "Amount Investment Failed")
 
         self.data.companies[params.company_wallet].cashflow.push(CashFlow.make(sp.amount,"Investment", sp.now, True))
@@ -949,8 +974,8 @@ class DevilList(Core):
         ownership = sp.local('ownership', self.data.fundraise[fund_raise.value].ownership)
         fd_shares = sp.local('fd_shares', ownership.value * self.data.companies[params.company_wallet].total_shares / self.data.companies[params.company_wallet].company_ownership)
         
-        self.data.companies[params.company_wallet].company_ownership = sp.as_nat(self.data.companies[params.company_wallet].company_ownership - ownership.value)
         
+        self.data.companies[params.company_wallet].company_ownership = sp.as_nat(self.data.companies[params.company_wallet].company_ownership - ownership.value)
         self.data.companies[params.company_wallet].cap_table.push(
                                     Cap_table.make(params.investor_name, "Investor",self.data.fundraise[fund_raise.value].investment ,
                                     0, 0, fd_shares.value, "DirectEquity", fd_shares.value, ownership.value)
@@ -1037,21 +1062,24 @@ def add_test(config, is_default = True):
                             stakeHolder_name = "SundarPichai", stakeHolder_profile_Id = sp.string("SundarPichaiProfileID"), stakeHolder_type = sp.string("CEO"), 
                             investment = sp.tez(4000), common_shares = sp.nat(2450), common_options = sp.nat(0),
                             preferred_shares = sp.nat(0), fd_shares = sp.nat(0), fd_percent = sp.nat(0))).run(sender = Google)
-        scenario.h2("Company Raising Fund")
-        scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(100000), ownership = sp.nat(10),type = sp.string("SAFE"))).run(sender = Google)
-        scenario.h2("Investor Offering Initial Offer")
-        scenario += contract.request_from_investor(sp.record(company_wallet = Google.address, investment = sp.tez(100000), valuation_cap = sp.tez(400000), direct_equity = sp.nat(25), type = sp.string("SAFE"))).run(sender = robert)
-        scenario.h2("Company Accepting Investor Final Offer")
-        scenario += contract.accept_investor_request(sp.record(investor_wallet = robert.address)).run(sender = Google)
-        scenario.h2("Company Paying Salaries to Employee")
-        scenario += contract.pay_from_company_wallet(sp.record(company_wallet = Google.address, receiver_wallet = SundarPichai.address, amount = sp.tez(600000), tag = "Salary")).run(amount = sp.tez(600000), sender = Google)
-        scenario.h2("Signing SAFE Agreement")
-        scenario += contract.invest_through_SAFE(sp.record(investor_name = sp.string("Robert"),company_wallet = Google.address)).run(
-                    amount = sp.tez(100000), sender = robert)
-        scenario.h2("Raise Fund New Round - Previous SAFE conversion ")
-        scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(100000), ownership = sp.nat(20),type = sp.string("DirectEquity"))).run(sender = Google)
+        # scenario.h2("Company Raising Fund")
+        # scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(100000), ownership = sp.nat(10),type = sp.string("SAFE"))).run(sender = Google)
+        # scenario.h2("Investor Offering Initial Offer")
+        # scenario += contract.request_from_investor(sp.record(company_wallet = Google.address, investment = sp.tez(100000), valuation_cap = sp.tez(400000), direct_equity = sp.nat(25), type = sp.string("SAFE"))).run(sender = robert)
+        # scenario.h2("Company Accepting Investor Final Offer")
+        # scenario += contract.accept_investor_request(sp.record(investor_wallet = robert.address)).run(sender = Google)
+        # scenario.h2("Company Paying Salaries to Employee")
+        # scenario += contract.pay_from_company_wallet(sp.record(company_wallet = Google.address, receiver_wallet = SundarPichai.address, amount = sp.tez(600000), tag = "Salary")).run(amount = sp.tez(600000), sender = Google)
+        # scenario.h2("Signing SAFE Agreement")
+        # scenario += contract.invest_through_SAFE(sp.record(investor_name = sp.string("Robert"),company_wallet = Google.address)).run(
+        #             amount = sp.tez(100000), sender = robert)
+        # scenario.h2("Raise Fund New Round - Previous SAFE conversion ")
+        # scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(100000), ownership = sp.nat(20),type = sp.string("DirectEquity"))).run(sender = Google)
 
-        scenario += contract.transfer_entry(sp.record(from_ = SundarPichai.address, to_ = bob.address, token_id = 0, amount = 10))
+        # scenario += contract.transfer_entry(sp.record(from_ = SundarPichai.address, to_ = bob.address, token_id = 0, amount = 10))
+        scenario += contract.sell_shares(sp.record(seller_wallet = SundarPichai.address, company_token = 0, shares = 200, price_per_share = 12))
+        scenario += contract.buy_shares(sp.record(buyer_wallet = SundarPichai.address, company_token = 0, shares = 200, price_per_share = 12))
+        scenario += contract.token_transfer(sp.record(from_ = SundarPichai.address, to_ = robert.address, token_id = 0, amount = 200))
         # scenario += contract.request_from_investor(sp.record(company_wallet = Google.address, investment = sp.tez(100000), valuation_cap = sp.tez(400000), direct_equity = sp.nat(40), type = sp.string("DirectEquity"))).run(sender = alice)
         # scenario += contract.accept_investor_request(sp.record(investor_wallet = alice.address)).run(sender = Google)
 
@@ -1117,4 +1145,3 @@ if "templates" not in __name__:
     # sp.add_compilation_target("FA2_comp", FA2(config = environment_config(),
     #                           metadata = sp.utils.metadata_of_url("https://example.com"),
     #                           admin = sp.address("tz1M9CMEtsXm3QxA7FmMU2Qh7xzsuGXVbcDr")))
-0

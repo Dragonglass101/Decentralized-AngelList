@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -81,8 +83,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoomInvestor = () => {
     const classes = useStyles();
-    const companyBigMapID = 74523;
-    const investorBigMapID = 74527;
+    const companyBigMapID = 79636;
+    const investorBigMapID = 79640;
 
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
@@ -132,18 +134,25 @@ export const ChatRoomInvestor = () => {
     
     async function makeSendersList(){
         const investorDetails = await getKeyBigMapByID(investorBigMapID, wallet.address);
-        const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorDetails.value["investor_profile_Id"]}`);
-        setinvestorPhotoCID(investorJSON.photoCID);
+        const investorProfileHash = investorDetails.value["investor_profile_Id"];
+        const investorJSON = await axios("https://" + investorProfileHash + ".ipfs.dweb.link/metadata.json");
+        const investorimageUri = investorJSON.data.image;
+        const investorimageHash = investorimageUri.substring(7, investorimageUri.length-5);
+        setinvestorPhotoCID(investorimageHash);
         const sendersList = investorDetails.value["message_history"]
-
+        console.log(investorJSON);
         console.log(investorDetails, sendersList);
         const tempSenderlist = [];
         for(let sender of Object.keys(sendersList)){
             const companyDetails = await getKeyBigMapByID(companyBigMapID, sender);
             const companyProfileHash = companyDetails.value["company_profile_Id"];
-            const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
-            setcompanyPhotoCID(companyJSON.photoCID);
+            const companyJSON = await axios("https://" + companyProfileHash + ".ipfs.dweb.link/metadata.json");
+        
+            const companyimageUri = companyJSON.data.image;
+            const companyimageHash = companyimageUri.substring(7, companyimageUri.length-5);
+            setcompanyPhotoCID(companyimageHash);
             console.log(companyJSON);
+
             tempSenderlist.push(
                 <div key={sender}>
                     <div onClick={()=>{ setcurrentCompany(sender);fetchSenderChats(sender, investorDetails.value["message_history"])}} className='row p-3' style={{cursor: "pointer"}}>
@@ -151,7 +160,7 @@ export const ChatRoomInvestor = () => {
                             <Avatar src={`https://ipfs.io/ipfs/${companyPhotoCID}`}/>
                         </div>
                         <div className='col-7'>
-                            <h6 className='m-0'>{companyJSON.name}</h6>
+                            <h6 className='m-0'>{companyJSON.data.name}</h6>
                             <span className='text-secondary font13'>Type a message</span>
                         </div>
                         <div className='col-2'>

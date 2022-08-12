@@ -22,6 +22,7 @@ import ThumbDownRoundedIcon from '@material-ui/icons/ThumbDownRounded';
 import ThumbUpRoundedIcon from '@material-ui/icons/ThumbUpRounded';
 
 import { getActiveAccount } from '../utils/wallet';
+import axios from 'axios';
 
 //Transaction Debit/credit/pending
 
@@ -80,8 +81,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const ChatRoom = () => {
     const classes = useStyles();
-    const companyBigMapID = 74523;
-    const investorBigMapID = 74527;
+    const companyBigMapID = 79636;
+    const investorBigMapID = 79640;
 
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
@@ -118,17 +119,14 @@ export const ChatRoom = () => {
             handleChangeMessageHash();
     }, [messageHash])
     
-
-    async function fetchJSON(url) {
-        const response = await fetch(url);
-        const jsonfile = await response.json();
-        return jsonfile;
-    }
-    
     async function makeSendersList(){
         const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
-        const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyDetails.value["company_profile_Id"]}`);
-        setcompanyPhotoCID(companyJSON.photoCID);
+        const companyJSON = await axios("https://" + companyDetails.value["company_profile_Id"] + ".ipfs.dweb.link/metadata.json");
+        
+        const companyimageUri = companyJSON.data.image;
+        const companyimageHash = companyimageUri.substring(7, companyimageUri.length-5);
+        setcompanyPhotoCID(companyimageHash);
+
         if(requestAccepted === null){
             setrequestAccepted(companyDetails.value["request_accepted"]);
             console.log(companyDetails.value["request_accepted"]);
@@ -142,8 +140,10 @@ export const ChatRoom = () => {
             console.log(investorDetails, sender.investor);
             const investorProfileHash = investorDetails.value["investor_profile_Id"];
             console.log(investorProfileHash);
-            const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorProfileHash}`);
-            setinvestorPhotoCID(investorJSON.photoCID);
+            const investorJSON = await axios("https://" + investorProfileHash + ".ipfs.dweb.link/metadata.json");
+            const investorimageUri = investorJSON.data.image;
+            const investorimageHash = investorimageUri.substring(7, investorimageUri.length-5);
+            setinvestorPhotoCID(investorimageHash);
 
             function listClickAction(){
                 if(!requestAccepted){
@@ -161,10 +161,10 @@ export const ChatRoom = () => {
                 <div key={sender.investor} style={{cursor: "pointer"}}>
                     <div onClick={listClickAction} className='row p-3'>
                         <div className='col-3'>
-                            <Avatar src={`https://ipfs.io/ipfs/${investorPhotoCID}`}/>
+                            <Avatar src={"https://" + investorimageHash + ".ipfs.dweb.link/blob"}/>
                         </div>
                         <div className='col-7'>
-                            <h6 className='m-0'>{investorJSON.name}</h6>
+                            <h6 className='m-0'>{investorJSON.data.name}</h6>
                             <span className='text-secondary font13'>Type a message</span>
                         </div>
                         <div className='col-2'>

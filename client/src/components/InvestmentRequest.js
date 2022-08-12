@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 
 import InvestorNavbar from './InvestorNavbar';
@@ -73,19 +74,31 @@ const useStyles = makeStyles((theme) => ({
 
 export const InvestmentRequest = () => {
   const classes = useStyles();
-  const companyBigMapID = 74523;
-  const investorBigMapID = 74527;
+  const companyBigMapID = 79636;
+  const investorBigMapID = 79640;
+  const fundraiseBigMapID = 79639;
 
   const [wallet, setWallet] = useState(null);
   const [loading, setloading] = useState(false);
   const [pendingList, setpendingList] = useState(null);
 
   const [currCompany, setcurrCompany] = useState(null);
+
   const [companyName, setcompanyName] = useState();
   const [contractType, setcontractType] = useState();
   const [ownership, setownership] = useState();
   const [companyValuation, setcompanyValuation] = useState();
+  const [alreadyInvested, setalreadyInvested] = useState();
   const [investement, setinvestement] = useState();
+
+  const [details, setDetails] = useState({
+    companyName: "",
+    contractType: "",
+    ownership: null,
+    companyValuation: null,
+    alreadyInvested: null,
+    investement: null
+  });
 
   const [view, setView] = React.useState('list');
 
@@ -102,12 +115,6 @@ export const InvestmentRequest = () => {
     }
   }, []);
 
-  async function fetchJSON(url) {
-    const response = await fetch(url);
-    const jsonfile = await response.json();
-    return jsonfile;
-  }
-
   async function makePendingPaymentList() {
     const storage = await getRootStorage();
 
@@ -115,22 +122,36 @@ export const InvestmentRequest = () => {
     for (let companyAddress of storage["all_companies"]) {
       const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
       console.log(companyDetails);
-      const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyDetails.value["company_profile_Id"]}`);
+      const companyJSON = await axios("https://" + companyDetails.value["company_profile_Id"] + ".ipfs.dweb.link/metadata.json");
+      const companyimageUri = companyJSON.data.image;
+      const companyimageHash = companyimageUri.substring(7, companyimageUri.length-5);
+
+      const fundraiseDetails = await getKeyBigMapByID(fundraiseBigMapID, `{"address":"${companyAddress}","nat":"${companyDetails.value["round_num"]}"}`);
+      console.log(companyJSON);
+      console.log(fundraiseDetails);
       const investmentDetails = (companyDetails.value["investor_requests"]);
       if (companyDetails.value["request_accepted"] && companyDetails.value["investor_accepted"] === wallet.address) {
         for(let request of investmentDetails){
           console.log(request);
           tempElements.push(
             <>
-              <ToggleButton 
-                onClick={() => { setcurrCompany(companyAddress); handleShowAgreement(companyJSON.name, request.type, request.ownership, request.valuation_cap, request.investment) }}
+              <ToggleButton
+                onClick={() => { 
+                  setcurrCompany(companyAddress); 
+                  handleShowAgreement(
+                    companyJSON.data.name, 
+                    fundraiseDetails.value.investment_type, 
+                    fundraiseDetails.value.ownership, 
+                    fundraiseDetails.value.valuation_cap, 
+                    Number(fundraiseDetails.value.investment), 
+                    fundraiseDetails.value.investement_confirmed) }}
                 value="chat1" aria-label="chat1" style={{ textTransform: 'capitalize', border: '0px' }}>
                   <div className='' style={{ width: '25%' }}>
-                    <Avatar />
+                    <Avatar src={"https://" + companyimageHash + ".ipfs.dweb.link/blob"}/>
                   </div>
                   <div className='text-start' style={{ width: '58%' }}>
-                    <h6 className='m-0 text-black'>{companyJSON.name}</h6>
-                    <span className='text-secondary font13'>{request.investment} ꜩ</span>
+                    <h6 className='m-0 text-black'>{companyJSON.data.name}</h6>
+                    <span className='text-secondary font13'>{fundraiseDetails.value.investment_type} ꜩ</span>
                   </div>
                   <div className='text-end' style={{ width: '17%' }}>
                     <span className='text-secondary font13'>25Jul</span>
@@ -150,12 +171,16 @@ export const InvestmentRequest = () => {
     makePendingPaymentList();
   }
 
-  function handleShowAgreement(name, type, ownership, valuation, investement) {
-    setcompanyName(name);
-    setcontractType(type);
-    setownership(ownership);
-    setcompanyValuation(valuation);
-    setinvestement(investement);
+  function handleShowAgreement(name, type, ownership, valuation, investement, isinvested) {
+    console.log("alsdkf", isinvested);
+    setDetails({
+      companyName: name, 
+      contractType: type, 
+      ownership: ownership, 
+      companyValuation: valuation, 
+      investement: investement, 
+      alreadyInvested: isinvested 
+    })
   }
 
   async function handleSignContract(e) {
@@ -163,12 +188,13 @@ export const InvestmentRequest = () => {
     setloading(true);
     try {
       const investorDetails = await getKeyBigMapByID(investorBigMapID, wallet.address);
-      const investorJSON = await fetchJSON(`https://ipfs.io/ipfs/${investorDetails.value["investor_profile_Id"]}`);
-      if (contractType === "SAFE") {
-        await investThroughSAFE(currCompany, investorJSON.name, investement);
+      const investorJSON = await axios("https://" + investorDetails.value["investor_profile_Id"] + ".ipfs.dweb.link/metadata.json");
+
+      if (details["contractType"] === "SAFE") {
+        await investThroughSAFE(currCompany, investorJSON.data.name, details["investement"]);
       }
-      if (contractType === "DirectEquity") {
-        await investThroughDirectEquity(currCompany, investorJSON.name, investement);
+      if (details["contractType"] === "DirectEquity") {
+        await investThroughDirectEquity(currCompany, investorJSON.data.name, details["investement"]);
       }
     } catch (error) {
       alert("Transaction Failed:", error.message);
@@ -209,7 +235,7 @@ export const InvestmentRequest = () => {
               {currCompany ?
               <div className='shadow-sm m-3 rounded15 bg-white' style={{ width: '60%', height: '505px' }}>
                 <div className='p-3 d-flex justify-content-between align-items-center' id='contract-start' style={{ height: '10%', borderRadius:'15px 15px 0 0', backgroundColor:'#e9e9e9' }}>
-                    <h5 className='m-0'>{companyName}</h5>
+                    <h5 className='m-0'>{details["companyName"]}</h5>
                     <div className='d-flex justify-content-between align-items-center'>
                     <TimerRoundedIcon />
                     </div>
@@ -219,23 +245,23 @@ export const InvestmentRequest = () => {
                     <table className="table mt-4 w-75 mx-auto shadow-sm">
                       <thead style={{ fontSize: '20px' }}>
                         <td>
-                          {contractType} Contract
+                          {details["contractType"]} Contract
                         </td>
                       </thead>
                       <tbody>
-                        {contractType === "DirectEquity" ?
+                        {details["contractType"] === "DirectEquity" ?
                         <tr>
                           <th>Ownership<p className='font10 text-secondary m-0'>on valuation cap</p></th>
-                          <td>{ownership}%</td>
+                          <td>{details["ownership"]}%</td>
                         </tr> : null}
-                        {contractType === "SAFE" ?
+                        {details["contractType"] === "SAFE" ?
                         <tr>
                           <th>Valuation Cap</th>
-                          <td>{companyValuation} ꜩ</td>
+                          <td>{details["companyValuation"]} ꜩ</td>
                         </tr> : null}
                         <tr>
                           <th>Investment Amount</th>
-                          <td>{investement} ꜩ</td>
+                          <td>{details["investement"]} ꜩ</td>
                         </tr>
                       </tbody>
                     </table>
@@ -244,7 +270,7 @@ export const InvestmentRequest = () => {
                     <div id='tnc' className='mx-auto' style={{ fontSize: '12px', width: '90%' }}>
                       <p>THIS INSTRUMENT AND ANY SECURITIES ISSUABLE PURSUANT HERETO HAVE NOT BEEN REGISTERED UNDER THE SECURITIES ACT OF 1933, AS AMENDED (THE &ldquo;<strong>SECURITIES ACT</strong>&rdquo;), OR UNDER THE SECURITIES LAWS OF CERTAIN STATES.&nbsp;&nbsp;THESE SECURITIES MAY NOT BE OFFERED, SOLD OR OTHERWISE TRANSFERRED, PLEDGED OR HYPOTHECATED EXCEPT AS PERMITTED IN THIS SAFE AND UNDER THE ACT AND APPLICABLE STATE SECURITIES LAWS PURSUANT TO AN EFFECTIVE REGISTRATION STATEMENT OR AN EXEMPTION THEREFROM. &nbsp;</p>
                       <p><br /></p>
-                      <p><strong>{companyName}</strong></p>
+                      <p><strong>{details["companyName"]}</strong></p>
                       <p><br /></p>
                       <p><strong>SAFE&nbsp;</strong></p>
                       <p><strong>(Simple Agreement for Future Equity)</strong></p>
@@ -321,7 +347,15 @@ export const InvestmentRequest = () => {
                 </div>
                 <div id='contract-end' className='m-0' style={{ height: '10%', borderRadius:'0 0 15px 15px', backgroundColor:'#e9e9e9' }}>
                   <div className='p-3 d-flex justify-content-between align-items-center h-100'>
-                    <h5 className='mb-0 ms-3'>{investement} ꜩ</h5>
+                    {details["alreadyInvested"] ? 
+                      <Tooltip title='Deposit Fund' aria-label='deposit-fund'>
+                        <Button className='me-3 text-black background-accept py-1 font13 shadow' variant='contained'>
+                          View Agreement
+                        </Button>
+                      </Tooltip>
+                    :
+                    <>
+                    <h5 className='mb-0 ms-3'>{details["investement"]} ꜩ</h5>
                     <div className='d-flex justify-content-around'>
                       <Tooltip title='Deposit Fund' aria-label='deposit-fund'>
                         <Button onClick={handleSignContract} className='me-3 text-black background-accept py-1 font13 shadow' variant='contained'>
@@ -334,6 +368,7 @@ export const InvestmentRequest = () => {
                         </Button>
                       </Tooltip>
                     </div>
+                    </>}
                   </div>
                 </div>
               </div>

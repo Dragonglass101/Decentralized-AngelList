@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Avatar from '@material-ui/core/Avatar';
@@ -76,8 +78,8 @@ export const StartupsListInvestor = () => {
     const [investementType, setinvestementType] = useState("SAFE");
     const [companyWalletAddress, setcompanyWalletAddress] = useState();
 
-    const companyBigMapID = 74523;
-    const fundraiseBigMapID = 74526;
+    const companyBigMapID = 79636;
+    const fundraiseBigMapID = 79639;
  
     useEffect(() => {
       const retrieveStorage = async () => {
@@ -89,12 +91,6 @@ export const StartupsListInvestor = () => {
         retrieveStorage();
     }, [])
 
-    async function fetchJSON(url) {
-        const response = await fetch(url);
-        const jsonfile = await response.json();
-        return jsonfile;
-    }
-
     async function makeCards(){
         const allCards = [];
         for( let companyAddress of storage["fundraised_companies"]){
@@ -104,21 +100,23 @@ export const StartupsListInvestor = () => {
             console.log(companyDetails);
             const companyProfileHash = companyDetails.value["company_profile_Id"];
             const fundraiseDetails = await getKeyBigMapByID(fundraiseBigMapID, `{"address":"${companyAddress}","nat":"${companyDetails.value["round_num"]}"}`);
-            const companyJSON = await fetchJSON(`https://ipfs.io/ipfs/${companyProfileHash}`);
+            const companyJSON = await axios("https://" + companyProfileHash + ".ipfs.dweb.link/metadata.json")
             console.log(companyJSON);
+            const imageUri = companyJSON.data.image;
+            const imageHash = imageUri.substring(7, imageUri.length-5);
 
             allCards.push(
                 <div key={companyProfileHash} className="shadow-sm card cardColorPinkish rounded m-3" style={{ width: '18rem', border: '0px' }}>
                     <div className="card-body">
                         <div className='d-flex justify-content-between align-items-center mb-3'>
-                            <Avatar alt="Remy Sharp" src={appleLogo} />
+                            <Avatar alt="Remy Sharp" src={"https://" + imageHash + ".ipfs.dweb.link/blob"} />
                             <div className='p-2 d-flex'>
                                 <span className='fw-bold mb-0 color-primary' style={{ fontSize: '30px' }}>{fundraiseDetails.value.ownership}%</span>
                             </div>
                         </div>
-                        <h5 className="card-title fw-bold">{companyJSON.name}</h5>
-                        <p className="card-subtitle mb-2 fw-bold">{companyJSON.startupCity}, {companyJSON.startupState}</p>
-                        <p className="card-text font13 text-secondary">{companyJSON.whatWillCompanyDo}</p>
+                        <h5 className="card-title fw-bold">{companyJSON.data.name}</h5>
+                        <p className="card-subtitle mb-2 fw-bold">{companyJSON.data.startupCity}, {companyJSON.data.startupState}</p>
+                        <p className="card-text font13 text-secondary">{companyJSON.data.whatWillCompanyDo}</p>
                         <div className='d-flex align-items-center justify-content-between'>
                             <h6 className='fw-bold mb-0'>{fundraiseDetails.value.investment} ꜩ</h6>
                             <Button onClick={()=>{setcompanyWalletAddress(companyAddress)}}style={{ textTransform: 'capitalize' }} size='small' variant='contained' color="primary" data-bs-toggle="modal" data-bs-target="#requestingBtn">Request</Button>

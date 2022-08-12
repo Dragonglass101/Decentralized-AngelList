@@ -12,9 +12,8 @@ import Switch from '@material-ui/core/Switch';
 import Divider from '@material-ui/core/Divider';
 
 import { connectWallet } from "../utils/wallet";
-import ipfs_mini from "../ipfs_mini";
 import { signupCompany } from '../utils/operation';
-import ipfs_api from '../ipfs_api';
+import { NFTStorage, File } from 'nft.storage'
 
 import small_devils_logo from '../images/logo/small_devils_logo.png'
 
@@ -47,6 +46,8 @@ export const FormCompany = () => {
 
     const navigate = useNavigate();
 
+    const nftstore_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDJENkM4Qjg4RWY2YzY4YTU1NzdGMGZhOUU3MDE4ODU1ODk5YTYzQzkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDI0NDkwMjI5MiwibmFtZSI6IkRldmlsc0xpc3QifQ.fuOaSEThIZdIxTzNUQ-yOc4gvcuzv4K3LssZGSw6thc"
+
     const [details, setDetails] = useState({
         industry: "",
         linkedIn: "",
@@ -61,17 +62,15 @@ export const FormCompany = () => {
         startupWebsiteUrl: "",
 
         bufferPhoto: null,
-        bufferResume: null
-    });
-    const [photoCID, setphotoCID] = useState(null);
+      });
 
-    useEffect(() => {
-        const onVerifyCompany = async () => {
-            try {
-                await signupCompany(companyDetailsCID, companyValuation);
-                navigate("/dashboard-company");
-            } catch (error) {
-                alert("Transaction Failed:", error.message);
+      useEffect(() => {
+          const onVerifyCompany = async () =>{
+            try{
+              await signupCompany(companyDetailsCID, companyValuation);
+              navigate("/dashboard-company");
+            }catch(error){
+              alert("Transaction Failed:", error.message);
             }
 
             setloading(false);
@@ -81,31 +80,31 @@ export const FormCompany = () => {
             onVerifyCompany();
     }, [companyDetailsCID]);
 
-    useEffect(() => {
-        console.log(photoCID);
-
-        const uploadCompanyDetailsIpfs = async () => {
-            const startupDetails = {
-                industry: details["industry"],
-                linkedIn: details["linkedIn"],
-                name: details["name"],
-                walletID: details["walletID"],
-                whatWillCompanyDo: details["whatWillCompanyDo"],
-                address: details["address"],
-                startupCity: details["startupCity"],
-                startupZipCode: details["startupZipCode"],
-                startupState: details["startupState"],
-                startupCountry: details["startupCountry"],
-                startupWebsiteUrl: details["startupWebsiteUrl"],
-                companyValuation: companyValuation,
-                photoCID: photoCID
-            }
-            await uploadDataIpfs(startupDetails);
-        }
-        if (photoCID != null)
-            uploadCompanyDetailsIpfs();
-
-    }, [photoCID])
+    async function uploadToIpfs(){
+        const client = new NFTStorage({ token:  nftstore_token});
+        const data = {
+            industry: details["industry"],
+            linkedIn: details["linkedIn"],
+            name: details["name"],
+            walletID: details["walletID"],
+            whatWillCompanyDo: details["whatWillCompanyDo"],
+            address: details["address"],
+            startupCity: details["startupCity"],
+            startupZipCode: details["startupZipCode"],
+            startupState: details["startupState"],
+            startupCountry: details["startupCountry"],
+            startupWebsiteUrl: details["startupWebsiteUrl"],
+            companyValuation: companyValuation,
+            description: "Investor", 
+            image: new File([details["bufferPhoto"]], 'blob'), 
+            number: details["number"],
+            email: details["email"],
+            linkedIn: details["linkedIn"]
+        };
+        const metadata = await client.store(data);
+        console.log("metadata", metadata);
+        setcompanyDetailsCID(metadata.ipnft);
+    }
 
     const [wallet, setWallet] = useState(null);
     const handleConnectWallet = async () => {
@@ -123,28 +122,9 @@ export const FormCompany = () => {
 
     async function handleSubmit(e) {
         e.preventDefault()
+        setloading(true)
         await handleConnectWallet();
-        uploadPhoto();
-    }
-
-    const uploadDataIpfs = async (data) => {
-        ipfs_mini.addJSON(data, (err, hash) => {
-            if (err)
-                console.error(err);
-            setcompanyDetailsCID(hash);
-
-            setloading(false);
-        });
-    }
-
-    function uploadPhoto() {
-        ipfs_api.files.add(details["bufferPhoto"], (error, result) => {
-            if (error) {
-                console.error(error)
-                return
-            }
-            setphotoCID(result[0].hash)
-        })
+        uploadToIpfs();
     }
 
     function capturePhoto(event) {
@@ -467,11 +447,116 @@ export const FormCompany = () => {
                                     </div>
                                 </div>
 
-                                {activeStep === steps.length - 1 ?
-                                    <Button className='ms-3' type="submit" variant="contained" color="primary" onClick={handleSubmit}>Finish</Button> :
-                                    null
-                                }
-                            </form>
+                            <div className={"container " + `${activeStep != 3 ? "hidden" : ""}`}>
+                                <h4 className='row fw-bold'>Costs</h4>
+                                <div className='row border rounded text-center my-4'>
+                                    <h3>$500</h3>
+                                    <span className='text-secondary'>Incorporation includes Stack Base plan for the first year.</span>
+                                </div>
+                                <h5 className='fw-bold font15'>What's included:</h5>
+                                <h5 className='text-danger'>Table Data Requires Edit</h5>
+                                <table className="table mb-3 font13">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Feature</th>
+                                            <th scope="col">Description</th>
+                                            <th scope="col">Included</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className='text-secondary'>
+                                        <tr>
+                                            <th scope="row">Entity Formation</th>
+                                            <td>These are the shares allocated to founders</td>
+                                            <td>CheckCircleOutlineIcon</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Incorporation Fees</th>
+                                            <td>This gives you flexibility in the future to authorize additional shares for
+                                                fundraises or employee equity programs without having to make
+                                                additional filings.</td>
+                                            <td>5,000,000 shares</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Online Cap Table Management</th>
+                                            <td>This is the sum of the above two fields.</td>
+                                            <td>15,000,000 shares</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Fundraising Tools</th>
+                                            <td>A standard term. This helps you ensure you control who owns your stock</td>
+                                            <td>Included; Transfer requires written consent by the board members.</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Corporate Bank Account</th>
+                                            <td>This sets the floor for the value of the company's shares. You want this
+                                                number to be low to ensure it's easy to purchase your own shares</td>
+                                            <td>$.00001/share</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Post Incorporation Documents</th>
+                                            <td>This sets the floor for the value of the company's shares. You want this
+                                                number to be low to ensure it's easy to purchase your own shares</td>
+                                            <td>$.00001/share</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Corporate Bank Account</th>
+                                            <td>This sets the floor for the value of the company's shares. You want this
+                                                number to be low to ensure it's easy to purchase your own shares</td>
+                                            <td>$.00001/share</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Corporate Bank Account</th>
+                                            <td>This sets the floor for the value of the company's shares. You want this
+                                                number to be low to ensure it's easy to purchase your own shares</td>
+                                            <td>$.00001/share</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Corporate Bank Account</th>
+                                            <td>This sets the floor for the value of the company's shares. You want this
+                                                number to be low to ensure it's easy to purchase your own shares</td>
+                                            <td>$.00001/share</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+
+                            <div className={"container " + `${activeStep != 4 ? "hidden" : ""}`}>
+                                <h4 className='fw-bold'>Agreement</h4>
+                                <span className='font15'>
+                                    Before submitting, please review & accept the below mentioned documents and the terms and conditions. After submitting, you will be redirected to payment. After
+                                    payment is received, Stack will begin processing your incorporation. If for any reason incorporation is cancelled or unsuccessful, you will be refunded.
+                                </span>
+
+                                <div className='row my-3 align-items-center font13 text-secondary'>
+                                    <Switch />
+                                    <span className='col-11 font13'>I confirm that my company is not involved in any way with gambling, wagering, cannabis, tobacco, firearms, manufacturing alcohol, or illegal
+                                        activities.</span>
+                                </div>
+                                <div className='row my-3 align-items-center font13 text-secondary'>
+                                    <Switch />
+                                    <span className='col-11 font13'>By providing the information above, I hereby certify, to the best of my knowledge, that the information provided in this application is complete and
+                                        correct..</span>
+                                </div>
+                                <div className='row my-3 align-items-center font13 text-secondary'>
+                                    <Switch />
+                                    <span className='col-11 font13'>I acknowledge that once I submit this application, that the incorporation may be filed with the state of Delaware and I will be invoiced for the cost
+                                        of incorporation.</span>
+                                </div>
+                                <div className='row my-3 align-items-center font13 text-secondary'>
+                                    <Switch />
+                                    <span className='col-11 font13'>I have read and accepted the Electronic Disclosure & E-Signature Consent, Deposit Account Terms and Conditions, Cardholder Terms and
+                                        Conditions, Privacy Policy, Terms of Service, Master Subscription Agreement, and the Disclosures listed below. I consent to the use of electronic
+                                        records in connection with this application and to place my e-Signature on the documents listed above</span>
+                                </div>
+                            </div>
+
+                            {activeStep === steps.length - 1 ? 
+                                <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>{loading ? "loading...": "Finish"}</Button> : 
+                                null
+                            }
+                        </form>
                         </Typography>
                         <div className='container d-flex justify-content-between my-4'>
                             <Button
