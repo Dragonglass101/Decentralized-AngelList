@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import { NFTStorage, File } from 'nft.storage'
 
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -86,6 +87,8 @@ export const ChatRoomInvestor = () => {
     const companyBigMapID = 79636;
     const investorBigMapID = 79640;
 
+    const nftstore_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDJENkM4Qjg4RWY2YzY4YTU1NzdGMGZhOUU3MDE4ODU1ODk5YTYzQzkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDI0NDkwMjI5MiwibmFtZSI6IkRldmlsc0xpc3QifQ.fuOaSEThIZdIxTzNUQ-yOc4gvcuzv4K3LssZGSw6thc"
+
     const [loading, setloading] = useState(false);
     const [wallet, setWallet] = useState(null);
     const [sendersList, setsendersList] = useState(null);
@@ -125,13 +128,6 @@ export const ChatRoomInvestor = () => {
         handleChangeMessageHash();
     }, [messageHash])
     
-
-    async function fetchJSON(url) {
-        const response = await fetch(url);
-        const jsonfile = await response.json();
-        return jsonfile;
-    }
-    
     async function makeSendersList(){
         const investorDetails = await getKeyBigMapByID(investorBigMapID, wallet.address);
         const investorProfileHash = investorDetails.value["investor_profile_Id"];
@@ -157,7 +153,7 @@ export const ChatRoomInvestor = () => {
                 <div key={sender}>
                     <div onClick={()=>{ setcurrentCompany(sender);fetchSenderChats(sender, investorDetails.value["message_history"])}} className='row p-3' style={{cursor: "pointer"}}>
                         <div className='col-3'>
-                            <Avatar src={`https://ipfs.io/ipfs/${companyPhotoCID}`}/>
+                            <Avatar src={"https://" + companyPhotoCID + ".ipfs.dweb.link/blob"}/>
                         </div>
                         <div className='col-7'>
                             <h6 className='m-0'>{companyJSON.data.name}</h6>
@@ -175,56 +171,9 @@ export const ChatRoomInvestor = () => {
         setsendersList(tempSenderlist);
     }
 
-    async function fetchText(url) {
-        const response = await fetch(url);
-        return response.text();
-    }
-
     async function fetchSenderChats(companyAddress, messageHistory){
         setloadingChats(true);
         const tempElements = [];
-        // for(let request of initialRequestfromInvestors){
-        //     if(request.investor === investorAddress)
-        //         tempElements.push(
-        //             <div key={investorAddress} className='w-75' id='left-side-request'>
-        //                 <div className='d-flex my-3'>
-        //                     <div className='text-center'>
-        //                         <Avatar />
-        //                         <span className='font13 text-dark'>09:00</span>
-        //                     </div>
-        //                     <div className='ms-3 p-4 text-dark left-chat background-chat-request'>
-        //                         <div className='mb-3'>
-        //                             <div className='d-flex justify-content-between align-items-center text-light'>
-        //                                 <h6>Ownership</h6>
-        //                                 <span>{request.ownership}%</span>
-        //                             </div>
-
-        //                             <div className='d-flex justify-content-between align-items-center text-light'>
-        //                                 <h6>Valuation Cap</h6>
-        //                                 <span>{request.valuation_cap} ꜩ</span>
-        //                             </div>
-
-        //                             <div className='d-flex justify-content-between align-items-center text-light'>
-        //                                 <h6>Investment</h6>
-        //                                 <span>{request.investment} ꜩ</span>
-        //                             </div>
-        //                         </div>
-
-        //                         <div className='d-flex justify-content-between align-items-center'>
-        //                             <Button className='me-3 text-black background-accept' variant='contained'>
-        //                                 <ThumbUpRoundedIcon className='text-black me-2' />
-        //                                 Accept
-        //                             </Button>
-        //                             <Button variant='contained' className='background-deny'>
-        //                                 <ThumbDownRoundedIcon className='me-2' />
-        //                                 Deny
-        //                             </Button>
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //         );
-        // }
         
         if(messageHistory[`${companyAddress}`] === "") {
             setconversationElements(tempElements);
@@ -233,8 +182,8 @@ export const ChatRoomInvestor = () => {
         
         const messageHashInStorage = messageHistory[`${companyAddress}`];
         console.log(messageHistory, companyAddress);
-        const messagesString = await fetchText(`https://ipfs.io/ipfs/${messageHashInStorage}`);
-
+        const messagesStringJson = await axios("https://" + messageHashInStorage + ".ipfs.dweb.link/metadata.json")
+        const messagesString = messagesStringJson.data.chats;
         const messagesArr = messagesString.split("|");
 
         for(let message of messagesArr){
@@ -247,7 +196,7 @@ export const ChatRoomInvestor = () => {
                                 <span>{message.split("=")[1]}</span>
                             </div>
                             <div className='text-center me-1'>
-                                <Avatar src={`https://ipfs.io/ipfs/${investorPhotoCID}`}/>
+                                <Avatar src={"https://" + investorPhotoCID + ".ipfs.dweb.link/blob"}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                         </div>
@@ -260,7 +209,7 @@ export const ChatRoomInvestor = () => {
                     <div key={message} className='w-75' id='left-side-chat'>
                         <div className='d-flex my-3'>
                             <div className='text-center'>
-                                <Avatar src={`https://ipfs.io/ipfs/${companyPhotoCID}`}/>
+                                <Avatar src={"https://" + companyPhotoCID + ".ipfs.dweb.link/blob"}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                             <div className='ms-3 background-light d-flex align-items-center p-3 text-dark left-chat'>
@@ -274,10 +223,17 @@ export const ChatRoomInvestor = () => {
         setconversationElements(tempElements);
         setloadingChats(false);
     }
-    function addTextIpfs(text){
-        ipfs_mini.add(text).then((result, err)=>{
-            console.log(err, result)
-            setmessageHash(result)}).catch(console.log);
+    async function addTextIpfs(text){
+        const client = new NFTStorage({ token:  nftstore_token});
+        const data = {
+            name: "Chats",
+            description: "chats",
+            image: new File([], 'blob'),
+            chats: text
+        };
+        const metadata = await client.store(data);
+        console.log("metadata", metadata);
+        setmessageHash(metadata.ipnft);
     }
 
     async function handleMessageSend(){
@@ -292,11 +248,10 @@ export const ChatRoomInvestor = () => {
             newMessage = "i:" + "7:00" + "=" + typedMessage.current.value + "|";
         }
         else{
-            const messageString = await fetchText(`https://ipfs.io/ipfs/${oldMessageHash}`);
-            newMessage = messageString + "i:" + "7:00" + "=" + typedMessage.current.value + "|";
+            const messageString = await axios("https://" + oldMessageHash + ".ipfs.dweb.link/metadata.json");
+            newMessage = messageString.data.chats + "i:" + "7:00" + "=" + typedMessage.current.value + "|";
         }
-        const dateNow = Date.now();
-        newMessage = newMessage;
+
         addTextIpfs(newMessage);
     }
 
