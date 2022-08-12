@@ -62,15 +62,15 @@ export const FormCompany = () => {
         startupWebsiteUrl: "",
 
         bufferPhoto: null,
-      });
+    });
 
-      useEffect(() => {
-          const onVerifyCompany = async () =>{
-            try{
-              await signupCompany(companyDetailsCID, companyValuation);
-              navigate("/dashboard-company");
-            }catch(error){
-              alert("Transaction Failed:", error.message);
+    useEffect(() => {
+        const onVerifyCompany = async () => {
+            try {
+                await signupCompany(companyDetailsCID, companyValuation);
+                navigate("/dashboard-company");
+            } catch (error) {
+                alert("Transaction Failed:", error.message);
             }
 
             setloading(false);
@@ -80,8 +80,8 @@ export const FormCompany = () => {
             onVerifyCompany();
     }, [companyDetailsCID]);
 
-    async function uploadToIpfs(){
-        const client = new NFTStorage({ token:  nftstore_token});
+    async function uploadToIpfs() {
+        const client = new NFTStorage({ token: nftstore_token });
         const data = {
             industry: details["industry"],
             linkedIn: details["linkedIn"],
@@ -95,8 +95,8 @@ export const FormCompany = () => {
             startupCountry: details["startupCountry"],
             startupWebsiteUrl: details["startupWebsiteUrl"],
             companyValuation: companyValuation,
-            description: "Investor", 
-            image: new File([details["bufferPhoto"]], 'blob'), 
+            description: "Investor",
+            image: new File([details["bufferPhoto"]], 'blob'),
             number: details["number"],
             email: details["email"],
             linkedIn: details["linkedIn"]
@@ -447,116 +447,11 @@ export const FormCompany = () => {
                                     </div>
                                 </div>
 
-                            <div className={"container " + `${activeStep != 3 ? "hidden" : ""}`}>
-                                <h4 className='row fw-bold'>Costs</h4>
-                                <div className='row border rounded text-center my-4'>
-                                    <h3>$500</h3>
-                                    <span className='text-secondary'>Incorporation includes Stack Base plan for the first year.</span>
-                                </div>
-                                <h5 className='fw-bold font15'>What's included:</h5>
-                                <h5 className='text-danger'>Table Data Requires Edit</h5>
-                                <table className="table mb-3 font13">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Feature</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Included</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className='text-secondary'>
-                                        <tr>
-                                            <th scope="row">Entity Formation</th>
-                                            <td>These are the shares allocated to founders</td>
-                                            <td>CheckCircleOutlineIcon</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Incorporation Fees</th>
-                                            <td>This gives you flexibility in the future to authorize additional shares for
-                                                fundraises or employee equity programs without having to make
-                                                additional filings.</td>
-                                            <td>5,000,000 shares</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Online Cap Table Management</th>
-                                            <td>This is the sum of the above two fields.</td>
-                                            <td>15,000,000 shares</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Fundraising Tools</th>
-                                            <td>A standard term. This helps you ensure you control who owns your stock</td>
-                                            <td>Included; Transfer requires written consent by the board members.</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Corporate Bank Account</th>
-                                            <td>This sets the floor for the value of the company's shares. You want this
-                                                number to be low to ensure it's easy to purchase your own shares</td>
-                                            <td>$.00001/share</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Post Incorporation Documents</th>
-                                            <td>This sets the floor for the value of the company's shares. You want this
-                                                number to be low to ensure it's easy to purchase your own shares</td>
-                                            <td>$.00001/share</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Corporate Bank Account</th>
-                                            <td>This sets the floor for the value of the company's shares. You want this
-                                                number to be low to ensure it's easy to purchase your own shares</td>
-                                            <td>$.00001/share</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Corporate Bank Account</th>
-                                            <td>This sets the floor for the value of the company's shares. You want this
-                                                number to be low to ensure it's easy to purchase your own shares</td>
-                                            <td>$.00001/share</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Corporate Bank Account</th>
-                                            <td>This sets the floor for the value of the company's shares. You want this
-                                                number to be low to ensure it's easy to purchase your own shares</td>
-                                            <td>$.00001/share</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-
-                            </div>
-
-                            <div className={"container " + `${activeStep != 4 ? "hidden" : ""}`}>
-                                <h4 className='fw-bold'>Agreement</h4>
-                                <span className='font15'>
-                                    Before submitting, please review & accept the below mentioned documents and the terms and conditions. After submitting, you will be redirected to payment. After
-                                    payment is received, Stack will begin processing your incorporation. If for any reason incorporation is cancelled or unsuccessful, you will be refunded.
-                                </span>
-
-                                <div className='row my-3 align-items-center font13 text-secondary'>
-                                    <Switch />
-                                    <span className='col-11 font13'>I confirm that my company is not involved in any way with gambling, wagering, cannabis, tobacco, firearms, manufacturing alcohol, or illegal
-                                        activities.</span>
-                                </div>
-                                <div className='row my-3 align-items-center font13 text-secondary'>
-                                    <Switch />
-                                    <span className='col-11 font13'>By providing the information above, I hereby certify, to the best of my knowledge, that the information provided in this application is complete and
-                                        correct..</span>
-                                </div>
-                                <div className='row my-3 align-items-center font13 text-secondary'>
-                                    <Switch />
-                                    <span className='col-11 font13'>I acknowledge that once I submit this application, that the incorporation may be filed with the state of Delaware and I will be invoiced for the cost
-                                        of incorporation.</span>
-                                </div>
-                                <div className='row my-3 align-items-center font13 text-secondary'>
-                                    <Switch />
-                                    <span className='col-11 font13'>I have read and accepted the Electronic Disclosure & E-Signature Consent, Deposit Account Terms and Conditions, Cardholder Terms and
-                                        Conditions, Privacy Policy, Terms of Service, Master Subscription Agreement, and the Disclosures listed below. I consent to the use of electronic
-                                        records in connection with this application and to place my e-Signature on the documents listed above</span>
-                                </div>
-                            </div>
-
-                            {activeStep === steps.length - 1 ? 
-                                <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>{loading ? "loading...": "Finish"}</Button> : 
-                                null
-                            }
-                        </form>
+                                {activeStep === steps.length - 1 ?
+                                    <Button type="submit" variant="contained" color="primary" onClick={handleSubmit}>{loading ? "loading..." : "Finish"}</Button> :
+                                    null
+                                }
+                            </form>
                         </Typography>
                         <div className='container d-flex justify-content-between my-4'>
                             <Button

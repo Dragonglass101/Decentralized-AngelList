@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    backgroundColor:'rgb(236, 238, 245)',
   },
   backButton: {
     marginRight: theme.spacing(1),
@@ -115,7 +116,7 @@ export const FormInvestor = () => {
     uploadToIpfs();
   }
 
-  document.body.style.backgroundColor = 'rgb(236, 238, 245)';
+  // document.body.style.backgroundColor = 'rgb(236, 238, 245)';
 
   return (
     <div className={classes.root}>
