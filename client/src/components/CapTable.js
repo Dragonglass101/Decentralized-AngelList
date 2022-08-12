@@ -118,7 +118,7 @@ const doughnutConfigs = {
         //     theme: "fusion"
         // },
         "chart": {
-            "caption": "Companies Market Share",
+            "caption": "Company Market Share",
             "subCaption": "Last year",
             "numberPrefix": "$",
             "bgColor": "#ffffff",
@@ -214,8 +214,8 @@ export const CapTable = () => {
                                     </div>
                                 </div>
                                 <div className='w-50'>
-                                    <p className='my-1 font13 fw-bold text-secondary'>TOTAL INVESTED</p>
-                                    <h6 className='fw-bold mb-0'>$ 19,523.25</h6>
+                                    <p className='my-1 font13 fw-bold text-secondary'>Company Valuation</p>
+                                    <h6 className='fw-bold mb-0'>370k ꜩ</h6>
                                 </div>
                                 <div className='w-25' style={{ alignSelf: 'flex-end' }}>
                                     <div className='py-1 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
@@ -232,13 +232,13 @@ export const CapTable = () => {
                                     </div>
                                 </div>
                                 <div className='w-50'>
-                                    <p className='my-1 font13 fw-bold text-secondary'>TOTAL CHANGE</p>
-                                    <h6 className='fw-bold mb-0'>$ 19,523.25</h6>
+                                    <p className='my-1 font13 fw-bold text-secondary'>Ownership Percentage</p>
+                                    <h6 className='fw-bold mb-0'>84 %</h6>
                                 </div>
                                 <div className='w-25' style={{ alignSelf: 'flex-end' }}>
-                                    <div className='py-1 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
-                                        <KeyboardArrowUpIcon className='font15' />
-                                        <span className='fw-bold font10' style={{}}>6.24%</span>
+                                    <div className='py-1 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(240,101,72,.1)', color: 'rgba(240,101,72,1)' }}>
+                                        <KeyboardArrowDownIcon className='font15' />
+                                        <span className='fw-bold font10' style={{}}>5%</span>
                                     </div>
                                 </div>
                             </div>
@@ -250,8 +250,8 @@ export const CapTable = () => {
                                     </div>
                                 </div>
                                 <div className='w-50'>
-                                    <p className='my-1 font13 fw-bold text-secondary'>DAY CHANGE</p>
-                                    <h6 className='fw-bold mb-0'>$ 19,523.25</h6>
+                                    <p className='my-1 font13 fw-bold text-secondary'>Investments Recieved</p>
+                                    <h6 className='fw-bold mb-0'>150k ꜩ</h6>
                                 </div>
                                 <div className='w-25' style={{ alignSelf: 'flex-end' }}>
                                     <div className='py-1 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(240,101,72,.1)', color: 'rgba(240,101,72,1)' }}>

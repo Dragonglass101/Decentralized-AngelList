@@ -21,6 +21,10 @@ import Chip from '@material-ui/core/Chip';
 import Navbar from './CompanyNavbar';
 import NavFloating from './NavFloating';
 
+import sample1 from '../images/logo/sample-1.jpg'
+import sample2 from '../images/logo/sample-2.jpg'
+import dragon_glass from '../images/logo/dragon_glass.png'
+
 import searchIcon from '../images/search.png'
 import appleLogo from '../images/apple-logo.png'
 import pieChart from '../images/pie-chart.png'
@@ -340,7 +344,7 @@ export const DashboardCompany = () => {
     ]
   };
 
-  
+
   return (
     <>
       <div className={classes.root}>
@@ -355,8 +359,8 @@ export const DashboardCompany = () => {
           <div className='px-3'>
             <div className='d-flex justify-content-between align-items-center'>
               <div>
-                <h5 className='mb-0 ps-2'>Good Morning, Anna!</h5>
-                <p className='text-secondary ps-2'>Here's what's happening with your store today.</p>
+                <h5 className='mb-0 ps-2'>Good Morning, Anurag!</h5>
+                <p className='text-secondary ps-2'>Here's what's happening with your funds today.</p>
               </div>
               {/* <div className="input-group w-25">
                 <input style={{backgroundColor:'white'}} type="text" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" disabled />
@@ -368,13 +372,13 @@ export const DashboardCompany = () => {
 
               <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
-                  <p className='text-secondary fw-bold'>TOTAL EARNINGS</p>
-                  <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>
-                    13.45%</p>
+                  <p className='text-secondary fw-bold'>Company Valuation</p>
+                  {/* <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>
+                    13.45%</p> */}
                 </div>
                 <h5>559.2k ꜩ</h5>
                 <div className='d-flex justify-content-between align-items-end'>
-                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>View Net Earnings</a>
+                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>See Details</a>
                   <div className='p-2 rounded' style={{ backgroundColor: 'rgb(220,242,237)', color: 'rgb(28 163 132)' }}>
                     <MonetizationOnOutlinedIcon />
                   </div>
@@ -383,12 +387,12 @@ export const DashboardCompany = () => {
 
               <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
-                  <p className='text-secondary fw-bold'>ORDERS</p>
-                  <p className='fw-bold font13' style={{ color: 'rgb(200, 51, 51)' }}>
+                  <p className='text-secondary fw-bold'>Stock Pricing Per Share</p>
+                  {/* <p className='fw-bold font13' style={{ color: 'rgb(200, 51, 51)' }}>
                     13.45%
-                  </p>
+                  </p> */}
                 </div>
-                <h5>36,894</h5>
+                <h5>11 ꜩ</h5>
                 <div className='d-flex justify-content-between align-items-end'>
                   <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>View All Orders</a>
                   <div className='p-2 rounded' style={{ backgroundColor: 'rgba(41,156,219,.18)', color: 'rgba(41,156,219,1)' }}>
@@ -399,10 +403,10 @@ export const DashboardCompany = () => {
 
               <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
-                  <p className='text-secondary fw-bold'>CUSTOMERS</p>
-                  <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p>
+                  <p className='text-secondary fw-bold'>Investments Recieved</p>
+                  {/* <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p> */}
                 </div>
-                <h5>183.35M</h5>
+                <h5>300.2k ꜩ</h5>
                 <div className='d-flex justify-content-between align-items-end'>
                   <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>See Details</a>
                   <div className='p-2 rounded' style={{ backgroundColor: 'rgba(247,184,75,.18)', color: 'rgba(247,184,75,1)' }}>
@@ -413,12 +417,12 @@ export const DashboardCompany = () => {
 
               <div className='bg-white p-3 rounded shadow' style={{ width: '22%' }}>
                 <div className='d-flex justify-content-between'>
-                  <p className='text-secondary fw-bold'>MY BALANCE</p>
-                  <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p>
+                  <p className='text-secondary fw-bold'>Percentage of Ownership</p>
+                  {/* <p className='fw-bold font13' style={{ color: 'rgb(37, 186, 168)' }}>13.45%</p> */}
                 </div>
-                <h5>165.89k ꜩ</h5>
+                <h5>83 %</h5>
                 <div className='d-flex justify-content-between align-items-end'>
-                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>Withdraw Money</a>
+                  <a href='#' style={{ color: '#405189', textDecoration: 'underline' }}>See Details</a>
                   <div className='p-2 rounded' style={{ backgroundColor: 'rgba(64,81,137,.18)', color: 'rgba(64,81,137,1)' }}>
                     <AccountBalanceWalletOutlinedIcon />
                   </div>
@@ -429,7 +433,7 @@ export const DashboardCompany = () => {
 
             <div className='d-flex my-5 justify-content-between'>
               <div className='p-3 bg-white shadow' style={{ width: '60%' }}>
-                <h5>Revenue</h5>
+                <h5>Net Worth</h5>
                 <div className='d-flex align-items-center my-3 bg-light'>
                   <div className='w-25 text-center border p-2'>
                     <h5 className='m-0 font15 fw-bold'>7,585</h5>
@@ -452,13 +456,13 @@ export const DashboardCompany = () => {
               </div>
 
               <div className='bg-white p-3 shadow'>
-                <h5 className='mb-5'>Store visited by source</h5>
+                <h5 className='mb-5'>Company Ownership</h5>
                 <ReactFC className='doughnut' style={{ backgroundColor: 'white' }} {...doughnutConfigs} />
               </div>
             </div>
 
             <div className='d-flex justify-content-between'>
-              <div className='bg-white p-3 shadow' style={{ width: '56%' }}>
+              <div className='bg-white p-3 shadow' style={{ width: '54%' }}>
                 <div className='d-flex justify-content-between align-items-center mb-3'>
                   <h5 className='ms-2 mb-0'>Recent Transactions</h5>
                   <p className='me-3 mb-0'>Report</p>
@@ -467,134 +471,109 @@ export const DashboardCompany = () => {
                 <table className="table table-hover">
                   <tbody>
                     <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={dragon_glass} /></th>
                       <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
+                        <p className='m-0 fw-bold'>Dragon Glass</p>
+                        <span className='text-secondary'>Anurag Naruka</span>
                       </td>
-                      <td className='text-secondary'>Tech Company</td>
+                      <td className='text-secondary'>Glass Manf.</td>
                       <td>
-                        <p className='m-0 fw-bold'>8547</p>
-                        <span className='text-secondary'>Stock</span>
+                        <p className='m-0 fw-bold'>700</p>
+                        <span className='text-secondary'>Stocks</span>
                       </td>
-                      <td>$541200</td>
+                      <td>4000ꜩ</td>
                       <td className='fw-bold text-end'>
-                        <span>32%</span>
+                        <span>3%</span>
                         <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
                       </td>
                     </tr>
 
                     <tr>
-                      <th scope="row">
-                        <svg width="32px" height="32px" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4" /><path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853" /><path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05" /><path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335" /></svg>
-                      </th>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample1} /></th>
                       <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
+                        <p className='m-0 fw-bold'>Supreme Pvt. Ltd.</p>
+                        <span className='text-secondary'>Rahul Jain</span>
                       </td>
-                      <td className='text-secondary'>Tech Company</td>
+                      <td className='text-secondary'>Automobile</td>
                       <td>
-                        <p className='m-0 fw-bold'>8547</p>
-                        <span className='text-secondary'>Stock</span>
+                        <p className='m-0 fw-bold'>1250</p>
+                        <span className='text-secondary'>Stocks</span>
                       </td>
-                      <td>$541200</td>
+                      <td>9000ꜩ</td>
                       <td className='fw-bold text-end'>
-                        <span>32%</span>
+                        <span>12%</span>
                         <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
                       </td>
                     </tr>
 
                     <tr>
-                      <th scope="row">
-                        <svg width="32px" height="32px" viewBox="126.444 2.281 589 589" xmlns="http://www.w3.org/2000/svg"><circle cx="420.944" cy="296.781" r="294.5" fill="#2daae1" /><path d="M609.773 179.634c-13.891 6.164-28.811 10.331-44.498 12.204 16.01-9.587 28.275-24.779 34.066-42.86a154.78 154.78 0 0 1-49.209 18.801c-14.125-15.056-34.267-24.456-56.551-24.456-42.773 0-77.462 34.675-77.462 77.473 0 6.064.683 11.98 1.996 17.66-64.389-3.236-121.474-34.079-159.684-80.945-6.672 11.446-10.491 24.754-10.491 38.953 0 26.875 13.679 50.587 34.464 64.477a77.122 77.122 0 0 1-35.097-9.686v.979c0 37.54 26.701 68.842 62.145 75.961-6.511 1.784-13.344 2.716-20.413 2.716-4.998 0-9.847-.473-14.584-1.364 9.859 30.769 38.471 53.166 72.363 53.799-26.515 20.785-59.925 33.175-96.212 33.175-6.25 0-12.427-.373-18.491-1.104 34.291 21.988 75.006 34.824 118.759 34.824 142.496 0 220.428-118.052 220.428-220.428 0-3.361-.074-6.697-.236-10.021a157.855 157.855 0 0 0 38.707-40.158z" fill="#fff" /></svg>
-                      </th>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample2} /></th>
                       <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
+                        <p className='m-0 fw-bold'>Phoenix Creations</p>
+                        <span className='text-secondary'>Rakshit Bang</span>
                       </td>
-                      <td className='text-secondary'>Tech Company</td>
+                      <td className='text-secondary'>Artworks</td>
                       <td>
-                        <p className='m-0 fw-bold'>8547</p>
-                        <span className='text-secondary'>Stock</span>
+                        <p className='m-0 fw-bold'>320</p>
+                        <span className='text-secondary'>Stocks</span>
                       </td>
-                      <td>$541200</td>
+                      <td>8000ꜩ</td>
                       <td className='fw-bold text-end'>
-                        <span>32%</span>
+                        <span>7%</span>
                         <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
                       </td>
                     </tr>
 
-                    <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
-                      <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
-                      </td>
-                      <td className='text-secondary'>Tech Company</td>
-                      <td>
-                        <p className='m-0 fw-bold'>8547</p>
-                        <span className='text-secondary'>Stock</span>
-                      </td>
-                      <td>$541200</td>
-                      <td className='fw-bold text-end'>
-                        <span>32%</span>
-                        <BarChartOutlinedIcon className='mb-1 ms-1' style={{ color: 'rgb(37, 186, 168)' }} />
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
 
-              <div className='bg-white p-3 shadow' style={{ width: '43%' }}>
+              <div className='bg-white p-3 shadow' style={{ width: '45%' }}>
                 <div className='d-flex justify-content-between align-items-center mb-3'>
-                  <h5 className='ms-2 mb-0'>Stocks Owned</h5>
+                  <h5 className='ms-2 mb-0'>List of Signed Contracts</h5>
                   <p className='me-3 mb-0'>Report</p>
                 </div>
 
-                <table className="table table-hover">
+                <table className="table table-hover" style={{ overflow: 'auto' }}>
                   <tbody>
                     <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
+                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={dragon_glass} /></th>
                       <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
+                        <p className='m-0 fw-bold'>Dragon Glass</p>
+                        <span className='text-secondary'>Anurag Naruka</span>
                       </td>
-                      <td className='text-secondary'>Tech Company</td>
-                      <td>$541200</td>
+                      <td className='text-secondary'>Not Converted</td>
+                      <td className='text-secondary'>
+                        <p className='m-0 fw-bold text-black'>13%</p>
+                        <span className='text-secondary font10'>(at Valuation Cap)</span>
+                      </td>
+                      <td>SAFE</td>
                     </tr>
 
                     <tr>
                       <th scope="row">
-                        <svg width="32px" height="32px" viewBox="-3 0 262 262" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027" fill="#4285F4" /><path d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1" fill="#34A853" /><path d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782" fill="#FBBC05" /><path d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251" fill="#EB4335" /></svg>
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample1} />
                       </th>
                       <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
+                        <p className='m-0 fw-bold'>Supreme Pvt. Ltd.</p>
+                        <span className='text-secondary'>Rahul Jain</span>
                       </td>
-                      <td className='text-secondary'>Tech Company</td>
-                      <td>$541200</td>
+                      <td className='text-secondary'>Converted</td>
+                      <td className='text-black fw-bold'>11%</td>
+                      <td>Direct Equity</td>
                     </tr>
 
                     <tr>
                       <th scope="row">
-                        <svg width="32px" height="32px" viewBox="126.444 2.281 589 589" xmlns="http://www.w3.org/2000/svg"><circle cx="420.944" cy="296.781" r="294.5" fill="#2daae1" /><path d="M609.773 179.634c-13.891 6.164-28.811 10.331-44.498 12.204 16.01-9.587 28.275-24.779 34.066-42.86a154.78 154.78 0 0 1-49.209 18.801c-14.125-15.056-34.267-24.456-56.551-24.456-42.773 0-77.462 34.675-77.462 77.473 0 6.064.683 11.98 1.996 17.66-64.389-3.236-121.474-34.079-159.684-80.945-6.672 11.446-10.491 24.754-10.491 38.953 0 26.875 13.679 50.587 34.464 64.477a77.122 77.122 0 0 1-35.097-9.686v.979c0 37.54 26.701 68.842 62.145 75.961-6.511 1.784-13.344 2.716-20.413 2.716-4.998 0-9.847-.473-14.584-1.364 9.859 30.769 38.471 53.166 72.363 53.799-26.515 20.785-59.925 33.175-96.212 33.175-6.25 0-12.427-.373-18.491-1.104 34.291 21.988 75.006 34.824 118.759 34.824 142.496 0 220.428-118.052 220.428-220.428 0-3.361-.074-6.697-.236-10.021a157.855 157.855 0 0 0 38.707-40.158z" fill="#fff" /></svg>
+                        <img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={sample2} />
                       </th>
                       <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
+                        <p className='m-0 fw-bold'>Phoenix Creations</p>
+                        <span className='text-secondary'>Rakshit Bang</span>
                       </td>
-                      <td className='text-secondary'>Tech Company</td>
-                      <td>$541200</td>
-                    </tr>
-
-                    <tr>
-                      <th scope="row"><img style={{ width: '32px', height: '32px', borderRadius: '50%' }} alt="Remy Sharp" src={appleLogo} /></th>
-                      <td>
-                        <p className='m-0 fw-bold'>iTest Factory</p>
-                        <span className='text-secondary'>Oliver Tyler</span>
-                      </td>
-                      <td className='text-secondary'>Tech Company</td>
-                      <td>$541200</td>
+                      <td className='text-secondary'>Converted</td>
+                      <td className='text-black fw-bold'>5%</td>
+                      <td>SAFE</td>
                     </tr>
                   </tbody>
                 </table>
