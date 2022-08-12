@@ -184,7 +184,7 @@ export const ChatRoom = () => {
                     <div key={investorAddress} className='w-75' id='left-side-request'>
                         <div className='d-flex my-3'>
                             <div className='text-center'>
-                                <Avatar src={`https://ipfs.io/ipfs/${investorPhotoCID}`}/>
+                                <Avatar src={"https://" + investorPhotoCID + ".ipfs.dweb.link/blob"}/>
                                 <span className='font13 text-dark'>09:00</span>
                             </div>
                             <div className='ms-3 p-4 text-dark left-chat background-chat-request'>
@@ -210,14 +210,22 @@ export const ChatRoom = () => {
                                 </div>
 
                                 <div className='d-flex justify-content-between align-items-center'>
-                                    <Button disabled={requestAccepted} onClick={() => {handleAcceptOffer(investorAddress)}} className='me-3 text-black background-accept' variant='contained'>
+                                    {requestAccepted ? 
+                                    <Button disabled={requestAccepted} className='me-3 text-black background-accept' variant='contained'>
                                         <ThumbUpRoundedIcon className='text-black me-2' />
-                                        Accept
+                                        Request Accepted
                                     </Button>
-                                    <Button disabled={requestAccepted} variant='contained' className='background-deny'>
-                                        <ThumbDownRoundedIcon className='me-2' />
-                                        Deny
-                                    </Button>
+                                    :
+                                    <>
+                                        <Button onClick={() => {handleAcceptOffer(investorAddress)}} className='me-3 text-black background-accept' variant='contained'>
+                                            <ThumbUpRoundedIcon className='text-black me-2' />
+                                            Accept
+                                        </Button>
+                                        <Button variant='contained' className='background-deny'>
+                                            <ThumbDownRoundedIcon className='me-2' />
+                                            Deny
+                                        </Button>
+                                    </>}
                                 </div>
                             </div>
                         </div>
