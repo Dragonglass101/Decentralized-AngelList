@@ -1,42 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import { getRootStorage } from '../utils/Api';
-import { getActiveAccount, connectWallet } from '../utils/wallet';
+import React, { useState } from 'react';
+import { connectWallet } from '../utils/wallet';
 
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
-import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-import SearchIcon from '@material-ui/icons/Search';
 import Divider from '@material-ui/core/Divider';
 
 import sample1 from '../images/logo/sample-1.jpg'
 import sample2 from '../images/logo/sample-2.jpg'
 import dragon_glass from '../images/logo/dragon_glass.png'
 
-import stock1 from '../images/stocks/stock1.png'
-import stock2 from '../images/stocks/stock2.png'
-import stock3 from '../images/stocks/stock3.png'
 
 import chart1 from '../images/charts/chart1.png'
-import chart2 from '../images/charts/chart2.png'
 import chart3 from '../images/charts/chart3.png'
-import chart4 from '../images/charts/chart4.png'
 import chart5 from '../images/charts/chart5.png'
 
-import img1 from '../images/home/end_minus_5.png';
-import img2 from '../images/home/end_minus_4.png';
-import img3 from '../images/home/end_minus_3.png';
-import img4 from '../images/home/end_minus_2.png';
-import img5 from '../images/home/end_minus_1.png';
-import img6 from '../images/home/end.png';
-import img7 from '../images/home/end_plus_1.png';
-import angellist_abstract from '../images/stocks/angellist_abstract.png'
 import marketplace from '../images/marketplace.png'
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import Avatar from '@material-ui/core/Avatar';
-import appleLogo from '../images/apple-logo.png'
 
 import TwitterIcon from '@material-ui/icons/Twitter';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -46,12 +25,8 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import RedditIcon from '@material-ui/icons/Reddit';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
 
-import angellist_logo from '../images/home/angellist_logo.png'
-import devils_logo_img from '../images/logo/devils_logo_800px_trans.png'
-import devils_logo_svg from '../images/logo/devils_logo.svg'
 import small_devils_logo from '../images/logo/small_devils_logo.png'
 import { Button } from '@material-ui/core';
 
@@ -199,6 +174,12 @@ const nftGraphConfigs = {
 
 
 export const Marketplace = () => {
+    const [wallet, setWallet] = useState(null);
+    const handleConnectWallet = async () => {
+      const { wallet } = await connectWallet();
+      setWallet(wallet);
+    };
+
     return (
         <>
             <nav className='d-flex justify-content-between align-items-center shadow rounded15 px-3' style={{ height: '70px', marginBottom: '30px' }}>
@@ -231,7 +212,7 @@ export const Marketplace = () => {
                                 
                             </div>
                             <div class="modal-footer">
-                            <Button className='mt-3 d-block w-100' variant='contained' color='primary'>Connect Wallet</Button>
+                            <Button onClick={handleConnectWallet} className='mt-3 d-block w-100' variant='contained' color='primary'>Connect Wallet</Button>
                             </div>
                         </div>
                     </div>
@@ -260,12 +241,12 @@ export const Marketplace = () => {
                                     <div className='p-2 rounded' style={{ backgroundColor: 'rgba(64,81,137,.1)', color: 'rgba(64,81,137,1)' }}>
                                         <MonetizationOnOutlinedIcon style={{ width: '40px', height: '40px' }} />
                                     </div>
-                                    <span className='ms-3 fw-bold text-secondary'>BUYERS</span>
+                                    <span className='ms-3 fw-bold text-secondary'>BUYER REQUESTS</span>
                                 </div>
                                 <MoreVertIcon />
                             </div>
 
-                            <h4 className='fw-bold my-4'>1,571 . 564</h4>
+                            <h4 className='fw-bold my-4'>1,571</h4>
 
                             <div className='d-flex'>
                                 <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
@@ -284,12 +265,12 @@ export const Marketplace = () => {
                                     <div className='p-2 rounded' style={{ backgroundColor: 'rgba(64,81,137,.1)', color: 'rgba(64,81,137,1)' }}>
                                         <AccountBalanceWalletOutlinedIcon style={{ width: '40px', height: '40px' }} />
                                     </div>
-                                    <span className='ms-3 fw-bold text-secondary'>SELLERS</span>
+                                    <span className='ms-3 fw-bold text-secondary'>SELLER REQUESTS</span>
                                 </div>
                                 <MoreVertIcon />
                             </div>
 
-                            <h4 className='fw-bold my-4'>1,526 . 564</h4>
+                            <h4 className='fw-bold my-4'>1,526</h4>
 
                             <div className='d-flex'>
                                 <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>

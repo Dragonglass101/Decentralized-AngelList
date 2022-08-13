@@ -162,7 +162,9 @@ export const Home = () => {
                     <h3 className='display-5 fw-bold text-white mb-4'>Buy & Sell Company Tokens</h3>
                     {/* <h4 className='mb-4 fw-bold' style={{color:'rgb(64, 80, 181)'}}>Future of Trading is here!</h4> */}
                     <h5 className='text-light mb-5'>A Stock Trading Platform that uses FA2 tokens to buy & sell company shares</h5>
-                    <Button style={{ textTransform: 'capitalize', backgroundColor: '#7956bf' }} variant='contained' color='primary' size='large'>Go To Marketplace</Button>
+                    <Link to="/marketplace">
+                        <Button style={{ textTransform: 'capitalize', backgroundColor: '#7956bf' }} variant='contained' color='primary' size='large'>Go To Marketplace</Button>
+                    </Link>
                 </div>
                 <div style={{ width: '50%' }}>
                     <img style={{ marginTop: '-50px', width:'550px' }} src={angellist_abstract} />

@@ -81,6 +81,7 @@ import ZoomLine from "fusioncharts/fusioncharts.zoomline"
 
 // Step 5 - Include the theme as fusion
 import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+import { payVndr } from '../utils/operation';
 
 // Step 6 - Adding the chart and theme as dependency to the core fusioncharts
 ReactFC.fcRoot(FusionCharts, ZoomLine, Column2D, FusionTheme);
@@ -294,6 +295,13 @@ export const BuySellShares = () => {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
+
+    async function showAlertBuy(){
+        if(window.confirm("Seller found, Name of Seller: Anurag")){
+            await payVndr(1000, "tz1Yik5c1vGKgB3yyytZqrjxb1hbuSF2X8MZ", "tz1baoq2Ys4aqUGDJWYtWVpTxfUup9PdEpoP", "buying");
+        }
+        alert("Token Transfer Successful");
+    }
     return (
         <>
             <nav className='d-flex justify-content-between align-items-center shadow rounded15 px-3' style={{ height: '70px', marginBottom: '30px' }}>
@@ -325,9 +333,9 @@ export const BuySellShares = () => {
             <div className='d-flex'>
                 <div className='p-4 mx-auto shadow' style={{ width: '80%' }}>
                     <div className='pb-4 ms-5'>
-                        <h5 className='mb-0'>Wallet Balance</h5>
+                        <h3 className='mb-0'>Welcome Rakshit!</h3><h5><br/>Wallet Balance</h5>
                         <div className='d-flex align-items-start'>
-                            <h3 className='me-2 mb-0 pb-0 display-4'>29850.25851</h3>
+                            <h3 className='me-2 mb-0 pb-0 display-4'>28850.25</h3>
                             <h4 className='mt-2 mb-0 pb-0 text-secondary'>XTZ</h4>
                         </div>
                     </div>
@@ -362,12 +370,12 @@ export const BuySellShares = () => {
                                             <h5 className='fw-bold pb-2'>Market Order</h5>
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Tokens</span>
-                                                <input style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Market Price</span>
-                                                <input style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
                                             <Divider />
@@ -377,7 +385,7 @@ export const BuySellShares = () => {
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
 
-                                            <Button style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Buy Tokens</Button>
+                                            <Button onClick={()=>{setTimeout(showAlertBuy, 2000)}} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Buy Tokens</Button>
 
                                             <div className='my-3 text-center'>
                                                 <span className='text-secondary'>Trade Options</span>
@@ -398,12 +406,12 @@ export const BuySellShares = () => {
                                             <h5 className='fw-bold pb-2'>Market Order</h5>
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Tokens</span>
-                                                <input style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Market Price</span>
-                                                <input style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
                                             <Divider />
@@ -413,7 +421,7 @@ export const BuySellShares = () => {
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
 
-                                            <Button style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Sell Tokens</Button>
+                                            <Button onClick={()=>{setTimeout(showAlertBuy, 2000)}} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Sell Tokens</Button>
 
                                             <div className='my-3 text-center'>
                                                 <span className='text-secondary'>Trade Options</span>
@@ -466,7 +474,7 @@ export const BuySellShares = () => {
                             <Avatar className='me-4' src={dragon_glass} />
                             <div>
                                 <p className='mb-0 fw-bold'>Dragon Glass</p>
-                                <p className='mb-0 font13 text-secondary'>2,500 Tokens</p>
+                                <p className='mb-0 font13 text-secondary'>1,000 Tokens</p>
                             </div>
                         </div>
                         <img style={{ height: '40px' }} src={chart1} />
