@@ -1,146 +1,34 @@
-<!-- # Decentralized AngelList
-
-This is a Decentralized AngelList Dapp build on the Tezos blockchain
-
-## Prerequisites :
-
-- Python 3.x +
-- Node v12.x +
-
-## Setup, Run, Compile & Deploy Steps :
-
-1.  `npm install` it will install all your dependencies
-
-2.  `npm run client-install` it will install all the client dependencies i.e in React
-
-> If step 2 does not work then go to the 'client' directory and run 'npm install'
-
-3.  `npm run sync` this is a syncing command. Whenever the compile_config is changed in config.json this command must be executed from the terminal. This command helps the bundle to reconfigure the compilation parameters according to the changes you have made.
-
-4.  `npm run compile` will build the contracts locally inside the folder ./contract_build. This command compiles the python file to a Michelson file and stores it in the ./contract_build folder.
-
-5.  `npm run deploy` will deploy your contract with the params respect to your config.json
-
-6.  `npm run dapp` It will spin-up the Dapp front-end and you are ready to use it. This Bundle is packed up with simple create-react-app. Once you run the command the front-end dev server will start up and you will be redirected to your home page in your default browser.
-
-7.  `npm run test` It will run the whole template of SmartPy code with their scenario based testing. And the test results will be visualised in the teminal.
->Step 7 will also generate a test_build where your test results will be stored.
-
-8.  `npm run get-entry-points` It will extract the entry-points from you recently compiled code and display in the terminal with a sample invocation which you can reference while invoking an entry-point from your dapp.
-9.  **`npm run sync` is mandatory whenever your config.json file is changed !**
-
-### Editing compile_config :
-
-The contract name is "demo.py" inside the contract folder, to change the name of this folder you  will have to change it in config.json under contract_name.
-
-Note : You have to be specific about file name, otherwise it will throw an error.
-
-```json
-    "compile_config" : {
-        "contract_name": "demo.py",
-        "class_name": "MyContract(12, 13)"
-    },
-```
-
-#### contract_build folder will contain the following files :
-
-- demo_compiled.tz : Michelson Code of your Smart Contract.
-
-- demo_compiled.json : Micheline Code of your Smart Contract.
-
-- demo.smlse : an internal expression between SmartPy and SmartML, kept for the record but not directly useful.
-
-- demo_storage_init.tz : Micheline representation of the Storage.
-
-- demo_types.sp : It specifies the types of the params used in the contract.
-
->The two important are *\_compiled.tz & *\_storage_init.tz files
-
-#### Configuring Deployment Parameters :
-
-Inside the deploy_config section
-
-- First is the Tezos node you want to use , It can be local or any remote node
-
-* Next You can change the contract_code and contract_storage with the ones you want to deploy
-
-- Set the parameters like amount, gas_limit, derivation_path etc
-
-These are the pre-defined config for deployment:
-
-```json
-    "deploy_config" : {
-        "node" : "https://testnet.tezster.tech",
-        "contract_code" : "demo_compiled.tz",
-        "contract_storage" : "demo_storage_init.tz",
-        "key" : "test_key1",
-        "amount" : 10,
-        "delegate_address" : "",
-        "fee" : 10000,
-        "derivation_path" : "",
-        "storage_limit" : 10000,
-        "gas_limit" : 500000
-    },
-
-```
-
-A Tezos **node** allows you deploy contract, make transaction etc.
-
-**Contract Specifications:**
-
-- **contract_code** : It should refer to the Michelson Contract code you want to deploy.
-
-- **contract_storage** : refers to the Michelson representation of the initial storage used for deployment
-
-To deploy your contracts in the local tezos blockchain you first need to Setup [Tezster-CLI](https://docs.tezster.tech/tezster-cli) / [Tezster-GUI](https://docs.tezster.tech/)
-
-Once done just change the deploy_config.node : "http://localhost:18731"
-
-### Intracting with smart contract
->ConseilJs library is interct with the contract. -->
-
-
 <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a name="readme-top"></a>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
+
 
 
 
 <!-- PROJECT SHIELDS -->
 <!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-<!-- [![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url] -->
-[![LinkedIn][linkedin-shield]][linkedin-url]
+* I'm using markdown "reference style" links for readability.
+* Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+* See the bottom of this document for the declaration of the reference variables
+* for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+* https://www.markdownguide.org/basic-syntax/#reference-style-links
+
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <!-- <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
-  <h2 align="center">DevilList </h2>
+  <h1 align="center"> DevilsList </h1>
 
   <p align="center">
     An On-Chain AngelList on Tezos BlockChain!
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://youtu.be/m3xArqbYJ1A">View Demo</a>
+    .
     <a href="https://decentralizedangellist.web.app">View Site</a>
     <!-- <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
     ·
@@ -151,7 +39,7 @@ Once done just change the deploy_config.node : "http://localhost:18731"
 
 
 <!-- TABLE OF CONTENTS -->
-<details>
+
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
@@ -159,20 +47,55 @@ Once done just change the deploy_config.node : "http://localhost:18731"
     <li><a href="#usage">Challenges Faced</a></li>
     <li><a href="#contributing">Future Aspects and Scope</a></li>
     <li><a href="#license">Guide to setup the project locally</a></li>
+    <li><a href="#contract-address">Contract Address</a></li>
     <li><a href="#acknowledgments">Acknowledgments and References</a></li>
     <li><a href="#contact">Project Demo Pictures</a></li>
 
   </ol>
-</details>
 
 
 
-<!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
-<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
+### Inspiration 
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+With the world rapidly accepting and appreciating blockchain and decentralised ecosystems, it is imperative that major sites such as AngelList migrate to WEB3. New firms will be built on WEB3, and blockchain token transactions will be a major element of monetary transactions in the near future.
+Moreover Payments, loans, and borrowing were formerly only available through established financial institutions including banks. However, things changed with the arrival of blockchain technology. When the notion of cryptocurrencies began to grow in popularity, the conversation switched to a new set of issues, namely, decentralised finance (DeFi) Decentralized finance fosters an equitable and transparent financial system in which anybody may participate. It uses blockchain technology to provide unbanked individuals with access to financial and banking services.
+
+The goal of DeFi is to create an open-source, permissionless, and transparent financial services ecosystem. As a result, having a platform like AngelList is essential today.
+
+### Introduction
+
+DevilsList is an end-to-end platform where investors may invest in businesses using tez/USDT and sign SAFT/SAFEs directly on the site. When a round closes, this website keeps track of the cap-table, and entrepreneurs may pay their workers and vendors in tez/USDT. It is a fantastic programme for investing, raising funds, maintaining a cap-table, managing cash-flow, and doing payroll and accounting on-chain.
+
+### Features
+<img src='/src/images/demo_images/ppt2.png'>
+DevilsLsit is a fully-decentralised app where investors can finance a variety of new firms through SAFE notes, SAFTs or direct ownership.
+The flowchart above demonstrates how our website's fund-raising event works.
+
+### Exclusive Features
+#### DevilsList Marketplace
+
+Our goal was to develop a single, all-encompassing blockchain application that would allow users to invest, raise money, monitor cash flow, and more. DevilsList is a one-stop shop for all of your requirements, as my friends have very clearly explained. But as we worked to establish this product, we came to the realisation that, despite our best efforts to link investors and entrepreneurs, it is inevitable that startups will have to give up some equity in order to receive funding. What if we could devise a different means of obtaining funding for such startups? Thus, we developed the concept for DevilList Marketplace.
+
+<img src='/src/images/demo_images/ppt1.png'>
+
+Every company that registers on DevilList will receive a set of FA2 Fungible Company Tokens. These tokens are comparable to shares, however they are exclusively available on DevilList . The number of company tokens each founder and member wants to possess as a member must be entered whenever the firm registers itself and they are added as we have seen previously. The entire number of tokens that the company owns is determined when all members have been added, and the initial token price is set to the company's total valuation divided by the total token. These tokens can now be traded on the DevilList Market Place like shares. Anyone who wants to buy this token can log in to DevilMarket Place and submit a buy request. 
+ 
+Unlike with regular shares, the seller of this token will continue to receive 5% of any trade profits made by subsequent buyers of this token. Therefore, after 20 successful trades involving these tokens, they will no longer exist. As is obvious, the sooner you become the token's owner, the more and longer you can earn. 
+As a result, the majority of people will purchase these tokens from firm members as quickly as possible, helping to finance the startup in its  early stages. 
+Also the subsequent buyers, analyse company's valuation and trade this token similar to regular trading with 5% Royalty going to company. This will assist in ensuring a steady flow of funding for the business.
+
+#### Decentralized Peer-to-Peer Chat Application
+
+
+
+
+
+
+
+
 
 <!-- Here's why:
 * Your time should be focused on creating something amazing. A project that solves a problem and helps others
@@ -183,30 +106,37 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 <!-- Use the `BLANK_README.md` to get started. -->
 
-<p align="right">(<a href="#readme-top">Top</a>)</p>
+
 
 
 
 ### Tech-Stack
+* [Tezos](https://tezos.com/)
+* [IPFS](https://infura.io/)
+* [Smartpy](https://smartpy.io/)
+* [React](https://reactjs.org/)
 
-<!-- This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples. -->
+<p align="right"><a href="#readme-top">Top</a></p>
 
-* [![Tezos][Tezos]][Vue-url]
-* [![IPFS][IPFS]][Angular-url]
-* [![SmartPy][SmartPy]][Svelte-url]
-* [![React][React.js]][React-url]
-* [![TZKT API][TZKT API]][JQuery-url]
-* [![Taquito][Taquito]][JQuery-url]
-* [![FA2][FA2]][JQuery-url]
-
-
-<p align="right">(<a href="#readme-top">Top</a>)</p>
-
-### Challenges Faced
+## Challenges Faced
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
 
-### Future Aspects and Scope
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
+<p align="right"><a href="#readme-top">Top</a></p>
+
+## Future Aspects and Scope
+Royalty On FA2 Company Tokens: 
+Unlike traditional stock-trading using FA2 token the seller of token will get Royalty of 5% on the trade profit done buy the successive buyers of this tokens.
+By this we will encourage people to built great companies on blockchain as the early you become owner of the tokens longer you get the profit (each owner will keep getting royalty until the those tokens are in the market). The above feature is already half implemented.
+
+CRON jobs : Introducing CRON jobs to automate the buying and selling FA2 company tokens (which are currently being triggered by confirmations) instead directly initiate tokens transfer whenever avaliable at the buyer's price.
+
+Coinbase: If any user on the platform is deficiet of Tez instead of going to other platforms for buying tez he can buy tez directly from our platform. By making this buying process easy we will encourage the users to keep trading in Tez which will help in growth of Tezos Ecosystem. The above feature is almost close to completition.
+
+USDT/USDC: According to the research USDT stable coin has came on the Tezos blockchain recently in June 2022. USDC.e is coin on ethereum blockchain. For allowing the transactions in USDC.e there need to build an bridge between the two blockchain. We hope to enable transactions in this two coins in the near future.
+
+
+
+<p align="right"><a href="#readme-top">Top</a></p>
 
 
 
@@ -217,6 +147,8 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 - Python 3.x +
 - Node v12.x +
+
+<p align="right"><a href="#readme-top">Top</a></p>
 
 ### Setup, Run, Compile & Deploy Steps :
 
@@ -239,58 +171,33 @@ Of course, no one template will serve all projects since your needs may be diffe
 >Step 7 will also generate a test_build where your test results will be stored.
 
 8.  `npm run get-entry-points` It will extract the entry-points from you recently compiled code and display in the terminal with a sample invocation which you can reference while invoking an entry-point from your dapp.
+<<<<<<< HEAD
 9.  **`npm run sync` is mandatory whenever your config.json file is changed !**
+=======
+9.  *`npm run sync` is mandatory whenever your config.json file is changed !*
+
+<p align="right"><a href="#readme-top">Top</a></p>
+
+## Contract Address
+### KT1RgCskZanXW1mtz4aeFB9txG5Uce454V3q
+
+>>>>>>> 6bb0cf59d09cc27b77263aacea40dc8063c02b94
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments and References
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+* [Infura](https://infura.io/)
+* [Taquito](https://tezostaquito.io/)
+* [Smartpy](https://smartpy.io/)
+* [Tezos](https://opentezos.com/)
+* [Axios](https://axios-http.com/docs/intro)
+* [TZKT APi](https://api.tzkt.io/)
+* [React](https://reactjs.org/docs/getting-started.html)
+* [Fusion Charts](https://www.fusioncharts.com/fusioncharts)
+* [README Template](https://github.com/othneildrew/Best-README-Template/edit/master/README.md)
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
-
+<p align="right"><a href="#readme-top">Top</a></p>
 
 ## Project Demo Pictures
-You can refer the sample shots our projects <a href="https://github.com/othneildrew/Best-README-Template">Click Here</a>
- 
+You can refer the sample shots our projects <a href="https://drive.google.com/drive/folders/1vyppSZRm_aS8BcY_G4efxLQuYp651AkP?usp=sharing">Click Here</a>
+
+<p align="right">(<a href="#readme-top">Top</a>)</p>

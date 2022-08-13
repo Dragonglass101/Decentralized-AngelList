@@ -70,7 +70,6 @@ class Error_message:
     def not_admin_or_operator(self): return self.make("NOT_ADMIN_OR_OPERATOR")
     def paused(self):                return self.make("PAUSED")
 
-
 class Batch_transfer:
     def __init__(self, config):
         self.config = config
@@ -186,7 +185,6 @@ class Total_investment:
         self.data.total_investments = self.data.total_investments + amount
 
 #Data Type: Maps
-#Ledger keeps track of all tokens(shares of different company) owned by all individuals
 class Ledger_key:
     def __init__(self, config):
         self.config = config
@@ -512,18 +510,9 @@ class Core(sp.Contract):
 
             buy_shares_request = sp.list(t = sp.TRecord(buyer_wallet = sp.TAddress, company_token = sp.TNat, shares = sp.TNat, price_per_share = sp.TNat)),
             sell_shares_request = sp.list(t = sp.TRecord(seller_wallet = sp.TAddress, company_token = sp.TNat, shares = sp.TNat, price_per_share = sp.TNat)),
-            # investors = self.config.my_map(tvalue = Investors_value.get_type()),
-            investors = sp.big_map(
-                            tkey = sp.TAddress, 
-                            tvalue = sp.TRecord(
-                                    investor_profile_Id = sp.TString,
-                                    message_history = sp.TMap(
-                                        sp.TAddress,
-                                        sp.TString
-                                    ),
-                                    investments = sp.TList(t = Investors_value.get_type())
-                                )
-                                ),
+            
+            investors = sp.big_map( tkey = sp.TAddress, 
+                                    tvalue = sp.TRecord(investor_profile_Id = sp.TString, message_history = sp.TMap(sp.TAddress,sp.TString), investments = sp.TList(t = Investors_value.get_type()))),
 
             employees = self.config.my_map(tvalue = Employees_value.get_type()),
             company_members = self.config.my_map(tvalue = Company_members_value.get_type()),
@@ -557,8 +546,7 @@ class Core(sp.Contract):
                             investor_accepted = sp.TAddress,
                             time_of_acceptance = sp.TTimestamp,
                             message_history = sp.TMap(sp.TAddress, sp.TString),
-
-
+                            
                             safe_table = sp.TList(t = Safe_table.get_type()),
                             cap_table = sp.TList(t = Cap_table.get_type())
                     )
@@ -573,31 +561,17 @@ class Core(sp.Contract):
 
     # @sp.entry_point
     def transfer(self, params):
-        # sp.verify( ~self.is_paused(), message = self.error_message.paused() )
         sp.set_type(params, self.batch_transfer.get_type())
         sp.for transfer in params:
            current_from = transfer.from_
            sp.for tx in transfer.txs:
-                # if self.config.single_asset:
-                #     sp.verify(tx.token_id == 0, message = "single-asset: token-id <> 0")
+                if self.config.single_asset:
+                    sp.verify(tx.token_id == 0, message = "single-asset: token-id <> 0")
 
-                # sender_verify = ((self.is_administrator(sp.sender)) |
-                #                 (current_from == sp.sender))
-                # message = self.error_message.not_owner()
-                # if self.config.support_operator:
-                #     message = self.error_message.not_operator()
-                #     sender_verify |= (self.operator_set.is_member(self.data.operators,
-                #                                                   current_from,
-                #                                                   sp.sender,
-                #                                                   tx.token_id))
-                # if self.config.allow_self_transfer:
-                #     sender_verify |= (sp.sender == sp.self_address)
-                # sp.verify(sender_verify, message = message)
-                # sp.verify(
-                #     self.data.token_metadata.contains(tx.token_id),
-                #     message = self.error_message.token_undefined()
-                # )
-                # If amount is 0 we do nothing now:
+                sender_verify = ((self.is_administrator(sp.sender)) |
+                                (current_from == sp.sender))
+                message = self.error_message.not_owner()
+
                 sp.if (tx.amount > 0):
                     from_user = self.ledger_key.make(current_from, tx.token_id)
                     sp.verify(
@@ -694,7 +668,6 @@ class FA2_token_metadata(Core):
     def make_metadata(symbol, name, decimals):
         "Helper function to build metadata JSON bytes values."
         return (sp.map(l = {
-            # Remember that michelson wants map already in ordered
             "decimals" : sp.utils.bytes_of_string("%d" % decimals),
             "name" : sp.utils.bytes_of_string(name),
             "symbol" : sp.utils.bytes_of_string(symbol)
@@ -730,11 +703,7 @@ class FA2_mint(Core):
         if self.config.store_total_supply:
             self.data.total_supply[token_id] = amount + self.data.total_supply.get(token_id, default_value = 0)
 
-
-
 class DevilList(Core):
-    
-   
     @sp.entry_point
     def sell_shares(self, params):
         sp.set_type(params, sp.TRecord(seller_wallet = sp.TAddress, company_token = sp.TNat, shares = sp.TNat, price_per_share = sp.TNat))
@@ -756,19 +725,6 @@ class DevilList(Core):
         tranfer_entry.value.push(sp.record(from_ = params.from_, txs = txs.value))
         self.transfer(tranfer_entry.value)
 
-
-    
-    
-    # @sp.entry_point 
-    # def transfer_entry(self, params):
-    #     sp.set_type(params, sp.TRecord(from_ = sp.TAddress, to_ = sp.TAddress, token_id = token_id_type, amount = sp.TNat))
-    #     txs = sp.local("txs", sp.list([]))
-    #     tranfer_entry = sp.local("tranfer_entry", sp.list([]))
-    #     txs.value.push(sp.record(to_ = params.to_, token_id = params.token_id,amount = params.amount))
-    #     tranfer_entry.value.push(sp.record(from_ = params.from_, txs = txs.value))
-    #     self.transfer(tranfer_entry.value)
-
-    
 
     @sp.entry_point
     def investor_signup(self, params):
@@ -834,7 +790,7 @@ class DevilList(Core):
     @sp.entry_point
     def pay_from_company_wallet(self, params):
         sp.set_type(params, sp.TRecord(company_wallet = sp.TAddress, receiver_wallet = sp.TAddress, amount = sp.TMutez, tag = sp.TString))
-        sp.verify(sp.amount == sp.utils.nat_to_mutez(sp.utils.mutez_to_nat(params.amount)*sp.nat(1000000)), "Invalid Amount")
+        sp.verify(sp.amount == params.amount, "Invalid Amount")
         sp.send(params.receiver_wallet, sp.amount, message='Transaction Failed')
         self.data.companies[params.company_wallet].cashflow.push(CashFlow.make(sp.amount, params.tag, sp.now, False))
         self.data.companies[params.company_wallet].company_valuation = self.data.companies[params.company_wallet].company_valuation - sp.amount
@@ -943,7 +899,7 @@ class DevilList(Core):
         
         round_num = sp.local('round_num', self.data.companies[params.company_wallet].round_num )
         fund_raise = sp.local('fund_raise',Fundraise_key.make(self, params.company_wallet, round_num.value))
-        sp.verify(sp.amount == sp.utils.nat_to_mutez(sp.utils.mutez_to_nat(self.data.fundraise[fund_raise.value].investment) *sp.nat(1000000)) , "Invalid Amount") 
+        sp.verify(sp.amount == self.data.fundraise[fund_raise.value].investment , "Invalid Amount") 
         sp.send( params.company_wallet, sp.amount, message = "Amount Investment Failed")
 
         self.data.companies[params.company_wallet].cashflow.push(CashFlow.make(sp.amount,"Investment", sp.now, True))
@@ -1000,7 +956,6 @@ class DevilList(Core):
         self.data.companies[sp.sender].investor_accepted = sp.sender
         self.data.companies[sp.sender].round_num = self.data.companies[sp.sender].round_num + 1
 
-
         round_num = sp.local('round_num', self.data.companies[sp.sender].round_num)
         new_fund_raise = Fundraise_key.make(self, sp.sender, round_num.value)
         self.data.fundraise[new_fund_raise] = Fundraise_value.make(sp.now, sp.sender, params.investment, 
@@ -1028,68 +983,6 @@ class DevilList(Core):
             
         self.data.companies[sp.sender].safe_table = []
 
-    
-
-    
-def add_test(config, is_default = True):
-    @sp.add_test(name = config.name, is_default = is_default)
-    def test():
-        scenario = sp.test_scenario()
-        scenario.h1("Contract Name: " + "DevilList")
-        scenario.table_of_contents()
-        admin = sp.test_account("Administrator")
-        alice = sp.test_account("Alice")
-        bob   = sp.test_account("Bob")
-        robert = sp.test_account("Robert")
-        Google = sp.test_account("Google")
-        SundarPichai = sp.test_account("SundarPichai")
-       
-        scenario.h2("Accounts")
-        scenario.show([admin, Google, SundarPichai, alice, bob, robert])
-       
-
-        contract = DevilList (config = config,
-                        metadata = sp.utils.metadata_of_url("https://example.com"))
-        scenario += contract
-
-        scenario.h2("Signing Up Company")
-        scenario += contract.company_signup(sp.record(company_valuation = sp.tez(800000), company_profile_Id = sp.string("company_a\Profile_Id"))).run(
-                amount = sp.tez(50), sender = Google)
-
-        scenario.h2("Adding Members to Company and Minting their Company Shares Token")
-        scenario += contract.add_member_to_company(sp.record(
-                            member_wallet = SundarPichai.address,
-                            stakeHolder_name = "SundarPichai", stakeHolder_profile_Id = sp.string("SundarPichaiProfileID"), stakeHolder_type = sp.string("CEO"), 
-                            investment = sp.tez(4000), common_shares = sp.nat(2450), common_options = sp.nat(0),
-                            preferred_shares = sp.nat(0), fd_shares = sp.nat(0), fd_percent = sp.nat(0))).run(sender = Google)
-        # scenario.h2("Company Raising Fund")
-        # scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(100000), ownership = sp.nat(10),type = sp.string("SAFE"))).run(sender = Google)
-        # scenario.h2("Investor Offering Initial Offer")
-        # scenario += contract.request_from_investor(sp.record(company_wallet = Google.address, investment = sp.tez(100000), valuation_cap = sp.tez(400000), direct_equity = sp.nat(25), type = sp.string("SAFE"))).run(sender = robert)
-        # scenario.h2("Company Accepting Investor Final Offer")
-        # scenario += contract.accept_investor_request(sp.record(investor_wallet = robert.address)).run(sender = Google)
-        # scenario.h2("Company Paying Salaries to Employee")
-        # scenario += contract.pay_from_company_wallet(sp.record(company_wallet = Google.address, receiver_wallet = SundarPichai.address, amount = sp.tez(600000), tag = "Salary")).run(amount = sp.tez(600000), sender = Google)
-        # scenario.h2("Signing SAFE Agreement")
-        # scenario += contract.invest_through_SAFE(sp.record(investor_name = sp.string("Robert"),company_wallet = Google.address)).run(
-        #             amount = sp.tez(100000), sender = robert)
-        # scenario.h2("Raise Fund New Round - Previous SAFE conversion ")
-        # scenario += contract.raise_fund_for_company(sp.record(investment = sp.tez(100000), ownership = sp.nat(20),type = sp.string("DirectEquity"))).run(sender = Google)
-
-        # scenario += contract.transfer_entry(sp.record(from_ = SundarPichai.address, to_ = bob.address, token_id = 0, amount = 10))
-        scenario += contract.sell_shares(sp.record(seller_wallet = SundarPichai.address, company_token = 0, shares = 200, price_per_share = 12))
-        scenario += contract.buy_shares(sp.record(buyer_wallet = SundarPichai.address, company_token = 0, shares = 200, price_per_share = 12))
-        scenario += contract.token_transfer(sp.record(from_ = SundarPichai.address, to_ = robert.address, token_id = 0, amount = 200))
-        # scenario += contract.request_from_investor(sp.record(company_wallet = Google.address, investment = sp.tez(100000), valuation_cap = sp.tez(400000), direct_equity = sp.nat(40), type = sp.string("DirectEquity"))).run(sender = alice)
-        # scenario += contract.accept_investor_request(sp.record(investor_wallet = alice.address)).run(sender = Google)
-
-        # # scenario += contract.pay_from_company_wallet(sp.record(company_wallet = Google.address, receiver_wallet = SundarPichai.address, amount = sp.tez(600000), tag = "Salary")).run(amount = sp.tez(600000), sender = Google)
-
-        # scenario += contract.invest_through_DirectEquity(sp.record(investor_name = sp.string("Alice"),company_wallet = Google.address)).run(
-        #             amount = sp.tez(100000), sender = alice)
-
-
-        
 def global_parameter(env_var, default):
     try:
         if os.environ[env_var] == "true" :
@@ -1117,10 +1010,6 @@ def environment_config():
         use_token_metadata_offchain_view = global_parameter("use_token_metadata_offchain_view", True),
     )
 
-## ## Standard “main”
-##
-## This specific main uses the relative new feature of non-default tests
-## for the browser version.
 if "templates" not in __name__:
     add_test(environment_config())
     if not global_parameter("only_environment_test", False):
@@ -1142,6 +1031,4 @@ if "templates" not in __name__:
         add_test(Config(lazy_entry_points = True)
                  , is_default = not sp.in_browser)
 
-    # sp.add_compilation_target("FA2_comp", FA2(config = environment_config(),
-    #                           metadata = sp.utils.metadata_of_url("https://example.com"),
-    #                           admin = sp.address("tz1M9CMEtsXm3QxA7FmMU2Qh7xzsuGXVbcDr")))
+    
