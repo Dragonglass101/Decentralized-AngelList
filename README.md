@@ -29,7 +29,7 @@
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://youtu.be/m3xArqbYJ1A">View Demo</a>
     .
     <a href="https://decentralizedangellist.web.app">View Site</a>
     <!-- <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
