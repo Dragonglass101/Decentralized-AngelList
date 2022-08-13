@@ -177,6 +177,6 @@ USDT/USDC: According to the research USDT stable coin has came on the Tezos bloc
 <p align="right"><a href="#readme-top">Top</a></p>
 
 ## Project Demo Pictures
-You can refer the sample shots our projects <a href="https://drive.google.com/drive/folders/16ue-PlZ4RvHtR29oReQAVUAbTJ21dXgg?usp=sharing">Click Here</a>
+You can refer the sample shots our projects <a href="https://drive.google.com/drive/folders/1vyppSZRm_aS8BcY_G4efxLQuYp651AkP?usp=sharing">Click Here</a>
 
 <p align="right">(<a href="#readme-top">Top</a>)</p>
