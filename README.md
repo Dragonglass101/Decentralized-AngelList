@@ -36,7 +36,7 @@
   </p>
 </div>
 
-
+<img src='assets/devilslist-pic.jpg'>
 
 <!-- TABLE OF CONTENTS -->
 
@@ -171,9 +171,6 @@ USDT/USDC: According to the research USDT stable coin has came on the Tezos bloc
 >Step 7 will also generate a test_build where your test results will be stored.
 
 8.  `npm run get-entry-points` It will extract the entry-points from you recently compiled code and display in the terminal with a sample invocation which you can reference while invoking an entry-point from your dapp.
-<<<<<<< HEAD
-9.  **`npm run sync` is mandatory whenever your config.json file is changed !**
-=======
 9.  *`npm run sync` is mandatory whenever your config.json file is changed !*
 
 <p align="right"><a href="#readme-top">Top</a></p>
@@ -181,7 +178,6 @@ USDT/USDC: According to the research USDT stable coin has came on the Tezos bloc
 ## Contract Address
 ### KT1RgCskZanXW1mtz4aeFB9txG5Uce454V3q
 
->>>>>>> 6bb0cf59d09cc27b77263aacea40dc8063c02b94
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments and References
 
