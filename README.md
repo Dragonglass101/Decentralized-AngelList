@@ -112,10 +112,18 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 
 ### Tech-Stack
-* [Tezos](https://tezos.com/)
-* [IPFS](https://infura.io/)
-* [Smartpy](https://smartpy.io/)
-* [React](https://reactjs.org/)
+<p align="center">
+<a href="https://tezos.com/"><img src="assets/tezos-bg.png"   width="40%" height="40%"></a>
+<p align="center" float="left">
+<a href="https://smartpy.io/"><img src="assets/smartpy.png" width="30%" height="30%"></a>
+<a href="https://reactjs.org/"><img src="assets/reactjs.png"  width="30%" height="30%"></a>
+</p>
+<p align="center" float="left">
+<a href="https://ipfs.io/"><img src="assets/ipfs.png" width="30%" height="30%"></a>
+</p>
+    
+💲  Tezos - Evolutionary, revolutionary, and everything in-between. <br/>
+📷 IPFS is a peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge. <br/>
 
 <p align="right"><a href="#readme-top">Top</a></p>
 
