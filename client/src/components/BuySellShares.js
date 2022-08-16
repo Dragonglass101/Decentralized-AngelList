@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getActiveAccount } from '../utils/wallet';
+import { getActiveAccount, disconnectWallet} from '../utils/wallet';
 import { getBalance, getBigMapKeys, getKeyBigMapByID, getRootStorage } from '../utils/Api';
 import axios from 'axios';
 
@@ -48,8 +48,9 @@ import ZoomLine from "fusioncharts/fusioncharts.zoomline"
 
 // Step 5 - Include the theme as fusion
 import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
-import { payVndr } from '../utils/operation';
+import { buyTokensInMarketplace, payVndr, sellTokensInMarketplace } from '../utils/operation';
 import { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Step 6 - Adding the chart and theme as dependency to the core fusioncharts
 ReactFC.fcRoot(FusionCharts, ZoomLine, Column2D, FusionTheme);
@@ -256,11 +257,15 @@ export const BuySellShares = () => {
     const theme = useTheme();
     const [balance, setbalance] = useState();
     const [tokenList, settokenList] = useState();
+    const [companyOptionsList, setcompanyOptionsList] = useState();
+
+    const navigate = useNavigate();
 
     const sellTokens = useRef();
     const sellPrice = useRef();
     const buyTokens = useRef();
     const buyPrice = useRef();
+    const chosenCompany = useRef();
 
     const companyBigMapID = 88413;
     const ledgerBigMapID = 88418;
@@ -271,6 +276,7 @@ export const BuySellShares = () => {
             (async () => {
                 const activeAccount = await getActiveAccount();
                 setWallet(activeAccount);
+                makeCompanyOptionsList();
             })();
         }
     }, []);
@@ -293,13 +299,6 @@ export const BuySellShares = () => {
     const handleChangeIndex = (index) => {
         setValue(index);
     };
-
-    async function showAlertBuy() {
-        if (window.confirm("Seller found, Name of Seller: Anurag")) {
-            await payVndr(1000, "tz1Yik5c1vGKgB3yyytZqrjxb1hbuSF2X8MZ", "tz1baoq2Ys4aqUGDJWYtWVpTxfUup9PdEpoP", "buying");
-        }
-        alert("Token Transfer Successful");
-    }
 
     async function getOwnedTokens() {
         const tokenDetails = await getBigMapKeys(ledgerBigMapID);
@@ -355,9 +354,90 @@ export const BuySellShares = () => {
         getOwnedTokens();
     }
 
-    async function handleSellTokens() {
+    async function handleSellTokens(e) {
+        e.preventDefault();
+        try{
+            await sellTokensInMarketplace(chosenCompany.current.value, sellPrice.current.value, wallet.address, sellTokens.current.value);
+            alert("Token sold successfully");
+        }
+        catch{
+            console.error("Token selling failed");
+        }
 
     }
+    // company_token0
+    // price_per_share1
+    // seller_wallettz1WCzntScYKkYm6zPozjC53Rz4krRbS8WEY
+    // shares10
+    async function handleBuyTokens(e){
+        e.preventDefault();
+        const storage = await getRootStorage();
+        console.log(storage);
+        const sellersList = storage["sell_shares_request"]
+        let sellerAddress = null;
+
+        for(let seller of sellersList){
+            const sellingPrice = seller.price_per_share;
+            const companyToken = seller.company_token;
+            const sellerWallet = seller.seller_wallet;
+            const sellingTokens = seller.shares;
+
+            if(
+                companyToken != chosenCompany.current.value &&
+                sellingPrice != buyPrice.current.value &&
+                sellingTokens != buyTokens.current.value
+            )
+            {
+                alert("No tokens are currently available");
+                return;
+            }
+            else{
+                if(window.confirm("Do You Want to Continue Buying Tokens?")){
+                    sellerAddress = sellerWallet;
+                }
+                else{
+                    return;
+                }
+            }
+
+        }
+
+        try{
+            await buyTokensInMarketplace(buyTokens.current.value, sellerAddress, wallet.address, chosenCompany.current.value, buyTokens.current.value*buyPrice.current.value)
+            alert("Token sold successfully");
+            window.location.reload();
+        }
+        catch{
+            console.error("Token selling failed");
+        }
+    }
+
+    async function makeCompanyOptionsList(){
+        const temp = [];
+
+        const storage = await getRootStorage();
+
+        let i=0;
+        for (let companyAddress of storage["all_companies"]) {
+            const companyDetails = await getKeyBigMapByID(companyBigMapID, companyAddress);
+            const companyProfileHash = companyDetails.value["company_profile_Id"];
+            const companyJSON = await axios("https://" + companyProfileHash + ".ipfs.dweb.link/metadata.json")
+            const companyName = companyJSON.data.name;
+
+            temp.push(<option value={i} selected>{companyName}</option>);
+            i++;
+        }
+        setcompanyOptionsList(temp);
+    }
+
+    const onDisConnectWallet = async () => {
+        console.log("Disconnecting");
+        await disconnectWallet();
+        const activeAccount = await getActiveAccount();
+        setWallet(activeAccount);
+        console.log("Disconnected");
+        navigate("/marketplace");
+      };
 
     return (
         <>
@@ -376,8 +456,8 @@ export const BuySellShares = () => {
                 </div>
 
                 <div className='d-flex justify-content-between align-items-center'>
-                    <Button className='mx-2' variant="outlined" color="primary">
-                        Log in
+                    <Button onClick={onDisConnectWallet} className='mx-2' variant="outlined" color="primary">
+                        Log out
                     </Button>
                 </div>
             </nav>
@@ -419,24 +499,22 @@ export const BuySellShares = () => {
                                         <img src={buy1} className='w-100' />
                                     </div>
                                     <div style={{ width: '40%' }}>
-                                        <form onSubmit={handleSellTokens} className='p-3 bg-white shadow'>
+                                        <form onSubmit={handleBuyTokens} className='p-3 bg-white shadow'>
                                             <h5 className='fw-bold pb-2'>Market Order</h5>
 
-                                            <select className="form-select" aria-label="Default select example">
-                                                <option selected>Select Company</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                            <select ref={chosenCompany} className="form-select" aria-label="Default select example">
+                                                <option disabled selected>Select Company</option>
+                                                {companyOptionsList}
                                             </select>
 
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Tokens</span>
-                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" required />
+                                                <input ref={buyTokens} defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" required />
                                             </div>
 
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Price per Token</span>
-                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" required />
+                                                <input ref={buyPrice} defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" required />
                                             </div>
 
                                             <Divider />
@@ -445,7 +523,7 @@ export const BuySellShares = () => {
                                                 <span className='text-secondary'>Commissions</span>
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
-                                            <Button onClick={() => { setTimeout(showAlertBuy, 2000) }} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Buy Tokens</Button>
+                                            <Button type='submit' style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Buy Tokens</Button>
 
                                             <div className='my-3 text-center'>
                                                 <span className='text-secondary'>Trade Options</span>
@@ -462,22 +540,20 @@ export const BuySellShares = () => {
                                         <img src={buy2} className='w-100' />
                                     </div>
                                     <div style={{ width: '40%' }}>
-                                        <div className='p-3 bg-white shadow'>
+                                        <form onSubmit={handleSellTokens} className='p-3 bg-white shadow'>
                                             <h5 className='fw-bold pb-2'>Market Order</h5>
-                                            <select className="form-select" aria-label="Default select example">
-                                                <option selected>Select Company</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                            <select ref={chosenCompany} className="form-select" aria-label="Default select example">
+                                                <option disabled selected>Select Company</option>
+                                                {companyOptionsList}
                                             </select>
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Tokens</span>
-                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                                <input ref={sellTokens} defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Price per Token</span>
-                                                <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
+                                                <input ref={sellPrice} defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
                                             <Divider />
@@ -486,11 +562,11 @@ export const BuySellShares = () => {
                                                 <span className='text-secondary'>Commissions</span>
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
-                                            <Button onClick={() => { setTimeout(showAlertBuy, 2000) }} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Sell Tokens</Button>
+                                            <Button type='submit' style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Sell Tokens</Button>
                                             <div className='my-3 text-center'>
                                                 <span className='text-secondary'>Trade Options</span>
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

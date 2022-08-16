@@ -266,3 +266,51 @@ export const payVndr = async(amount, companyAddress, receiverWallet, tag) => {
         throw error;
     }
 }
+
+// "company_token:nat": "nat",
+// "price_per_share:nat": "nat",
+// "seller_wallet:address": "address",
+// "shares:nat": "nat"
+export const sellTokensInMarketplace = async(companyToken, pricePerShare, sellerWallet, shares) => {
+    try {
+        const contract = await tezos.wallet.at(
+            //Contract Address
+            "KT1Hm63JnL6ZCypjWgH4Xnr9tETpkbz48q5H"
+        );
+
+        const op = await contract.methods
+            .sell_shares(
+                companyToken, pricePerShare, sellerWallet, shares
+            )
+            .send({
+                amount: 0,
+                mutez: false,
+            });
+        await op.confirmation(1);
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+}
+
+export const buyTokensInMarketplace = async(amountTokens, fromAddress, toAddress, tokenID, amount) => {
+    try {
+        const contract = await tezos.wallet.at(
+            //Contract Address
+            "KT1Hm63JnL6ZCypjWgH4Xnr9tETpkbz48q5H"
+        );
+
+        const op = await contract.methods
+            .token_transfer(
+                amountTokens, fromAddress, toAddress, tokenID
+            )
+            .send({
+                amount: amount,
+                mutez: false,
+            });
+        await op.confirmation(1);
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+}
