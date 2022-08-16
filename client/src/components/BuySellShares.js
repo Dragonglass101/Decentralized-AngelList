@@ -255,7 +255,7 @@ const useStyles = makeStyles((theme) => ({
 export const BuySellShares = () => {
     const theme = useTheme();
     const [balance, setbalance] = useState();
-    const [tokenList , settokenList] = useState();
+    const [tokenList, settokenList] = useState();
 
     const sellTokens = useRef();
     const sellPrice = useRef();
@@ -280,7 +280,7 @@ export const BuySellShares = () => {
             const bal = await getBalance(wallet.address);
             setbalance(bal)
         }
-        if (wallet && !balance){
+        if (wallet && !balance) {
             retrieveBalance();
         }
     }, [wallet])
@@ -294,21 +294,21 @@ export const BuySellShares = () => {
         setValue(index);
     };
 
-    async function showAlertBuy(){
-        if(window.confirm("Seller found, Name of Seller: Anurag")){
+    async function showAlertBuy() {
+        if (window.confirm("Seller found, Name of Seller: Anurag")) {
             await payVndr(1000, "tz1Yik5c1vGKgB3yyytZqrjxb1hbuSF2X8MZ", "tz1baoq2Ys4aqUGDJWYtWVpTxfUup9PdEpoP", "buying");
         }
         alert("Token Transfer Successful");
     }
 
-    async function getOwnedTokens(){
+    async function getOwnedTokens() {
         const tokenDetails = await getBigMapKeys(ledgerBigMapID);
         const storage = await getRootStorage();
         console.log(tokenDetails);
 
         const temp = [];
-        for(let token of tokenDetails){
-            if(token.key.address === wallet.address){
+        for (let token of tokenDetails) {
+            if (token.key.address === wallet.address) {
                 const tokensOwned = token.value;
 
                 let companyAddress = storage["all_companies"][token.key.nat];
@@ -321,41 +321,41 @@ export const BuySellShares = () => {
                 const companyJSON = await axios("https://" + companyProfileHash + ".ipfs.dweb.link/metadata.json")
                 const companyName = companyJSON.data.name;
                 const companyUri = companyJSON.data.image;
-                const companyPhotoHash = companyUri.substring(7, companyUri.length-5);
+                const companyPhotoHash = companyUri.substring(7, companyUri.length - 5);
                 temp.push(
                     <>
-                    <div className='d-flex justify-content-between align-items-center'>
                         <div className='d-flex justify-content-between align-items-center'>
-                            <Avatar className='me-4' src={"https://" + companyPhotoHash + ".ipfs.dweb.link/blob"} />
-                            <div>
-                                <p className='mb-0 fw-bold'>{companyName}</p>
-                                <p className='mb-0 font13 text-secondary'>{tokensOwned} Tokens</p>
+                            <div className='d-flex justify-content-between align-items-center'>
+                                <Avatar className='me-4' src={"https://" + companyPhotoHash + ".ipfs.dweb.link/blob"} />
+                                <div>
+                                    <p className='mb-0 fw-bold'>{companyName}</p>
+                                    <p className='mb-0 font13 text-secondary'>{tokensOwned} Tokens</p>
+                                </div>
+                            </div>
+                            <img style={{ height: '40px' }} src={chart1} />
+                            <div className='d-flex justify-content-around text-align-center'>
+                                <div className='text-center'>
+                                    <p className='mb-0 fw-bold'>{companyValuation / totalShares} ꜩ</p>
+                                    <p className='mb-0 font13 text-secondary'>Price per Token</p>
+                                </div>
+
+                                <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded px-2 ms-3' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
+                                    <span className='fw-bold font13' style={{}}>0 . 00%</span>
+                                </div>
                             </div>
                         </div>
-                        <img style={{ height: '40px' }} src={chart1} />
-                        <div className='d-flex justify-content-around text-align-center'>
-                            <div className='text-center'>
-                                <p className='mb-0 fw-bold'>{companyValuation/totalShares} ꜩ</p>
-                                <p className='mb-0 font13 text-secondary'>Price per Token</p>
-                            </div>
 
-                            <div className='py-1 me-3 d-flex justify-content-center align-items-center rounded px-2 ms-3' style={{ backgroundColor: 'rgba(10,179,156,.1)', color: 'rgba(10,179,156,1)' }}>
-                                <span className='fw-bold font13' style={{}}>0 . 00%</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} /></>
+                        <Divider className='my-3' style={{ backgroundColor: 'grey' }} /></>
                 )
             }
         }
         settokenList(temp);
     }
-    if(!tokenList && wallet){
+    if (!tokenList && wallet) {
         getOwnedTokens();
     }
 
-    async function handleSellTokens(){
+    async function handleSellTokens() {
 
     }
 
@@ -376,24 +376,19 @@ export const BuySellShares = () => {
                 </div>
 
                 <div className='d-flex justify-content-between align-items-center'>
-                    {/* <Button className='mx-2' variant="outlined" color="primary" onClick={handleLogin}>
+                    <Button className='mx-2' variant="outlined" color="primary">
                         Log in
                     </Button>
-                    <Link to='/sign-up'>
-                        <Button className='mx-2' variant="contained" color="primary">
-                            Join
-                        </Button>
-                    </Link> */}
                 </div>
             </nav>
 
             <div className='d-flex'>
                 <div className='p-4 mx-auto shadow' style={{ width: '80%' }}>
                     <div className='pb-4 ms-5'>
-                        <h3 className='mb-0'>Welcome,</h3><h5><br/>Wallet Balance</h5>
+                        <h3 className='mb-0'>Welcome,</h3><h5><br />Wallet Balance</h5>
                         <div className='d-flex align-items-start'>
-                        {wallet ?
-                            <h3 className='me-2 mb-0 pb-0 display-4'>{(balance - (balance % 10000)) / 1000000}</h3> : null}
+                            {wallet ?
+                                <h3 className='me-2 mb-0 pb-0 display-4'>{(balance - (balance % 10000)) / 1000000}</h3> : null}
                             <h4 className='mt-2 mb-0 pb-0 text-secondary'>XTZ</h4>
                         </div>
                     </div>
@@ -427,13 +422,20 @@ export const BuySellShares = () => {
                                         <form onSubmit={handleSellTokens} className='p-3 bg-white shadow'>
                                             <h5 className='fw-bold pb-2'>Market Order</h5>
 
+                                            <select className="form-select" aria-label="Default select example">
+                                                <option selected>Select Company</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
+
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Tokens</span>
                                                 <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" required />
                                             </div>
 
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
-                                                <span className='text-secondary'>Market Price</span>
+                                                <span className='text-secondary'>Price per Token</span>
                                                 <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" required />
                                             </div>
 
@@ -443,7 +445,7 @@ export const BuySellShares = () => {
                                                 <span className='text-secondary'>Commissions</span>
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
-                                            <Button onClick={()=>{setTimeout(showAlertBuy, 2000)}} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Buy Tokens</Button>
+                                            <Button onClick={() => { setTimeout(showAlertBuy, 2000) }} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Buy Tokens</Button>
 
                                             <div className='my-3 text-center'>
                                                 <span className='text-secondary'>Trade Options</span>
@@ -462,13 +464,19 @@ export const BuySellShares = () => {
                                     <div style={{ width: '40%' }}>
                                         <div className='p-3 bg-white shadow'>
                                             <h5 className='fw-bold pb-2'>Market Order</h5>
+                                            <select className="form-select" aria-label="Default select example">
+                                                <option selected>Select Company</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
                                                 <span className='text-secondary'>Tokens</span>
                                                 <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
                                             <div className='my-3 d-flex justify-content-between align-items-center'>
-                                                <span className='text-secondary'>Market Price</span>
+                                                <span className='text-secondary'>Price per Token</span>
                                                 <input defaultValue={0} style={{ width: '35%' }} type="number" className="form-control" id="exampleFormControlInput1" placeholder="" />
                                             </div>
 
@@ -478,7 +486,7 @@ export const BuySellShares = () => {
                                                 <span className='text-secondary'>Commissions</span>
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
-                                            <Button onClick={()=>{setTimeout(showAlertBuy, 2000)}} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Sell Tokens</Button>
+                                            <Button onClick={() => { setTimeout(showAlertBuy, 2000) }} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Sell Tokens</Button>
                                             <div className='my-3 text-center'>
                                                 <span className='text-secondary'>Trade Options</span>
                                             </div>
@@ -518,16 +526,16 @@ export const BuySellShares = () => {
             </div>
 
 
-            <div className='shadow mt-5 my-4 p-4 mx-auto' style={{width:'80%'}}>
-                    <div className='d-flex justify-content-between align-items-center'>
-                        <h5 className='fw-bold mb-0'>Top Firms</h5>
-                        <MoreVertIcon />
-                    </div>
-                    <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
-
-                    {tokenList}
-
+            <div className='shadow mt-5 my-4 p-4 mx-auto' style={{ width: '80%' }}>
+                <div className='d-flex justify-content-between align-items-center'>
+                    <h5 className='fw-bold mb-0'>Top Firms</h5>
+                    <MoreVertIcon />
                 </div>
+                <Divider className='my-3' style={{ backgroundColor: 'grey' }} />
+
+                {tokenList}
+
+            </div>
 
             {/* Footer */}
 
