@@ -1,0 +1,65 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@fontsource/roboto": "^4.5.7",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "@react-pdf/renderer": "^2.3.0",
+    "@taquito/beacon-wallet": "^13.0.1",
+    "@taquito/taquito": "^13.0.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@zalando/oauth2-client-js": "^0.0.18",
+    "apexcharts": "^3.35.4",
+    "axios": "^0.27.2",
+    "bootstrap": "^4.4.1",
+    "bulma": "^0.9.4",
+    "chokidar": "^3.5.3",
+    "coinbase": "^2.0.8",
+    "conseiljs": "0.4.3",
+    "firebase-tools": "^11.4.2",
+    "fusioncharts": "^3.19.0",
+    "install": "^0.13.0",
+    "ipfs-api": "^26.1.2",
+    "ipfs-car": "^0.8.1",
+    "ipfs-mini": "^1.1.5",
+    "nft.storage": "^3.3.0",
+    "npm": "^8.15.0",
+    "openid-client": "^5.1.8",
+    "react": "^16.13.1",
+    "react-apexcharts": "^1.4.0",
+    "react-dom": "^16.13.1",
+    "react-fusioncharts": "^4.0.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "^3.4.1",
+    "react-select": "^5.4.0",
+    "react-select-country-list": "^2.2.3",
+    "react-swipeable-views": "^0.14.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

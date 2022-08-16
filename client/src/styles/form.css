@@ -1,0 +1,276 @@
+@font-face {
+    font-family: devils_font;
+    src: url(../fonts/Devil.ttf);
+}
+
+@font-face {
+    font-family: devils_tail_font;
+    src: url(../fonts/DevilTail.otf);
+}
+
+@font-face {
+    font-family: devils_lairs_font;
+    src: url(../fonts/DevilLairs.ttf);
+}
+
+html * {
+    font-family: kanit;
+}
+
+
+.fitHeight {
+    height: fit-content !important;
+}
+
+.font15 {
+    font-size: 15px !important;
+}
+
+.font13 {
+    font-size: 13px !important;
+}
+
+.font10 {
+    font-size: 10px !important;
+}
+
+.rounded25 {
+    border-radius: 25px !important;
+}
+
+.rounded15 {
+    border-radius: 15px !important;
+}
+
+.employee-form-bg {
+    background-color: rgb(236, 238, 245)
+}
+
+.cardColorPinkish {
+    background-color: rgb(243, 243, 255) !important;
+}
+
+.cardColorGreyish {
+    background-color: rgb(241, 245, 252) !important;
+}
+
+.background-cream {
+    background-color: rgb(233, 229, 221);
+}
+
+.background-darkBlue {
+    background-color: rgb(36, 53, 194) !important;
+}
+
+.background-chocolate {
+    background-color: rgb(190, 158, 128);
+}
+
+.background-grey {
+    background-color: rgb(248, 248, 248);
+}
+
+.color-primary {
+    color: rgb(64, 80, 181);
+}
+
+.sidebar-background {
+    background-color: rgb(18, 24, 39) !important;
+}
+
+.sidebar-color {
+    color: rgb(18, 24, 39) !important;
+}
+
+.background-whatsappScreen {
+    background-color: rgb(36, 44, 53);
+}
+
+.font-digitalClock {
+    font-family: 'Orbitron';
+}
+
+.font-numbers {
+    font-family: 'Uchen';
+}
+
+.background-selected:hover,
+.background-selected:focus,
+.background-selected:active,
+.background-selected:visited {
+    background-color: rgb(36, 42, 56) !important;
+    border-radius: 15px !important;
+    font-weight: bold !important;
+}
+
+/* a:hover,
+a:active,
+a:focus,
+a:visited {
+    background-color: rgb(36, 42, 56) !important;
+    border-radius: 15px !important;
+    font-weight: bold !important;
+} */
+
+.highlight-karo {
+    background-color: rgb(36, 42, 56) !important;
+    border-radius: 15px !important;
+    font-weight: bold !important;
+}
+
+.green-karo {
+    color: rgb(18, 185, 129) !important;
+}
+
+
+.menu-item-color {
+    color: rgb(209, 213, 219);
+}
+
+.menu-icon-color {
+    color: rgb(156, 163, 175);
+}
+
+.background-paper {
+    background-color: rgb(250, 250, 252);
+}
+
+/* ::-webkit-scrollbar {
+    display: none;
+} */
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 20px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+.color-green-spent {
+    color: rgb(37, 186, 168) !important;
+}
+
+.banner {
+    background: rgb(17 22 48);
+    border-radius: 17px 17px 0px 0px;
+    color: white;
+}
+
+.background-light-purple {
+    background-color: rgb(238, 240, 255);
+}
+
+.button-purple {
+    background-color: #21005f !important;
+}
+
+.color-credit {
+    color: #82d616;
+}
+
+.color-debit {
+    color: #ea0606;
+}
+
+.background-primary {
+    background-color: rgb(64, 80, 181) !important;
+}
+
+.background-secondary{
+    background-color: #f50057 !important;
+}
+
+.background-purplepink {
+    background-color: rgb(80, 72, 228) !important;
+}
+
+.left-chat {
+    border-radius: 0px 20px 20px 20px;
+}
+
+.right-chat {
+    border-radius: 20px 0px 20px 20px;
+}
+
+.background-maroon {
+    background-color: rgb(79, 65, 109) !important;
+}
+
+.background-light {
+    background-color: rgb(245, 247, 251) !important;
+}
+
+.background-chat-request{
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+.color-chat-request{
+    color: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%) !important;
+}
+
+.background-accept{
+    background: rgb(37, 186, 168) !important;
+}
+
+.background-deny{
+    background: rgb(200, 51, 51) !important;
+}
+
+.background-highlight-selected{
+    background-color: rgb(36, 42, 56) !important;
+}
+
+.color-purple-border{
+    border-color: rgb(18, 24, 39) !important;
+    border: 2px solid  !important;
+    border-radius: 10px;
+    color:rgb(18, 24, 39) !important;
+    background: transparent !important;
+}
+
+/* Playing with Charts  */
+.doughnut{
+    /* position:relative;
+    top:-30px;
+    left:-25px; */
+}
+
+.chatSelected:hover{
+    background-color: rgb(245, 247, 251) !important;
+}
+
+.chatSelected{
+    background-color: rgb(245, 247, 251) !important;
+}
+
+.chatSelected:focus,
+.chatSelected:checked,
+.chatSelected:target,
+.chatSelected:active,
+.chatSelected:visited {
+    background-color: rgb(232, 238, 249) !important;
+}
+
+.create-avatar{
+    width: '32px';
+    height: '32px';
+    border-radius: '50%' ;
+}
+
+.gradient-color{
+    color:linear-gradient(90deg, #FF00CC 0%, #333399 100%) !important; 
+}
