@@ -67,7 +67,7 @@ import { Trash } from "./components/Trash"
           <Route path='employee-requests-company' element={<EmployeeRequestsCompany/>} />
           <Route path='trash' element={<Trash/>} />
           <Route path='marketplace' element={<Marketplace/>} />
-          <Route path='share-market' element={<BuySellShares/>} />
+          <Route path='/buy-sell-tokens' element={<BuySellShares/>} />
           <Route path='/agreement' element={<PdfGenerator/>} />
         </Routes>
     </Router>

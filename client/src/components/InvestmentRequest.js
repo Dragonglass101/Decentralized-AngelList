@@ -75,9 +75,9 @@ const useStyles = makeStyles((theme) => ({
 
 export const InvestmentRequest = () => {
   const classes = useStyles();
-  const companyBigMapID = 79636;
-  const investorBigMapID = 79640;
-  const fundraiseBigMapID = 79639;
+  const companyBigMapID = 88413;
+  const investorBigMapID = 88417;
+  const fundraiseBigMapID = 88416;
 
   const [wallet, setWallet] = useState(null);
   const [loading, setloading] = useState(false);

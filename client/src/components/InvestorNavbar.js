@@ -87,8 +87,8 @@ const InvestorNavbar = () => {
 
   const [wallet, setWallet] = useState(null);
 
-  const companyBigMapID = 79636;
-  const investorBigMapID = 79640;
+  const companyBigMapID = 88413;
+  const investorBigMapID = 88417;
   useEffect(() => {
     if (!wallet) {
       (async () => {

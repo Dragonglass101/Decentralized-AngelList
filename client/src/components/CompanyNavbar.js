@@ -79,8 +79,8 @@ const CompanyNavbar = () => {
     const [name, setname] = useState();
     const [photoCID, setphotoCID] = useState();
 
-    const companyBigMapID = 79636;
-    const investorBigMapID = 79640;
+    const companyBigMapID = 88413;
+    const investorBigMapID = 88417;
 
     const investementRaised = useRef();
     const ownershipRaised = useRef();

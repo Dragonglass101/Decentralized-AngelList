@@ -1,22 +1,10 @@
-import React from 'react';
-import { alpha, makeStyles, rgbToHex } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
+import React, {useState, useEffect} from 'react';
+import { getActiveAccount } from '../utils/wallet';
+
+import { alpha, makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Chip from '@material-ui/core/Chip';
 
 import Navbar from './CompanyNavbar';
 import NavFloating from './NavFloating';
@@ -26,38 +14,14 @@ import sample2 from '../images/people/person2.jpeg'
 import dragon_glass from '../images/people/person3.jpeg'
 import sean_paul from '../images/people/seanpaulPic.png'
 
-import searchIcon from '../images/search.png'
-import appleLogo from '../images/apple-logo.png'
-import pieChart from '../images/pie-chart.png'
-import walletImg from '../images/wallet.png'
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
-import IconButton from '@material-ui/core/IconButton';
-import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
-import PaymentIcon from '@material-ui/icons/Payment';
 
 //Transaction Debit/credit/pending
-import SyncProblemIcon from '@material-ui/icons/SyncProblem';
-import EjectIcon from '@material-ui/icons/Eject';
-import ArrowDropDownCircleIcon from '@material-ui/icons/ArrowDropDownCircle';
-import TrendingDownRoundedIcon from '@material-ui/icons/TrendingDownRounded';
-import TrendingUpRoundedIcon from '@material-ui/icons/TrendingUpRounded';
-import ArrowDownwardRoundedIcon from '@material-ui/icons/ArrowDownwardRounded';
-import ArrowUpwardRoundedIcon from '@material-ui/icons/ArrowUpwardRounded';
-import PeopleAltRoundedIcon from '@material-ui/icons/PeopleAltRounded';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import AccountBalanceWalletRoundedIcon from '@material-ui/icons/AccountBalanceWalletRounded';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import LocalMallOutlinedIcon from '@material-ui/icons/LocalMallOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import AccountBalanceWalletOutlinedIcon from '@material-ui/icons/AccountBalanceWalletOutlined';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import BarChartOutlinedIcon from '@material-ui/icons/BarChartOutlined';
 
-import DataUsageRoundedIcon from '@material-ui/icons/DataUsageRounded';
-import SearchIcon from '@material-ui/icons/Search';
 
-import Chart from "react-apexcharts";
 
 // Step 2 - Include the react-fusioncharts component
 import ReactFC from "react-fusioncharts";
@@ -71,64 +35,10 @@ import ZoomLine from "fusioncharts/fusioncharts.zoomline"
 
 // Step 5 - Include the theme as fusion
 import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
+import { getKeyBigMapByID } from '../utils/Api';
 
 // Step 6 - Adding the chart and theme as dependency to the core fusioncharts
 ReactFC.fcRoot(FusionCharts, ZoomLine, Column2D, FusionTheme);
-
-
-const chartData = [
-  {
-    label: "Founders",
-    value: "285040"
-  },
-  {
-    label: "Employees",
-    value: "146330"
-  },
-  {
-    label: "Investor A",
-    value: "105070"
-  },
-  {
-    label: "Option Pool",
-    value: "49100"
-  }
-];
-
-// Create a JSON object to store the chart configurations
-const doughnutConfigs = {
-  type: "doughnut2d", // The chart type
-  width: "360", // Width of the chart
-  height: "360", // Height of the chart
-  dataFormat: "json", // Data type
-  dataSource: {
-    // Chart Configuration
-    chart: {
-      // caption: "Companies Market Share",
-      // subCaption: "Last year",
-      numberPrefix: "$",
-      bgColor: "#fbfafa",
-      startingAngle: "310",
-      showLegend: "1",
-      defaultCenterLabel: "Total Shares: $64.08K",
-      centerLabel: "$label: $value",
-      centerLabelBold: "1",
-      enableSmartLabels: "0",
-      showLegend: '1',
-      // doughnutRadius:'85',
-      // showTooltip: "0",
-      // showPercentValues: "1",
-      valuePosition: 'inside',
-      labelPosition: "inside",
-      minAngleForLabel: "360",
-      showPercentInTooltip: "1",
-      decimals: "0",
-      theme: "fusion"
-    },
-    // Chart Data - from step 2
-    data: chartData
-  }
-};
 
 const valuationData = [
   {
@@ -285,65 +195,90 @@ const useStyles = makeStyles((theme) => ({
 
 export const DashboardCompany = () => {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const companyBigMapID = 88413;
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const series = [ //data on the y-axis
+  const [wallet, setWallet] = useState(null);
+  const [donutData, setdonutData] = useState(null);
+  const chartData = [
     {
-      name: "Temperature in Celsius",
-      data: [4132, 4124, 3153, 5323, 5123, 4444, 6532, 7555, 6488, 7690, 3000, 2345]
+      label: "Founders",
+      value: "2500"
+    },
+    {
+      label: "Employees",
+      value: "146330"
+    },
+    {
+      label: "Investor A",
+      value: "105070"
+    },
+    {
+      label: "Option Pool",
+      value: "49100"
     }
   ];
-  const options = { //data on the x-axis
-    series: [{
-      name: 'Website Blog',
-      type: 'column',
-      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160]
-    },
-    {
-      name: 'Social Media',
-      type: 'line',
-      data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16]
-    }],
-    chart: {
-      height: 350,
-      type: 'line',
-    },
-    stroke: {
-      width: [0, 4]
-    },
-    // title: {
-    //   text: 'Traffic Sources'
-    // },
-    dataLabels: {
-      enabled: true,
-      enabledOnSeries: [1]
-    },
-    labels: ['01 Jan 2001', '02 Jan 2001', '03 Jan 2001', '04 Jan 2001', '05 Jan 2001', '06 Jan 2001', '07 Jan 2001', '08 Jan 2001', '09 Jan 2001', '10 Jan 2001', '11 Jan 2001', '12 Jan 2001'],
-    xaxis: {
-      type: 'datetime'
-    },
-    yaxis: [{
-      title: {
-        text: 'Website Blog',
+  
+  const doughnutConfigs = {
+    type: "doughnut2d", // The chart type
+    width: "360", // Width of the chart
+    height: "360", // Height of the chart
+    dataFormat: "json", // Data type
+    dataSource: {
+      // Chart Configuration
+      chart: {
+        // caption: "Companies Market Share",
+        // subCaption: "Last year",
+        numberPrefix: "$",
+        bgColor: "#fbfafa",
+        startingAngle: "310",
+        showLegend: "1",
+        defaultCenterLabel: "Total Shares: $64.08K",
+        centerLabel: "$label: $value",
+        centerLabelBold: "1",
+        enableSmartLabels: "0",
+        showLegend: '1',
+        // doughnutRadius:'85',
+        // showTooltip: "0",
+        // showPercentValues: "1",
+        valuePosition: 'inside',
+        labelPosition: "inside",
+        minAngleForLabel: "360",
+        showPercentInTooltip: "1",
+        decimals: "0",
+        theme: "fusion"
       },
-
-    },
-      // {
-      //   opposite: true,
-      //   title: {
-      //     text: 'Social Media'
-      //   }
-      // }
-    ]
+      // Chart Data - from step 2
+      data: chartData
+    }
   };
+
+  useEffect(() => {
+    async function getCapTable(){
+      const temp = [];
+      const companyDetails = await getKeyBigMapByID(companyBigMapID, wallet.address);
+      console.log(companyDetails);
+
+      for(let equity of companyDetails.value["cap_table"]){
+        console.log(equity.stakeHolder_type, equity.fd_shares);
+        // temp.push({
+        //   label: equity.stakeHolder_type,
+        //   value: equity.fd_shares
+        // })
+      }
+      setdonutData(temp);
+    }
+    if(!donutData && wallet){
+      getCapTable();
+    }
+  }, [wallet])
+
+  useEffect(() => {
+    if(!wallet){
+      (async () => {
+      const activeAccount = await getActiveAccount();
+      setWallet(activeAccount);
+    })();}
+  }, [])
 
 
   return (
@@ -360,7 +295,7 @@ export const DashboardCompany = () => {
           <div className='px-3'>
             <div className='d-flex justify-content-between align-items-center'>
               <div>
-                <h5 className='mb-0 ps-2'>Good Morning, Anurag!</h5>
+                <h5 className='mb-0 ps-2'>Good Morning, Anurag! {donutData}</h5>
                 <p className='text-secondary ps-2'>Here's what's happening with your funds today.</p>
               </div>
               {/* <div className="input-group w-25">
