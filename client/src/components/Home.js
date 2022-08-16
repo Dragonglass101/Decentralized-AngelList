@@ -35,6 +35,9 @@ import TelegramIcon from '@material-ui/icons/Telegram';
 
 import angellist_logo from '../images/home/angellist_logo.png'
 import devils_logo_img from '../images/logo/devils_logo_800px_trans.png'
+import left_wing from '../images/wiggle/left_wing.png'
+import right_wing from '../images/wiggle/right_wing.png'
+import devil_with_tail from '../images/wiggle/devil_with_tail.png'
 import devils_logo_svg from '../images/logo/devils_logo.svg'
 import small_devils_logo from '../images/logo/small_devils_logo.png'
 
@@ -126,11 +129,16 @@ export const Home = () => {
                 <div className="container-fluid py-4" style={{ width: '55%' }}>
                     <h1 className="display-5 fw-bold mb-3">Invest in world-changing startups</h1>
                     <p className="col-md-8 fs-4 p-0 mb-5">Join leading investors funding the next wave of world-changing startups.</p>
-                    <div style={{cursor:'default'}} className="btn button-purple text-white btn-lg">Invest Now</div>
+                    <div style={{ cursor: 'default' }} className="btn button-purple text-white btn-lg">Invest Now</div>
                 </div>
                 <div className="container-fluid py-4" style={{ width: '45%' }}>
-                    <img className='w-100' src={devils_logo_img} />
-                    {/* <img className='w-100' src={devils_logo_svg} /> */}
+                    {/* <img className='w-100 wing_flap' src={devils_logo_img} /> */}
+                    {/* <img className='w-100' src={devil_with_tail} /> */}
+                    <div className='d-flex justify-content-center'>
+                        <img style={{ position: 'absolute', zIndex:'100', marginTop:'15px', marginLeft:'3px', width:'30%' }} className='devil_with_tail' src={devil_with_tail} />
+                    </div>
+                    <img style={{ zIndex: '-1' }} className='w-50 left_wing' src={left_wing} />
+                    <img style={{ zIndex: '-1' }} className='w-50 right_wing' src={right_wing} />
                 </div>
             </div>
 
@@ -167,11 +175,11 @@ export const Home = () => {
                     </Link>
                 </div>
                 <div style={{ width: '50%' }}>
-                    <img style={{ marginTop: '-50px', width:'550px' }} src={angellist_abstract} />
+                    <img style={{ marginTop: '-50px', width: '550px' }} src={angellist_abstract} />
                 </div>
             </div>
 
-            <div className='px-5 mt-5 bg-black shadow'>
+            <footer className='px-5 mt-5 bg-black shadow'>
                 <div className='d-flex justify-content-between'>
                     <div className='p-5 w-50 text-white'>
                         <h3 className='fw-bold'>Stay in the loop</h3>
@@ -267,7 +275,7 @@ export const Home = () => {
 
 
 
-            </div>
+            </footer>
 
 
 

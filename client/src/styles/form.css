@@ -15,7 +15,12 @@
 
 html * {
     font-family: kanit;
+    /* margin:auto; */
 }
+
+/* body{
+    min-width:1275px;
+} */
 
 
 .fitHeight {
