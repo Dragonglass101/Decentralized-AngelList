@@ -36,7 +36,7 @@
   </p>
 </div>
 
-
+<img src='assets/devilslist-pic.jpg'>
 
 <!-- TABLE OF CONTENTS -->
 
@@ -70,7 +70,7 @@ The goal of DeFi is to create an open-source, permissionless, and transparent fi
 DevilsList is an end-to-end platform where investors may invest in businesses using tez/USDT and sign SAFT/SAFEs directly on the site. When a round closes, this website keeps track of the cap-table, and entrepreneurs may pay their workers and vendors in tez/USDT. It is a fantastic programme for investing, raising funds, maintaining a cap-table, managing cash-flow, and doing payroll and accounting on-chain.
 
 ### Features
-<img src='/src/images/demo_images/ppt2.png'>
+<img src='assets/workflow-devilslist.png'>
 DevilsLsit is a fully-decentralised app where investors can finance a variety of new firms through SAFE notes, SAFTs or direct ownership.
 The flowchart above demonstrates how our website's fund-raising event works.
 
@@ -79,7 +79,7 @@ The flowchart above demonstrates how our website's fund-raising event works.
 
 Our goal was to develop a single, all-encompassing blockchain application that would allow users to invest, raise money, monitor cash flow, and more. DevilsList is a one-stop shop for all of your requirements, as my friends have very clearly explained. But as we worked to establish this product, we came to the realisation that, despite our best efforts to link investors and entrepreneurs, it is inevitable that startups will have to give up some equity in order to receive funding. What if we could devise a different means of obtaining funding for such startups? Thus, we developed the concept for DevilList Marketplace.
 
-<img src='/src/images/demo_images/ppt1.png'>
+<img src='assets/market-place-working.png'>
 
 Every company that registers on DevilList will receive a set of FA2 Fungible Company Tokens. These tokens are comparable to shares, however they are exclusively available on DevilList . The number of company tokens each founder and member wants to possess as a member must be entered whenever the firm registers itself and they are added as we have seen previously. The entire number of tokens that the company owns is determined when all members have been added, and the initial token price is set to the company's total valuation divided by the total token. These tokens can now be traded on the DevilList Market Place like shares. Anyone who wants to buy this token can log in to DevilMarket Place and submit a buy request. 
  
@@ -89,8 +89,7 @@ Also the subsequent buyers, analyse company's valuation and trade this token sim
 
 #### Decentralized Peer-to-Peer Chat Application
 
-
-
+Most platforms offer only a global or general chating service on decentralized applications but on Devilslist decentralized peer-to-peer communication is possible. This one on one chatting service provides a more personalized experience to the investors and the companies to negotiate in investements.
 
 
 
@@ -111,15 +110,32 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 
 ### Tech-Stack
-* [Tezos](https://tezos.com/)
-* [IPFS](https://infura.io/)
-* [Smartpy](https://smartpy.io/)
-* [React](https://reactjs.org/)
+<p align="center">
+<a href="https://tezos.com/"><img src="assets/tezos-bg.png"   width="40%" height="40%"></a>
+<p align="center" float="left">
+<a href="https://smartpy.io/"><img src="assets/smartpy.png" width="30%" height="30%"></a>
+<a href="https://reactjs.org/"><img src="assets/reactjs.png"  width="30%" height="30%"></a>
+</p>
+<p align="center" float="left">
+<a href="https://ipfs.io/"><img src="assets/ipfs.png" width="30%" height="30%"></a>
+</p>
+    
+💲  Tezos - Evolutionary, revolutionary, and everything in-between. <br/>
+📷 IPFS is a peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge. <br/>
+
 
 <p align="right"><a href="#readme-top">Top</a></p>
 
 ## Challenges Faced
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
+We are new to the Tezos Block chain are so we ran into soem issues while the duration of this project,
+1. It took major time to resolve erros in smartpy due to lack of proper error messages and documentation regarding the errors.
+2. The Becon Wallet was not compatible with the latest React JS version (18) due to which we had to use version 16.
+3. The resources for the working of Angellist were scarce.
+
+### Major issues
+2 days prior to the deadline, the infura ipfs service stopped working due to which we had to switch to a different service
+(nft.storage). This caused a major backlash due to which we had to restructure the project accordingly. If not for this
+inconvenience we would have implemented more features we had initially decided.
 
 <p align="right"><a href="#readme-top">Top</a></p>
 
@@ -171,9 +187,6 @@ USDT/USDC: According to the research USDT stable coin has came on the Tezos bloc
 >Step 7 will also generate a test_build where your test results will be stored.
 
 8.  `npm run get-entry-points` It will extract the entry-points from you recently compiled code and display in the terminal with a sample invocation which you can reference while invoking an entry-point from your dapp.
-<<<<<<< HEAD
-9.  **`npm run sync` is mandatory whenever your config.json file is changed !**
-=======
 9.  *`npm run sync` is mandatory whenever your config.json file is changed !*
 
 <p align="right"><a href="#readme-top">Top</a></p>
@@ -181,7 +194,6 @@ USDT/USDC: According to the research USDT stable coin has came on the Tezos bloc
 ## Contract Address
 ### KT1RgCskZanXW1mtz4aeFB9txG5Uce454V3q
 
->>>>>>> 6bb0cf59d09cc27b77263aacea40dc8063c02b94
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments and References
 

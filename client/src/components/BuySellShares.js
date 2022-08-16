@@ -384,7 +384,6 @@ export const BuySellShares = () => {
                                                 <span className='text-secondary'>Commissions</span>
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
-
                                             <Button onClick={()=>{setTimeout(showAlertBuy, 2000)}} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Buy Tokens</Button>
 
                                             <div className='my-3 text-center'>
@@ -420,9 +419,7 @@ export const BuySellShares = () => {
                                                 <span className='text-secondary'>Commissions</span>
                                                 <span className='fw-bold'>0.00 XTZ</span>
                                             </div>
-
                                             <Button onClick={()=>{setTimeout(showAlertBuy, 2000)}} style={{ backgroundColor: 'rgb(79,57,246)' }} className='d-block w-100' variant='contained' color='primary'>Sell Tokens</Button>
-
                                             <div className='my-3 text-center'>
                                                 <span className='text-secondary'>Trade Options</span>
                                             </div>
