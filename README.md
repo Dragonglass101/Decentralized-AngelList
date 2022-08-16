@@ -13,8 +13,6 @@
 * https://www.markdownguide.org/basic-syntax/#reference-style-links
 
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -22,14 +20,14 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a> -->
 
-  <h1 align="center"> DevilList </h1>
+  <h1 align="center"> DevilsList </h1>
 
   <p align="center">
     An On-Chain AngelList on Tezos BlockChain!
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://youtu.be/m3xArqbYJ1A">View Demo</a>
     .
     <a href="https://decentralizedangellist.web.app">View Site</a>
     <!-- <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
@@ -38,7 +36,7 @@
   </p>
 </div>
 
-
+<img src='assets/devilslist-pic.jpg'>
 
 <!-- TABLE OF CONTENTS -->
 
@@ -62,18 +60,36 @@
 
 ### Inspiration 
 
-With the worlds fastly adapting and appreciating blockchain and decentralized ecosystem it is the need of the day for the big platforms like AngelList to move to WEB3. New startups will be based on WEB3 and in near future blockchain token transactions will lay the prime part of monetary transactions. 
-Moreover Traditional financial services such as payments, lending and borrowing were only available via established financial institutes and banks. But it transformed with the introduction of blockchain technology. When the concept of cryptocurrency started expanding, the discussion has shifted to a new set of considerations, i.e., decentralized finance (DeFi) decentralized finance creates a fair and transparent financial system where anyone can participate. It allows unbanked people to access financial and banking services via blockchain technology.
+With the world rapidly accepting and appreciating blockchain and decentralised ecosystems, it is imperative that major sites such as AngelList migrate to WEB3. New firms will be built on WEB3, and blockchain token transactions will be a major element of monetary transactions in the near future.
+Moreover Payments, loans, and borrowing were formerly only available through established financial institutions including banks. However, things changed with the arrival of blockchain technology. When the notion of cryptocurrencies began to grow in popularity, the conversation switched to a new set of issues, namely, decentralised finance (DeFi) Decentralized finance fosters an equitable and transparent financial system in which anybody may participate. It uses blockchain technology to provide unbanked individuals with access to financial and banking services.
 
-DeFi aims to build an open-source, permissionless and transparent financial service ecosystem. Thus it is need of the day to have platform like Angellist to be on AngelList.
+The goal of DeFi is to create an open-source, permissionless, and transparent financial services ecosystem. As a result, having a platform like AngelList is essential today.
 
-DevilList is an end-to-end platform where investors can invest using tez/USDT in startups and can sign SAFT/SAFEs on the platform itself. This platform keep track of cap-table whenever a round closes and startups can also pay their employees and vendors in tez/USDT. It is a super app to invest, raise funds, maintain cap-table, manage cash-flow and payroll & accounting done on-chain.
+### Introduction
 
-Cap-Table Calculator and Manager 
-On platform wallet to pay to vendors or employee
-Decentralized Peer to Peer Chat
-On Platform investing through (Direct Equity SAFE/SAFT)agreements.
-Deentralized Stock Trading (Future of Trading)
+DevilsList is an end-to-end platform where investors may invest in businesses using tez/USDT and sign SAFT/SAFEs directly on the site. When a round closes, this website keeps track of the cap-table, and entrepreneurs may pay their workers and vendors in tez/USDT. It is a fantastic programme for investing, raising funds, maintaining a cap-table, managing cash-flow, and doing payroll and accounting on-chain.
+
+### Features
+<img src='assets/workflow-devilslist.png'>
+DevilsLsit is a fully-decentralised app where investors can finance a variety of new firms through SAFE notes, SAFTs or direct ownership.
+The flowchart above demonstrates how our website's fund-raising event works.
+
+### Exclusive Features
+#### DevilsList Marketplace
+
+Our goal was to develop a single, all-encompassing blockchain application that would allow users to invest, raise money, monitor cash flow, and more. DevilsList is a one-stop shop for all of your requirements, as my friends have very clearly explained. But as we worked to establish this product, we came to the realisation that, despite our best efforts to link investors and entrepreneurs, it is inevitable that startups will have to give up some equity in order to receive funding. What if we could devise a different means of obtaining funding for such startups? Thus, we developed the concept for DevilList Marketplace.
+
+<img src='assets/market-place-working.png'>
+
+Every company that registers on DevilList will receive a set of FA2 Fungible Company Tokens. These tokens are comparable to shares, however they are exclusively available on DevilList . The number of company tokens each founder and member wants to possess as a member must be entered whenever the firm registers itself and they are added as we have seen previously. The entire number of tokens that the company owns is determined when all members have been added, and the initial token price is set to the company's total valuation divided by the total token. These tokens can now be traded on the DevilList Market Place like shares. Anyone who wants to buy this token can log in to DevilMarket Place and submit a buy request. 
+ 
+Unlike with regular shares, the seller of this token will continue to receive 5% of any trade profits made by subsequent buyers of this token. Therefore, after 20 successful trades involving these tokens, they will no longer exist. As is obvious, the sooner you become the token's owner, the more and longer you can earn. 
+As a result, the majority of people will purchase these tokens from firm members as quickly as possible, helping to finance the startup in its  early stages. 
+Also the subsequent buyers, analyse company's valuation and trade this token similar to regular trading with 5% Royalty going to company. This will assist in ensuring a steady flow of funding for the business.
+
+#### Decentralized Peer-to-Peer Chat Application
+
+Most platforms offer only a global or general chating service on decentralized applications but on Devilslist decentralized peer-to-peer communication is possible. This one on one chatting service provides a more personalized experience to the investors and the companies to negotiate in investements.
 
 
 
@@ -94,15 +110,32 @@ Of course, no one template will serve all projects since your needs may be diffe
 
 
 ### Tech-Stack
-* [Tezos](https://tezos.com/)
-* [IPFS](https://infura.io/)
-* [Smartpy](https://smartpy.io/)
-* [React](https://reactjs.org/)
+<p align="center">
+<a href="https://tezos.com/"><img src="assets/tezos-bg.png"   width="40%" height="40%"></a>
+<p align="center" float="left">
+<a href="https://smartpy.io/"><img src="assets/smartpy.png" width="30%" height="30%"></a>
+<a href="https://reactjs.org/"><img src="assets/reactjs.png"  width="30%" height="30%"></a>
+</p>
+<p align="center" float="left">
+<a href="https://ipfs.io/"><img src="assets/ipfs.png" width="30%" height="30%"></a>
+</p>
+    
+💲  Tezos - Evolutionary, revolutionary, and everything in-between. <br/>
+📷 IPFS is a peer-to-peer hypermedia protocol designed to preserve and grow humanity's knowledge. <br/>
+
 
 <p align="right"><a href="#readme-top">Top</a></p>
 
 ## Challenges Faced
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
+We are new to the Tezos Block chain are so we ran into soem issues while the duration of this project,
+1. It took major time to resolve erros in smartpy due to lack of proper error messages and documentation regarding the errors.
+2. The Becon Wallet was not compatible with the latest React JS version (18) due to which we had to use version 16.
+3. The resources for the working of Angellist were scarce.
+
+### Major issues
+2 days prior to the deadline, the infura ipfs service stopped working due to which we had to switch to a different service
+(nft.storage). This caused a major backlash due to which we had to restructure the project accordingly. If not for this
+inconvenience we would have implemented more features we had initially decided.
 
 <p align="right"><a href="#readme-top">Top</a></p>
 
@@ -177,6 +210,6 @@ USDT/USDC: According to the research USDT stable coin has came on the Tezos bloc
 <p align="right"><a href="#readme-top">Top</a></p>
 
 ## Project Demo Pictures
-You can refer the sample shots our projects <a href="https://drive.google.com/drive/folders/16ue-PlZ4RvHtR29oReQAVUAbTJ21dXgg?usp=sharing">Click Here</a>
+You can refer the sample shots our projects <a href="https://drive.google.com/drive/folders/1vyppSZRm_aS8BcY_G4efxLQuYp651AkP?usp=sharing">Click Here</a>
 
 <p align="right">(<a href="#readme-top">Top</a>)</p>
